@@ -1,4 +1,4 @@
-extends Control
+extends VBoxContainer
 
 
 # Declare member variables here. Examples:
@@ -8,7 +8,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	add_constant_override("separation", 20)
 	pass # Replace with function body.
 
 
@@ -16,5 +15,10 @@ func _ready():
 #func _process(delta):
 #	pass
 
-
-
+var backgroundColor = GameVars.outlineColor
+func _draw():
+	var style_box = StyleBoxFlat.new()
+	style_box.set_corner_radius_all(4)
+	style_box.set_expand_margin_all(2)
+	style_box.bg_color = backgroundColor
+	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))

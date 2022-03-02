@@ -1,5 +1,5 @@
-extends Control
-
+extends HBoxContainer
+var backgroundColor = GameVars.outlineColor
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -8,7 +8,6 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	add_constant_override("separation", 20)
 	pass # Replace with function body.
 
 
@@ -17,4 +16,8 @@ func _ready():
 #	pass
 
 
-
+func _draw():
+	var style_box = StyleBoxFlat.new()
+	style_box.set_corner_radius_all(2)
+	style_box.bg_color = backgroundColor
+	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))
