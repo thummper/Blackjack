@@ -13,6 +13,13 @@ onready var doubleButton    = get_node("TempButtonVAlign/DoubleButton")
 onready var splitButton     = get_node("TempButtonVAlign/SplitButton")
 onready var surrenderButton = get_node("TempButtonVAlign/SurrenderButton")
 
+signal hit
+signal stand
+signal double
+signal split
+signal surrender
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var buttons = [
@@ -33,6 +40,7 @@ func actionButtonPressed(button):
 	print("Pressed passed: ", button)
 	var action = button.text.to_lower()
 	print("Action: ", action)
+	emit_signal(action)
 
 	
 

@@ -6,6 +6,8 @@ export var dealer = false
 
 onready var c1 = $CARD1
 onready var c2 = $CARD2
+var cards = []
+
 
 
 
@@ -23,6 +25,20 @@ func _ready():
 		$ValueControl.anchor_left = 1.2
 	pass # Replace with function body.
 
+
+func addCard(card):
+	if cards.size() < 2:
+		cards.push_back(card)
+		showCard(card)
+		
+func showCard(card):
+	if (c1.get_child_count() == 0):
+		c1.add_child(card)
+	elif (c2.get_child_count() == 0):
+		c2.add_child(card)
+	else: 
+		push_error("Failed to show card in c1 or c2, they both had more than 0 children")
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

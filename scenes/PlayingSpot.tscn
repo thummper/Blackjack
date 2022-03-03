@@ -41,9 +41,6 @@ anchor_top = 0.5
 anchor_right = 0.4
 anchor_bottom = 0.5
 rect_rotation = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CARD2" type="Control" parent="."]
 anchor_left = 0.65

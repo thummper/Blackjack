@@ -6,8 +6,28 @@ var gameDeck    = preload("res://scripts/GameDeck.gd").new(cardFactory)
 var debugPoint  = preload("res://scenes/Point.tscn")
 var activeCards = []
 var chipTrayVisible = true
+var playing = false 
 onready var trayButton = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
 onready var uiAnimations = get_node("UI Layer/UI ANIMATIONS")
+
+
+var playerInformation = {
+	"startingMoney": 1000,
+	"handsPlayed": 0,
+	"handsWon": 0,
+	"handsLost": 0,
+	"handsSurrendered": 0
+}
+
+onready var blackjackPositions = [
+	{"position" : get_node("ControlWrapper/PlayerPositions/SPOT_0"), "player": "human"},
+	{"position" : get_node("ControlWrapper/PlayerPositions/SPOT_1"), "player": "none"},
+	{"position" : get_node("ControlWrapper/PlayerPositions/SPOT_2"), "player": "none"},
+	{"position" : get_node("ControlWrapper/PlayerPositions/SPOT_3"), "player": "none"},
+	{"position" : get_node("ControlWrapper/PlayerPositions/SPOT_4"), "player": "none"}
+]
+onready var dealerPosition = get_node("ControlWrapper/DealerPos/DealerSpot")
+onready var delayTimer = get_node("DelayTimer")
 
 #export var numberofDecks = 1
 #var GameDeck = preload("res://Scenes/GameDeck.tscn").instance()
@@ -17,26 +37,32 @@ onready var uiAnimations = get_node("UI Layer/UI ANIMATIONS")
 # var a = 2
 # var b = "text"
 
-
+var blackjackGame = preload("res://scripts/blackjackGame.gd")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Generate game deck 
 	gameDeck.generateDeck(2)
-	var pSpots = get_tree().get_nodes_in_group("pSpot")
-	for spot in pSpots:
-		print("SPOT: ", spot.c1, spot.c2)
-		var c1 = gameDeck.getCard()
-		var c2 = gameDeck.getCard()
-		activeCards.push_back(c1)
-		activeCards.push_back(c2)
-		
-		spot.c1.add_child(c1)
-		spot.c2.add_child(c2)
+	blackjackGame = blackjackGame.new(gameDeck, blackjackPositions, dealerPosition, delayTimer)
+
+	
+	
+#	var pSpots = get_tree().get_nodes_in_group("pSpot")
+#	for spot in pSpots:
+#		print("SPOT: ", spot.c1, spot.c2)
+#		var c1 = gameDeck.getCard()
+#		var c2 = gameDeck.getCard()
+#		activeCards.push_back(c1)
+#		activeCards.push_back(c2)
+#
+#		spot.c1.add_child(c1)
+#		spot.c2.add_child(c2)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if(!playing):
+		blackjackGame.startGame()
+		playing = true
 
 
 
@@ -89,3 +115,31 @@ func trayButton_pressed():
 		showTray()
 
 	pass
+
+
+func player_hit():
+	pass # Replace with function body.
+
+
+func player_double():
+	pass # Replace with function body.
+
+
+func player_split():
+	pass # Replace with function body.
+
+
+func player_stand():
+	pass # Replace with function body.
+
+
+func player_surrender():
+	pass # Replace with function body.
+
+
+
+
+
+func _on_DelayTimer_timeout():
+	print("timeout")
+	pass # Replace with function body.

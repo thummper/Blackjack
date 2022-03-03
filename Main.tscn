@@ -165,6 +165,8 @@ tracks/4/keys = {
 script = ExtResource( 3 )
 oc = Color( 0.0745098, 0.235294, 0.152941, 0.392157 )
 
+[node name="DelayTimer" type="Timer" parent="."]
+
 [node name="BackgroundWrapper" type="Node" parent="."]
 
 [node name="Background" parent="BackgroundWrapper" instance=ExtResource( 1 )]
@@ -193,31 +195,7 @@ anchor_top = 0.3
 anchor_right = 1.0
 anchor_bottom = 0.9
 
-[node name="SPOT0" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.5
-anchor_top = 0.7
-anchor_right = 0.5
-anchor_bottom = 0.7
-margin_top = -99.792
-margin_bottom = 100.208
-
-[node name="SPOT1" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.3
-anchor_top = 0.66
-anchor_right = 0.3
-anchor_bottom = 0.66
-margin_left = -99.84
-margin_right = 100.16
-
-[node name="SPOT2" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.7
-anchor_top = 0.66
-anchor_right = 0.7
-anchor_bottom = 0.66
-margin_left = -100.16
-margin_right = 99.84
-
-[node name="SPOT3" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
+[node name="SPOT_0" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
 anchor_left = 0.9
 anchor_top = 0.5
 anchor_right = 0.9
@@ -225,7 +203,31 @@ anchor_bottom = 0.5
 margin_left = -100.16
 margin_right = 99.84
 
-[node name="SPOT4" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
+[node name="SPOT_1" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
+anchor_left = 0.7
+anchor_top = 0.66
+anchor_right = 0.7
+anchor_bottom = 0.66
+margin_left = -100.16
+margin_right = 99.84
+
+[node name="SPOT_2" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+margin_top = -99.792
+margin_bottom = 100.208
+
+[node name="SPOT_3" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
+anchor_left = 0.3
+anchor_top = 0.66
+anchor_right = 0.3
+anchor_bottom = 0.66
+margin_left = -99.84
+margin_right = 100.16
+
+[node name="SPOT_4" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
 anchor_left = 0.1
 anchor_top = 0.5
 anchor_right = 0.1
@@ -496,7 +498,13 @@ playback_speed = 3.0
 anims/RESET = SubResource( 2 )
 anims/trayClose = SubResource( 3 )
 
+[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="double" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_double"]
+[connection signal="hit" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_hit"]
+[connection signal="split" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_split"]
+[connection signal="stand" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_stand"]
+[connection signal="surrender" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_surrender"]
 [connection signal="mouse_entered" from="UI Layer/UIWRAPPER/BottomUI/ChipUIOrder/ChipControl" to="." method="_on_ChipControl_mouse_entered"]
 [connection signal="mouse_exited" from="UI Layer/UIWRAPPER/BottomUI/ChipUIOrder/ChipControl" to="." method="_on_ChipControl_mouse_exited"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/ChipUIOrder/ChipControl/VBoxContainer/HBoxContainer/ChipControlButton" to="." method="chipControlPressed"]

@@ -25,14 +25,24 @@ func _ready():
 	$cardBack.texture  = back
 	$cardFront.scale =  Vector2(spriteScale, spriteScale)
 	$cardBack	.scale =  Vector2(spriteScale, spriteScale)
-	
+
+
+func showCard():
+	$cardFront.visible = true
+	$cardBack.visible = false
+	flipped = true
+
+func hideCard():
+	$cardFront.visible = false
+	$cardBack.visible  = true
+	flipped = false
+
+
 func flip():
 	if flipped:
-		$cardFront.visible = false
-		$cardBack.visible  = true
+		hideCard()
 	else:
-		$cardFront.visible = true
-		$cardBack.visible  = false
+		showCard()
 	flipped = !flipped
 	
 

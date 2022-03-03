@@ -28,5 +28,9 @@ func getCard():
 	var card = cards.pop_back()
 	return card
 	
+func burn(number):
+	for i in range(number):
+		cards.pop_back()
+	
 
 	
