@@ -6,6 +6,8 @@ var gameDeck    = preload("res://scripts/GameDeck.gd").new(cardFactory)
 var debugPoint  = preload("res://scenes/Point.tscn")
 var activeCards = []
 var chipTrayVisible = true
+onready var trayButton = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
+onready var uiAnimations = get_node("UI Layer/UI ANIMATIONS")
 
 #export var numberofDecks = 1
 #var GameDeck = preload("res://Scenes/GameDeck.tscn").instance()
@@ -55,26 +57,29 @@ func _on_Timer_timeout():
 
 
 
+
 func trayButtonMouseEnter():
-	$"UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ButtonVAlign/trayButton".setLight()
-	pass # Replace with function body.
+	trayButton.setLight()
+
+
 
 
 func trayButtonMouseExit():
-	$"UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ButtonVAlign/trayButton".setDark()
-	pass # Replace with function body.
+	trayButton.setDark()
+
+
 
 
 func showTray():
 	if chipTrayVisible != true:
-		$"UI Layer/UI ANIMATIONS".play_backwards("trayClose")
-		$"UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ButtonVAlign/trayButton".flip_v = false
+		uiAnimations.play_backwards("trayClose")
+		trayButton.flip_v = false
 		chipTrayVisible = true
 
 func hideTray():
 	if chipTrayVisible:
-		$"UI Layer/UI ANIMATIONS".play("trayClose")
-		$"UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ButtonVAlign/trayButton".flip_v = true
+		uiAnimations.play("trayClose")
+		trayButton.flip_v = true
 		chipTrayVisible = false
 
 func trayButton_pressed():

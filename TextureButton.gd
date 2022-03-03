@@ -17,6 +17,8 @@ func _ready():
 
 
 var backgroundColor = GameVars.outlineColor
+
+
 func setDark():
 	backgroundColor = GameVars.outlineColor
 	update()
