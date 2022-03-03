@@ -16,14 +16,22 @@ GAMESTATES:
 var gamestate = 0
 
 func _init(deck, positionInfo, dealerPos, timer):
-	gameDeck  = deck
 	positions = positionInfo
 	dealerPosition = dealerPos
 	delayTimer = timer
+	assignDeck(deck)
+	
+
+func assignDeck(deck):
+	gameDeck = deck
+	# Not sure if leave this in, some games burn card on game start?
+	gameDeck.burn(1)
+	
+	
 	
 func startGame():
-	#1 - Burn 1 card from the deck 
-	gameDeck.burn(1)
+	# We should only start the game once all bets have been made
+
 	#2 - Deal one up card to each player
 	dealToPlayers()
 	delayTimer.start(0.25)
