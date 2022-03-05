@@ -23,7 +23,7 @@ func _ready():
 		$ValueControl.anchor_top = 0.5
 		$ValueControl.anchor_bottom = 0.5
 		$ValueControl.anchor_left = 1.2
-	pass # Replace with function body.
+		$BettingInfo.visible = false
 
 
 func addCard(card):

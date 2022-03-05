@@ -11,15 +11,8 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
 
 func _draw():
 	var bg        = GameVars.outlineColor
-	var style_box = GameVars.getUIStyleBox(bg, [0, 0, 0, 0], 2)
+	var style_box = GameVars.getUIStyleBox(bg, [0, 0, 0, 0], 10)
 	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))
-#	draw_rect(Rect2(Vector2(0, 0), rect_size), get_owner().outlineColor, true)
-	
-	
