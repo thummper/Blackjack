@@ -517,7 +517,7 @@ anchor_right = 1.0
 margin_bottom = 50.0
 script = ExtResource( 35 )
 
-[node name="Label" type="Label" parent="UI Layer/UIWRAPPER/MoneyContainer"]
+[node name="playerMoney" type="Label" parent="UI Layer/UIWRAPPER/MoneyContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 36 )

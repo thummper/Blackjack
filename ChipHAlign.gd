@@ -54,11 +54,12 @@ func _ready():
 			texturePaths[text] = load(buttonInfo.texturePath + buttonInfo.name + textureNames[text])
 		button.setTextures(texturePaths)
 		button.betAmount = buttonInfo.betAmount
+		button.chipName = buttonInfo.name
 		add_child(button)
 		
-func betButtonPressed(betAmount):
+func betButtonPressed(betAmount, chipName):
 	# I really want to handle this in the main script, so will forward the signal
-	emit_signal("makeBet", betAmount)
+	emit_signal("makeBet", betAmount, chipName)
 
 		
 
