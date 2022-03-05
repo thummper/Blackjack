@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/05_compressed.png-e5086172cdc0927dc456894401fd495b.stex"
+path="res://.import/02_small_normal.png-76a6a8332ef0f6deaa8c46140aaaabcd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/card_assets/chips/05/05_compressed.png"
-dest_files=[ "res://.import/05_compressed.png-e5086172cdc0927dc456894401fd495b.stex" ]
+source_file="res://sprites/card_assets/chips/02/02_small_normal.png"
+dest_files=[ "res://.import/02_small_normal.png-76a6a8332ef0f6deaa8c46140aaaabcd.stex" ]
 
 [params]
 

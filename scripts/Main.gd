@@ -50,6 +50,7 @@ onready var delayTimer     = get_node("DelayTimer")
 var blackjackGame = preload("res://scripts/blackjackGame.gd")
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("MAIN: ", self)
 	# Generate game deck 
 	gameDeck.generateDeck(2)
 	blackjackGame = blackjackGame.new(gameDeck, blackjackPositions, dealerPosition, delayTimer)
@@ -180,4 +181,12 @@ func _on_TempActionUI_confirm_bet():
 
 func chipButtonPressed(action):
 	print("CHIP BUTTON: ", action)
+	pass # Replace with function body.
+	
+	
+
+
+
+func makeBet(amount):
+	print("Make bet in main: ", amount)
 	pass # Replace with function body.
