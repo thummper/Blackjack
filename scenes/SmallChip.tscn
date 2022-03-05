@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SmallChip.gd" type="Script" id=1]
+[ext_resource path="res://scenes/SmallChip.gd" type="Script" id=2]
+[ext_resource path="res://sprites/card_assets/chips/miniChips/01_empty_small.png" type="Texture" id=3]
+
+[node name="Control" type="Control"]
+margin_right = 25.0
+margin_bottom = 25.0
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+centered = false
+script = ExtResource( 1 )

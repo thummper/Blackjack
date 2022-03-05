@@ -12,10 +12,12 @@ var playing = false
 var betsMade = false
 onready var trayButton = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
 onready var uiAnimations = get_node("UI Layer/UI ANIMATIONS")
+onready var moneyLabel = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")
+onready var miniChip = preload("res://scenes/SmallChip.tscn")
 
 
 var playerInformation = {
-	"startingMoney": 1000,
+	"money": 1000,
 	"handsPlayed": 0,
 	"handsWon": 0,
 	"handsLost": 0,
@@ -69,6 +71,12 @@ func _ready():
 
 
 
+func getPlayerPosition():
+	for position in blackjackPositions:
+		if(position.player == mainPlayer):
+			return position.position
+
+
 # Loop through all active players, check if bets have been made
 func checkBetting():
 	var allBetsMade = true
@@ -82,10 +90,6 @@ func _process(delta):
 	if(!playing):
 		checkBetting()
 
-		
-	
-	
-	
 	if(betsMade && !playing):
 		blackjackGame.startGame()
 		playing = true
@@ -179,14 +183,25 @@ func _on_TempActionUI_confirm_bet():
 	print("Human player confirms bet")
 
 
-func chipButtonPressed(action):
-	print("CHIP BUTTON: ", action)
-	pass # Replace with function body.
+
+
+# Handle money changes here so the UI updates
+func changePlayerMoney(amount):
+	playerInformation.money += amount
+	moneyLabel.text = "£" + String(playerInformation.money)
 	
-	
 
 
 
-func makeBet(amount):
-	print("Make bet in main: ", amount)
-	pass # Replace with function body.
+func makeBet(amount, chipName):
+	# If we are currently allowed to make bets, subtract the money and add info to board
+	if(!betsMade && !playing && playerInformation.money >= amount):
+		# We can and are making a bet
+		changePlayerMoney(-amount)
+		var mini = miniChip.instance()
+		mini.setTexture(chipName)
+		var pos = getPlayerPosition()
+		pos.addMiniChip(mini)
+		
+	# TODO toast for failure reason
+

@@ -1,6 +1,7 @@
 extends TextureButton
 signal betButton
 var betAmount = 1
+var chipName = "01"
 
 
 # Accepts loaded textures, sets button up
@@ -19,5 +20,5 @@ func _ready():
 
 func buttonPressed():
 	# Emit a betting signal for main to handle
-	emit_signal("betButton", betAmount)
+	emit_signal("betButton", betAmount, chipName)
 

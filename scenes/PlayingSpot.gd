@@ -40,6 +40,14 @@ func showCard(card):
 		push_error("Failed to show card in c1 or c2, they both had more than 0 children")
 		
 
+
+onready var miniContainer = get_node("BettingInfo/HBoxContainer")
+func addMiniChip(mini):
+	
+	miniContainer.add_child(mini)
+	
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
