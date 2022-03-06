@@ -195,9 +195,9 @@ __meta__ = {
 dealer = true
 
 [node name="PlayerPositions" type="Control" parent="ControlWrapper"]
-anchor_top = 0.3
+anchor_top = 0.25
 anchor_right = 1.0
-anchor_bottom = 0.9
+anchor_bottom = 0.85
 
 [node name="SPOT_0" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
 anchor_left = 0.9

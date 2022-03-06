@@ -202,6 +202,7 @@ func makeBet(amount, chipName):
 		mini.setTexture(chipName)
 		var pos = getPlayerPosition()
 		pos.addMiniChip(mini)
+		pos.addBetValue(amount)
 		
 	# TODO toast for failure reason
 

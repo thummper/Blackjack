@@ -8,7 +8,9 @@ onready var c1 = $CARD1
 onready var c2 = $CARD2
 var cards = []
 
-
+var betValue = 0
+onready var uiBetValue = get_node("BettingInfo/VBoxContainer/BetAmount")
+onready var miniContainer = get_node("BettingInfo/BetDisplay")
 
 
 
@@ -24,6 +26,14 @@ func _ready():
 		$ValueControl.anchor_bottom = 0.5
 		$ValueControl.anchor_left = 1.2
 		$BettingInfo.visible = false
+
+func _process(delta):
+	if(betValue == 0):
+		uiBetValue.visible = false
+		miniContainer.visible = false
+	else:
+		uiBetValue.visible = true
+		miniContainer.visible = true
 
 
 func addCard(card):
@@ -41,11 +51,17 @@ func showCard(card):
 		
 
 
-onready var miniContainer = get_node("BettingInfo/BetDisplay")
+
 func addMiniChip(mini):
 	# Pass off to bet display as sizing logic is in there 
 	miniContainer.addMini(mini)
 
+
+
+
+func addBetValue(amount):
+	betValue += amount
+	uiBetValue.text = "£" + String(betValue)
 	
 
 
