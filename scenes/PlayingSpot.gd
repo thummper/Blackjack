@@ -41,10 +41,11 @@ func showCard(card):
 		
 
 
-onready var miniContainer = get_node("BettingInfo/HBoxContainer")
+onready var miniContainer = get_node("BettingInfo/BetDisplay")
 func addMiniChip(mini):
-	
-	miniContainer.add_child(mini)
+	# Pass off to bet display as sizing logic is in there 
+	miniContainer.addMini(mini)
+
 	
 
 
