@@ -20,11 +20,12 @@ signal double
 signal split
 signal surrender
 signal confirm_bet
+var buttons 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var buttons = [
+	buttons = [
 		hitButton,
 		standButton,
 		doubleButton, 
@@ -44,6 +45,14 @@ func actionButtonPressed(button):
 	var action = button.text.to_lower()
 	print("Action: ", action)
 	emit_signal(action)
+	
+func enableButtons():
+	for button in buttons:
+		button.disabled = false
+	
+func disableButtons():
+	for button in buttons:
+		button.disabled = true
 
 	
 

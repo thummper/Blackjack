@@ -14,14 +14,23 @@ var aiPlayers = []
 var currentGame = null
 # We can only start playing once all bets have been placed
 var betsMade = false
-onready var trayButton   = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
-onready var uiAnimations = get_node("UI Layer/UI ANIMATIONS")
-onready var moneyLabel   = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")
-onready var miniChip     = preload("res://scenes/SmallChip.tscn")
+onready var actionButtons = get_node("UI Layer/UIWRAPPER/TempActionUI")
+onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
+onready var uiAnimations  = get_node("UI Layer/UI ANIMATIONS")
+onready var moneyLabel    = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")
+onready var miniChip      = preload("res://scenes/SmallChip.tscn")
+onready var cardSpawn     = get_node("UI Layer/UIWRAPPER/CardSpawnPoint")
+onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/DealActions")
 
 
 
-
+onready var gameControls = {
+	"chipTrayControl": trayButton, 
+	"cardSpawn": cardSpawn,
+	"actionButtons": actionButtons,
+	"uiAnimation": uiAnimations,
+	"dealActions": gameDealActions
+}
 
 
 
@@ -67,7 +76,7 @@ func _ready():
 	# 2 - Generate the game deck
 	gameDeck.generateDeck(2)
 	# 3 - Pass all information to the blackjack handler
-	currentGame = blackjackGame.new(gameDeck, humanPlayer, aiPlayers, dealer)
+	currentGame = blackjackGame.new(gameDeck, humanPlayer, aiPlayers, dealer, gameControls)
 
 
 
@@ -198,7 +207,7 @@ func changePlayerMoney(amount):
 func makeBet(amount, chipName):
 	# TODO - all of this logic should be moved to the game class 
 	# If we are currently allowed to make bets, subtract the money and add info to board
-	if(!betsMade && !playing && currentGame.humanPlayer.money >= amount):
+	if(currentGame.gamestate == 0 && currentGame.humanPlayer.money >= amount):
 		# We can and are making a bet
 		currentGame.humanPlayerBet(amount)
 		changePlayerMoney(-amount)

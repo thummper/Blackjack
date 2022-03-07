@@ -9,10 +9,13 @@ var dealerHand  = []
 var dealerValue = []
 var dealerWinnings = 0
 var dealerStand    = 17
+var bettingEnabled = true
+
 
 var dealer
 var humanPlayer
 var ais
+var gameControls
 
 
 
@@ -21,13 +24,19 @@ GAMESTATES:
 	0 - GAME NOT STARTED
 	1 - ALL BETS HAVE BEEN MADE
 """
-var gamestate = 0
+var gamestate = null
 
-func _init(deck, humanPlyer, aiPlyers, dealerPlyer):
+func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	assignDeck(deck)
 	dealer = dealerPlyer
 	ais    = aiPlyers
 	humanPlayer = humanPlyer
+	gameControls = controls
+	
+	print(gameControls)
+	
+	# Init 0 gamestate
+	changeGameState(0)
 
 	
 	
@@ -75,18 +84,27 @@ func checkBetting():
 			finishedBetting = false
 	if(finishedBetting):
 		print("All players have finished betting, should disable betting")
-		gamestate = 1
-	else: 
-		gamestate = 0
+		changeGameState(1)
+
 		
 
 func changeGameState(newstate):
 	gamestate = newstate
 	match newstate:
 		0:
+			# Enable betting
+			# Technically this already happens, we check game state in main
+			# We could toggle the UI
+			gameControls.dealActions.enableButtons()
+			gameControls.actionButtons.disableButtons()
+			# Disable action buttons
 			print("Game ended / not playing")
 			print("Enable betting / clear bets")
 		1:
+			gameControls.dealActions.disableButtons()
+			gameControls.actionButtons.enableButtons()
+			# Disable betting
+			# Enable action buttons
 			print("Pending game start, disable betting / clear bets")
 
 
