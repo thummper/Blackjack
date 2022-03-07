@@ -38,19 +38,32 @@ func _process(delta):
 
 
 func addCard(card):
+	print("ADDING: ", card)
 	if cards.size() < 2:
 		cards.push_back(card)
 		showCard(card)
 		
+		
+func getCardSlot():
+	if(c1.get_child_count() == 0):
+		return c1
+	else:
+		return c2
+		
 func showCard(card):
+	print("CARD: ")
+	card.printTextures()
+	print("Adding card as child")
 	if (c1.get_child_count() == 0):
 		c1.add_child(card)
+		card.showCard()
 	elif (c2.get_child_count() == 0):
 		c2.add_child(card)
 	else: 
 		push_error("Failed to show card in c1 or c2, they both had more than 0 children")
 		
-
+	print(c2.get_children())
+	print(c1.get_children())
 
 
 func addMiniChip(mini):

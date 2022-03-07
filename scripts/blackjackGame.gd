@@ -182,12 +182,18 @@ func changePlayerMoney(amount):
 func dealCard(position, faceUp):
 	# Get card
 	var card = gameDeck.getCard()
+
 	# Add card to card spawn?
 	gameControls.cardSpawn.addCard(card)
+	# Get position card will go to 
+	
+	var spot = position.getCardSlot()
+	gameControls.cardSpawn.moveCard(position, spot)
+	
 	if(faceUp):
 		# By default dealt cards are face down
 		card.showCard()
-	position.addCard(card)
+
 	
 	
 

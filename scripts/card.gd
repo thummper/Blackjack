@@ -24,7 +24,7 @@ func _ready():
 	$cardFront.texture = front
 	$cardBack.texture  = back
 	$cardFront.scale =  Vector2(spriteScale, spriteScale)
-	$cardBack	.scale =  Vector2(spriteScale, spriteScale)
+	$cardBack.scale =  Vector2(spriteScale, spriteScale)
 
 
 func showCard():
@@ -36,6 +36,10 @@ func hideCard():
 	$cardFront.visible = false
 	$cardBack.visible  = true
 	flipped = false
+	
+func printTextures():
+	print($cardFront.texture)
+	print($cardBack.texture)
 
 
 func flip():
