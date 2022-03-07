@@ -291,14 +291,14 @@ anchor_left = -0.25
 anchor_right = -0.25
 anchor_bottom = 0.98
 
-[node name="Button" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
+[node name="DealButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
 margin_right = 70.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Deal"
 
-[node name="Button2" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
+[node name="ClearBetButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
 margin_top = 36.0
 margin_right = 70.0
 margin_bottom = 68.0
@@ -355,6 +355,8 @@ anims/trayClose = SubResource( 3 )
 [connection signal="stand" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_stand"]
 [connection signal="surrender" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_surrender"]
 [connection signal="chipButtonPressed" from="UI Layer/UIWRAPPER/BottomUI" to="." method="chipButtonPressed"]
+[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/DealButton" to="." method="dealButton_pressed"]
+[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/ClearBetButton" to="." method="clearBetButton_pressed"]
 [connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ChipVAlign/ChipHAlign" to="." method="makeBet"]
 [connection signal="mouse_entered" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton" to="." method="trayButtonMouseEnter"]
 [connection signal="mouse_exited" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton" to="." method="trayButtonMouseExit"]

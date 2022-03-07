@@ -9,17 +9,27 @@ var dealerHand  = []
 var dealerValue = []
 var dealerWinnings = 0
 var dealerStand    = 17
+
+var dealer
+var humanPlayer
+var ais
+
+
+
 """ 
 GAMESTATES:
 	0 - GAME NOT STARTED
+	1 - ALL BETS HAVE BEEN MADE
 """
 var gamestate = 0
 
-func _init(deck, positionInfo, dealerPos, timer):
-	positions = positionInfo
-	dealerPosition = dealerPos
-	delayTimer = timer
+func _init(deck, humanPlyer, aiPlyers, dealerPlyer):
 	assignDeck(deck)
+	dealer = dealerPlyer
+	ais    = aiPlyers
+	humanPlayer = humanPlyer
+
+	
 	
 
 func assignDeck(deck):
@@ -55,9 +65,37 @@ func dealToDealer(faceup):
 	dealCard(dealerPosition, faceup)
 
 
+func checkBetting():
+	# Loop through players and check if bets have all been made
+	var finishedBetting = true
+	if(humanPlayer.madeBet != true):
+		finishedBetting = false
+	for ai in ais:
+		if(ai.madeBet != true):
+			finishedBetting = false
+	if(finishedBetting):
+		print("All players have finished betting, should disable betting")
+		gamestate = 1
+	else: 
+		gamestate = 0
+		
+
+func changeGameState(newstate):
+	gamestate = newstate
+	match newstate:
+		0:
+			print("Game ended / not playing")
+			print("Enable betting / clear bets")
+		1:
+			print("Pending game start, disable betting / clear bets")
 
 
+func humanPlayerBet(amount):
+	humanPlayer.bet(amount)
 
+
+func changePlayerMoney(amount):
+	humanPlayer.money += amount
 
 
 func dealToPlayers():
