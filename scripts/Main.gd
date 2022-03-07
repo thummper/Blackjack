@@ -93,8 +93,9 @@ func _process(delta):
 	if(currentGame.gamestate == 0):
 		currentGame.checkBetting()
 	elif(currentGame.gamestate == 1):
+		currentGame.startTable()
 		#print("Blackjack game could start")
-		pass
+
 
 # Loop through all active players, check if bets have been made
 #func checkBetting():

@@ -2,6 +2,7 @@ extends Control
 
 export var outlineColor: Color
 export var dealer = false
+export var order  = 0
 
 
 onready var c1 = $CARD1

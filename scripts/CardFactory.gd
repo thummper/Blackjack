@@ -60,7 +60,6 @@ func generateDeck():
 				backTexture = load(backDir + "/" + "01.png")
 				textureStore['backtext'] = backTexture
 				
-			print("creating: ", textureKey)
 			
 			# Instance the card, pass textures and store 
 			var tempCard = cardScene.instance()

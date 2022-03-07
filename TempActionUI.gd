@@ -12,14 +12,13 @@ onready var standButton     = get_node("TempButtonVAlign/StandButton")
 onready var doubleButton    = get_node("TempButtonVAlign/DoubleButton")
 onready var splitButton     = get_node("TempButtonVAlign/SplitButton")
 onready var surrenderButton = get_node("TempButtonVAlign/SurrenderButton")
-onready var confirmBetButton = get_node("TempButtonVAlign/ConfirmBetButton")
 
 signal hit
 signal stand
 signal double
 signal split
 signal surrender
-signal confirm_bet
+
 var buttons 
 
 
@@ -31,7 +30,7 @@ func _ready():
 		doubleButton, 
 		splitButton,
 		surrenderButton,
-		confirmBetButton
+
 	];
 	
 	for button in buttons:

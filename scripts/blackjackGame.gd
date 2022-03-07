@@ -18,24 +18,45 @@ var ais
 var gameControls
 
 
+var dealingOrder = {
+	0: null,
+	1: null,
+	2: null,
+	3: null, 
+	4: null
+}
+
+
 
 """ 
 GAMESTATES:
 	0 - GAME NOT STARTED
 	1 - ALL BETS HAVE BEEN MADE
+	2 - GAME IS RUNNING
 """
 var gamestate = null
 
 func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	assignDeck(deck)
-	dealer = dealerPlyer
-	ais    = aiPlyers
-	humanPlayer = humanPlyer
+	dealer       = dealerPlyer
+	ais          = aiPlyers
+	humanPlayer  = humanPlyer
 	gameControls = controls
+
 	
-	print(gameControls)
 	
-	# Init 0 gamestate
+	""" 
+	Not sure if good?
+	Players are associated with positions, not the other way around
+	When dealing, ideally we loop through positions in order and get the player
+	So might be better to have this the other way around?
+	"""
+	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
+	for ai in ais:
+		dealingOrder[ai.playingPosition.order] = ai
+	print(dealingOrder)
+	
+	# Init 0 game state to make sure UI elements are toggled
 	changeGameState(0)
 
 	
@@ -46,6 +67,40 @@ func assignDeck(deck):
 	# Not sure if leave this in, some games burn card on game start?
 	gameDeck.burn(1)
 	
+
+
+
+	
+	
+# Starts a round of blackjack
+func startTable():
+	# Change game state
+	changeGameState(2)
+	# Deal 1 to players
+	dealToPlayers()
+	
+	
+func dealToPlayers():
+	# Loop through playing order and deal to them
+	for key in dealingOrder:
+		var player = dealingOrder[key]
+		if(player != null):
+			# Deal to this player's position
+			var position = player.playingPosition
+			dealCard(position, true)
+		
+	
+	
+#	# Loop through positions in order
+#	for pos in positions:
+#		# If there is a player
+#		if pos.player != "none":
+#			# Deal a card to the position
+#			print("Dealing to player in position: ", pos.position, " player is: ", pos.player)
+#			dealCard(pos.position, true)
+#			delayTimer.start(2)
+#			yield(delayTimer, "timeout")
+#
 	
 	
 func startGame():
@@ -116,22 +171,19 @@ func changePlayerMoney(amount):
 	humanPlayer.money += amount
 
 
-func dealToPlayers():
-	# Loop through positions in order
-	for pos in positions:
-		# If there is a player
-		if pos.player != "none":
-			# Deal a card to the position
-			print("Dealing to player in position: ", pos.position, " player is: ", pos.player)
-			dealCard(pos.position, true)
-			delayTimer.start(2)
-			yield(delayTimer, "timeout")
+
 
 			
 			
-			
+
+
+# Deal card is always called when dealing
+# We need to spawn the card and then play animation?
 func dealCard(position, faceUp):
+	# Get card
 	var card = gameDeck.getCard()
+	# Add card to card spawn?
+	gameControls.cardSpawn.addCard(card)
 	if(faceUp):
 		# By default dealt cards are face down
 		card.showCard()
