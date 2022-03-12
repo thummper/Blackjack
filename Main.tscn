@@ -171,11 +171,10 @@ anchor_bottom = 1.0
 
 [node name="CardSpawnPoint" type="Control" parent="UI Layer/UIWRAPPER"]
 anchor_left = 0.5
+anchor_top = -0.2
 anchor_right = 0.5
-margin_bottom = 40.0
+anchor_bottom = -0.2
 script = ExtResource( 6 )
-
-[node name="cardTween" type="Tween" parent="UI Layer/UIWRAPPER/CardSpawnPoint"]
 
 [node name="TempActionUI" type="Control" parent="UI Layer/UIWRAPPER"]
 margin_right = 200.0
@@ -298,9 +297,10 @@ anims/RESET = SubResource( 2 )
 anims/cardAnim = SubResource( 3 )
 anims/trayClose = ExtResource( 7 )
 
+[node name="CardTween" type="Tween" parent="."]
+
 [connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="tween_completed" from="UI Layer/UIWRAPPER/CardSpawnPoint/cardTween" to="UI Layer/UIWRAPPER/CardSpawnPoint" method="cardMoveFinished"]
 [connection signal="double" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_double"]
 [connection signal="hit" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_hit"]
 [connection signal="split" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_split"]

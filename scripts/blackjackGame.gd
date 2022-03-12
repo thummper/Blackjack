@@ -78,6 +78,14 @@ func startTable():
 	changeGameState(2)
 	# Deal 1 to players
 	dealToPlayers()
+	# Deal 1 down card to dealer
+	dealToDealer(false)
+	# Deal 2nd up card to players
+	yield(gameControls.cardTween, "tween_completed")
+	dealToPlayers()
+	yield(gameControls.cardTween, "tween_all_completed")
+	# Deal 2nd card (up) to dealer
+	dealToDealer(true)
 	
 	
 func dealToPlayers():
@@ -126,7 +134,7 @@ func startGame():
 	
 	
 func dealToDealer(faceup):
-	dealCard(dealerPosition, faceup)
+	dealCard(dealer.playingPosition, faceup)
 
 
 func checkBetting():
@@ -183,12 +191,34 @@ func dealCard(position, faceUp):
 	# Get card
 	var card = gameDeck.getCard()
 
-	# Add card to card spawn?
-	gameControls.cardSpawn.addCard(card)
-	# Get position card will go to 
-	
+
+
+	# Get spot the card will go into
 	var spot = position.getCardSlot()
-	gameControls.cardSpawn.moveCard(position, spot)
+	
+	
+	# Get start and end points of the Tween
+	var startLocation = gameControls.cardSpawn.rect_global_position
+	var endLocation   = spot.rect_global_position
+	
+	card.visible = false
+	spot.add_child(card)
+	card.global_position = startLocation
+	card.visible = true
+	
+	
+	# Make Tween work 
+	var cardTween: Tween = gameControls.cardTween
+	cardTween.interpolate_property(card, "global_position", startLocation, endLocation, 0.6, Tween.EASE_OUT)
+	cardTween.start()
+	yield(cardTween, "tween_completed")
+	# TODO: POSITION HAND VALUE HERE (IF CARDS VISIBLE)
+	position.calculateValue()
+	
+
+	
+	
+
 	
 	if(faceUp):
 		# By default dealt cards are face down

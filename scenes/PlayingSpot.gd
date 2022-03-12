@@ -77,6 +77,9 @@ func addBetValue(amount):
 	betValue += amount
 	uiBetValue.text = "£" + String(betValue)
 	
+	
+func calculateValue():
+	print("Should calc value")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
