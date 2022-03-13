@@ -186,31 +186,26 @@ func changePlayerMoney(amount):
 func dealCard(position, faceUp):
 	# Get card
 	var card = gameDeck.getCard()
+	# By default cards are face down, if face up make sure it is added to board flipped
 	if(faceUp):
-		# By default dealt cards are face down
 		card.showCard()
-
-
-
-	# Get spot the card will go into
-	var spot = position.getCardSlot()
 	
+	card.visible = false
+	var spot = position.addCard(card)
 	# Get start and end points of the Tween
 	var startLocation = gameControls.cardSpawn.rect_global_position
 	var endLocation   = spot.rect_global_position
-	
-	card.visible = false
-	spot.add_child(card)
+	# Set start location of card
 	card.global_position = startLocation
 	card.visible = true
 	
 	
-	# Make Tween work 
+	# Tween card to final position
 	var cardTween: Tween = gameControls.cardTween
 	cardTween.interpolate_property(card, "global_position", startLocation, endLocation, 0.6, Tween.EASE_OUT)
 	cardTween.start()
-	yield(cardTween, "tween_completed")
-	# TODO: POSITION HAND VALUE HERE (IF CARDS VISIBLE)
+	yield(cardTween, "tween_all_completed")
+	# Once card has been added to hand, calculate the hand value
 	position.calculateValue()
 	
 
