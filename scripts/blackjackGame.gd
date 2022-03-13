@@ -32,7 +32,8 @@ var dealingOrder = {
 GAMESTATES:
 	0 - GAME NOT STARTED
 	1 - ALL BETS HAVE BEEN MADE
-	2 - GAME IS RUNNING
+	2 - DEALING
+	3 - FINISHED DEALING 
 """
 var gamestate = null
 
@@ -55,7 +56,6 @@ func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	for ai in ais:
 		dealingOrder[ai.playingPosition.order] = ai
 	print(dealingOrder)
-	
 	# Init 0 game state to make sure UI elements are toggled
 	changeGameState(0)
 
@@ -74,18 +74,21 @@ func assignDeck(deck):
 	
 # Starts a round of blackjack
 func startTable():
-	# Change game state
+	# Change to dealing state
 	changeGameState(2)
-	# Deal 1 to players
+	# Deal 1 face up to all players
 	dealToPlayers()
-	# Deal 1 down card to dealer
+	# Deal 1 face down to dealer 
 	dealToDealer(false)
-	# Deal 2nd up card to players
 	yield(gameControls.cardTween, "tween_completed")
+	# Deal 1 face up to all players 
 	dealToPlayers()
-	yield(gameControls.cardTween, "tween_all_completed")
-	# Deal 2nd card (up) to dealer
+	yield(gameControls.cardTween, "tween_completed")
+	# Deal 1 face up card to dealer
 	dealToDealer(true)
+	yield(gameControls.cardTween, "tween_completed")
+	# Dealing over, change to end dealing state
+	changeGameState(3)
 	
 	
 func dealToPlayers():
@@ -165,10 +168,12 @@ func changeGameState(newstate):
 			print("Enable betting / clear bets")
 		1:
 			gameControls.dealActions.disableButtons()
+			print("Betting phase is finished (by player), dealer will deal")
+		2:
+			print("Dealer is dealing")
+		3:
+			print("Dealing over")
 			gameControls.actionButtons.enableButtons()
-			# Disable betting
-			# Enable action buttons
-			print("Pending game start, disable betting / clear bets")
 
 
 func humanPlayerBet(amount):

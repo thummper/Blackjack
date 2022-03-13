@@ -46,10 +46,12 @@ func actionButtonPressed(button):
 	emit_signal(action)
 	
 func enableButtons():
+	print("Enable action buttons")
 	for button in buttons:
 		button.disabled = false
 	
 func disableButtons():
+	print("Disable action buttons")
 	for button in buttons:
 		button.disabled = true
 
