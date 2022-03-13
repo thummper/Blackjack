@@ -16,7 +16,7 @@ var dealer
 var humanPlayer
 var ais
 var gameControls
-
+var gamestate = null
 
 var dealingOrder = {
 	0: null,
@@ -35,7 +35,29 @@ GAMESTATES:
 	2 - DEALING
 	3 - FINISHED DEALING 
 """
-var gamestate = null
+func changeGameState(newstate):
+	gamestate = newstate
+	match newstate:
+		0:
+			# Enable betting
+			# Technically this already happens, we check game state in main
+			# We could toggle the UI
+			gameControls.dealActions.enableButtons()
+			gameControls.actionButtons.disableButtons()
+			# Disable action buttons
+			print("Game ended / not playing")
+			print("Enable betting / clear bets")
+		1:
+			gameControls.dealActions.disableButtons()
+			print("Betting phase is finished (by player), dealer will deal")
+		2:
+			print("Dealer is dealing")
+		3:
+			print("Dealing over")
+			gameControls.actionButtons.enableButtons()
+
+
+
 
 func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	assignDeck(deck)
@@ -43,9 +65,6 @@ func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	ais          = aiPlyers
 	humanPlayer  = humanPlyer
 	gameControls = controls
-
-	
-	
 	""" 
 	Not sure if good?
 	Players are associated with positions, not the other way around
@@ -61,7 +80,6 @@ func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 
 	
 	
-
 func assignDeck(deck):
 	gameDeck = deck
 	# Not sure if leave this in, some games burn card on game start?
@@ -69,9 +87,6 @@ func assignDeck(deck):
 	
 
 
-
-	
-	
 # Starts a round of blackjack
 func startTable():
 	# Change to dealing state
@@ -154,26 +169,7 @@ func checkBetting():
 
 		
 
-func changeGameState(newstate):
-	gamestate = newstate
-	match newstate:
-		0:
-			# Enable betting
-			# Technically this already happens, we check game state in main
-			# We could toggle the UI
-			gameControls.dealActions.enableButtons()
-			gameControls.actionButtons.disableButtons()
-			# Disable action buttons
-			print("Game ended / not playing")
-			print("Enable betting / clear bets")
-		1:
-			gameControls.dealActions.disableButtons()
-			print("Betting phase is finished (by player), dealer will deal")
-		2:
-			print("Dealer is dealing")
-		3:
-			print("Dealing over")
-			gameControls.actionButtons.enableButtons()
+
 
 
 func humanPlayerBet(amount):
@@ -185,22 +181,19 @@ func changePlayerMoney(amount):
 
 
 
-
-			
-			
-
-
 # Deal card is always called when dealing
 # We need to spawn the card and then play animation?
 func dealCard(position, faceUp):
 	# Get card
 	var card = gameDeck.getCard()
+	if(faceUp):
+		# By default dealt cards are face down
+		card.showCard()
 
 
 
 	# Get spot the card will go into
 	var spot = position.getCardSlot()
-	
 	
 	# Get start and end points of the Tween
 	var startLocation = gameControls.cardSpawn.rect_global_position
@@ -221,13 +214,8 @@ func dealCard(position, faceUp):
 	position.calculateValue()
 	
 
-	
-	
 
-	
-	if(faceUp):
-		# By default dealt cards are face down
-		card.showCard()
+
 
 	
 	

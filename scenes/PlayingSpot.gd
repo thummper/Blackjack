@@ -9,10 +9,12 @@ onready var c1 = $CARD1
 onready var c2 = $CARD2
 var cards = []
 
-var betValue = 0
+var betValue  = 0
+var handValue = 0
+
 onready var uiBetValue = get_node("BettingInfo/VBoxContainer/BetAmount")
 onready var miniContainer = get_node("BettingInfo/BetDisplay")
-
+onready var valueContainer = get_node("ValueControl")
 
 
 # Declare member variables here. Examples:
@@ -29,6 +31,13 @@ func _ready():
 		$BettingInfo.visible = false
 
 func _process(delta):
+	if(handValue == 0):
+		valueContainer.visible = false
+	else:
+		valueContainer.visible = true
+		
+	
+	
 	if(betValue == 0):
 		uiBetValue.visible = false
 		miniContainer.visible = false
