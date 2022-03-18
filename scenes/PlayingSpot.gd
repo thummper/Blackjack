@@ -55,6 +55,9 @@ func addCard(card):
 		cards.push_back(card)
 		spot = getCardSlot()
 		spot.add_child(card)
+		
+		card.connect("cardFlipped", self, "calculateValue")
+		
 	else:
 		push_error("Card spot is overflowing")
 	return spot

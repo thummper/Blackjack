@@ -1,5 +1,7 @@
 extends Node2D
 
+signal cardFlipped
+
 var front
 var back
 var suit
@@ -30,7 +32,12 @@ func _ready():
 func showCard():
 	$cardFront.visible = true
 	$cardBack.visible = false
+	if flipped == false:
+		# This func called when card is unflipped
+		emit_signal("cardFlipped", softVal, hardVal)
+
 	flipped = true
+	
 
 func hideCard():
 	$cardFront.visible = false

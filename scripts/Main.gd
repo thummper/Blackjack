@@ -21,7 +21,7 @@ onready var moneyLabel    = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMo
 onready var miniChip      = preload("res://scenes/SmallChip.tscn")
 onready var cardSpawn     = get_node("UI Layer/UIWRAPPER/CardSpawnPoint")
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/DealActions")
-onready var cardTween = get_node("CardTween")
+onready var cardTween     = get_node("CardTween")
 
 
 onready var gameControls = {
