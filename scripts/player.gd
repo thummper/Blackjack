@@ -1,4 +1,5 @@
 var madeBet = false
+var handResolved = false 
 
 var money
 var ai
@@ -10,6 +11,8 @@ var blackjacks  = 0
 var handsSurrendered = 0
 var playingPosition  = null
 var currentBet  = 0
+
+
 
 
 func _init(startingMoney, isAI = false):

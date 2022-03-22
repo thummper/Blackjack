@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Outline.gd" type="Script" id=1]
 [ext_resource path="res://scenes/PlayingSpot.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/ChipCenter.gd" type="Script" id=7]
 [ext_resource path="res://scenes/VBoxContainer.gd" type="Script" id=8]
 [ext_resource path="res://misc/minichipTheme.tres" type="Theme" id=9]
+[ext_resource path="res://scripts/TurnIndicator.gd" type="Script" id=10]
 
 [node name="PlayingSpot" type="Control" groups=["pSpot"]]
 margin_left = -100.0
@@ -32,6 +33,12 @@ script = ExtResource( 1 )
 color = Color( 0.0470588, 0.14902, 0.0980392, 0.392157 )
 radius = 110
 width = 10
+
+[node name="TurnIndicator" type="Node2D" parent="CENTER"]
+script = ExtResource( 10 )
+color = Color( 0.733333, 0.698039, 0.164706, 0.258824 )
+radius = 116
+width = 3
 
 [node name="CARD1" type="Control" parent="."]
 anchor_left = 0.4
@@ -125,3 +132,9 @@ margin_bottom = 15.0
 theme = ExtResource( 9 )
 alignment = 1
 script = ExtResource( 6 )
+
+[node name="CardPivot" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
