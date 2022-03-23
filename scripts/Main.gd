@@ -30,7 +30,8 @@ onready var gameControls = {
 	"actionButtons": actionButtons,
 	"uiAnimation": uiAnimations,
 	"dealActions": gameDealActions,
-	"cardTween": cardTween
+	"cardTween": cardTween,
+	"moneyLabel": moneyLabel
 }
 
 
@@ -204,7 +205,7 @@ func player_surrender():
 # Handle money changes here so the UI updates
 func changePlayerMoney(amount):
 	currentGame.changePlayerMoney(amount)
-	moneyLabel.text = "£" + String(currentGame.humanPlayer.money)
+	
 
 
 

@@ -158,38 +158,43 @@ func resolveDealer():
 
 	print("Final dealer value: ", dealerValue)
 	changeGameState(7)
-	
+
 # Check dealer and all player hands, resolve outcomes
 func resolveGame():
 	var dealerBust  = false
 	var dealerValue = dealer.playingPosition.handValue
-	
+
 	if dealerValue > 21:
 		dealerBust = true
-	
-	
+
+
 	for pos in dealingOrder.keys():
-		
+
 		var playerBust = false
 		var player     = dealingOrder[pos]
-		
+
 		if player != null:
-			var playerValue = player.playingPosition.handValue 
+			var playerValue = player.playingPosition.handValue
 			if playerValue > 21:
 				playerBust = true
-				
+
 			if dealerBust && playerBust:
 				print("Player loses money")
+				player.gameResolved(0)
 			if dealerBust && !playerBust:
 				print("Player wins, dealer bust")
+				player.gameResolved(1)
 			if !dealerBust && !playerBust:
 				if dealerValue > playerValue:
 					print("Dealer beat player, no bust")
+					player.gameResolved(0)
 				if dealerValue < playerValue:
 					print("Player beat dealer, no bust")
+					player.gameResolved(1)
 				else:
 					print("Player and dealer tie")
-
+					player.gameResolved(2)
+			updateMoneyLabel()
 
 
 
@@ -255,6 +260,10 @@ func humanPlayerBet(amount):
 
 func changePlayerMoney(amount):
 	humanPlayer.money += amount
+	updateMoneyLabel()
+
+func updateMoneyLabel():
+	gameControls.moneyLabel.text = "£" + String(humanPlayer.money)
 
 
 # Deal card is always called when dealing

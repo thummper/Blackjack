@@ -31,7 +31,8 @@ func endBetting():
 		print("Player tried to end betting phase without making a bet")
 
 func handOver():
-	madeBet = false
+	madeBet    = false
+	currentBet = 0
 
 
 func assignPosition(position):
@@ -39,4 +40,23 @@ func assignPosition(position):
 
 func revealAllCards():
 	playingPosition.revealAllCards()
+
+
+"""
+_res
+0 - lose
+1 - win
+2 - push
+"""
+func gameResolved(_res):
+	if _res == 0:
+		handOver()
+	elif _res == 1:
+		money += currentBet * 1.5
+		handOver()
+	elif _res == 2:
+		money += currentBet
+		handOver()
+
+
 
