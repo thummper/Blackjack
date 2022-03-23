@@ -161,7 +161,35 @@ func resolveDealer():
 	
 # Check dealer and all player hands, resolve outcomes
 func resolveGame():
-	pass
+	var dealerBust  = false
+	var dealerValue = dealer.playingPosition.handValue
+	
+	if dealerValue > 21:
+		dealerBust = true
+	
+	
+	for pos in dealingOrder.keys():
+		
+		var playerBust = false
+		var player     = dealingOrder[pos]
+		
+		if player != null:
+			var playerValue = player.playingPosition.handValue 
+			if playerValue > 21:
+				playerBust = true
+				
+			if dealerBust && playerBust:
+				print("Player loses money")
+			if dealerBust && !playerBust:
+				print("Player wins, dealer bust")
+			if !dealerBust && !playerBust:
+				if dealerValue > playerValue:
+					print("Dealer beat player, no bust")
+				if dealerValue < playerValue:
+					print("Player beat dealer, no bust")
+				else:
+					print("Player and dealer tie")
+
 
 
 
