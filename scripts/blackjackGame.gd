@@ -67,6 +67,9 @@ func changeGameState(newstate):
 		6:
 			print(" All hands have been resolved")
 			resolveDealer()
+		7:
+			print("Dealer has been resolved")
+			resolveGame()
 
 
 
@@ -128,8 +131,8 @@ func playTable():
 			# Toggle turn information
 			activePlayer = player
 			player.playingPosition.showTurnIndicator()
-			
-			
+
+
 			changeGameState(4)
 			# Return so loop does not complete
 			return null
@@ -146,19 +149,24 @@ func resolveDealer():
 	# Reveal all cards in dealers hand
 	dealer.revealAllCards()
 	dealer.playingPosition.showTurnIndicator()
-	
+
 
 	while dealer.playingPosition.handValue <= 17:
 		dealToDealer(true)
 		yield(dealer.playingPosition.cardTween, "tween_all_completed")
 		dealer.playingPosition.calculateValue()
-		
+
 	print("Final dealer value: ", dealerValue)
-
-		
+	changeGameState(7)
 	
+# Check dealer and all player hands, resolve outcomes
+func resolveGame():
+	pass
 
-	
+
+
+
+
 
 
 
@@ -177,7 +185,7 @@ func dealToPlayers():
 			var position = player.playingPosition
 			position.setCardTween(gameControls.cardTween)
 			dealCard(position, true)
-		
+
 
 
 
@@ -243,6 +251,19 @@ func playerStand():
 		activePlayer.handResolved = true
 		# Return to playTable loop
 		playTable()
+
+
+func playerHit():
+	if gamestate == 4:
+		# Deal to player
+		dealCard(activePlayer.playingPosition, true)
+		activePlayer.playingPosition.calculateValue()
+		# If player has bust end turn
+		if activePlayer.playingPosition.handValue > 21:
+			print("Player has bust")
+			activePlayer.handResolved = true
+		playTable()
+
 
 
 

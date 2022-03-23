@@ -8,7 +8,7 @@ var playerScript  = preload("res://scripts/player.gd")
 var blackjackGame = preload("res://scripts/blackjackGame.gd")
 var activeCards   = []
 var chipTrayVisible = true
-var playing = false 
+var playing = false
 var humanPlayer = null
 var aiPlayers = []
 var currentGame = null
@@ -25,7 +25,7 @@ onready var cardTween     = get_node("CardTween")
 
 
 onready var gameControls = {
-	"chipTrayControl": trayButton, 
+	"chipTrayControl": trayButton,
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
 	"uiAnimation": uiAnimations,
@@ -43,7 +43,7 @@ onready var playerPositions = [
 	get_node("ControlWrapper/PlayerPositions/SPOT_1"),
 	get_node("ControlWrapper/PlayerPositions/SPOT_2"),
 	get_node("ControlWrapper/PlayerPositions/SPOT_3"),
-	get_node("ControlWrapper/PlayerPositions/SPOT_4")	
+	get_node("ControlWrapper/PlayerPositions/SPOT_4")
 ];
 onready var dealerPosition = get_node("ControlWrapper/DealerPos/DealerSpot")
 
@@ -69,11 +69,11 @@ func _ready():
 	# Assign the human player to their chosen spot
 	humanPlayer.assignPosition(playerPositions[0])
 	# TODO - GENERATE X AI PLAYERS AND ASSIGN THEM POSITIONS
-	
+
 	# 1.5 - Generate dealer
 	var dealer = playerScript.new(0, false)
 	dealer.assignPosition(dealerPosition)
-	
+
 	# 2 - Generate the game deck
 	gameDeck.generateDeck(2)
 	# 3 - Pass all information to the blackjack handler
@@ -114,16 +114,16 @@ func _process(delta):
 #	if(betsMade && !playing):
 #		blackjackGame.startGame()
 #		playing = true
-	
 
-		
-		
+
+
+
 
 
 
 func showChipTray():
 	pass
-	
+
 func hideChipTray():
 	pass
 
@@ -173,6 +173,7 @@ func trayButton_pressed():
 
 
 func player_hit():
+	currentGame.playerHit()
 	pass # Replace with function body.
 
 
@@ -204,31 +205,31 @@ func player_surrender():
 func changePlayerMoney(amount):
 	currentGame.changePlayerMoney(amount)
 	moneyLabel.text = "£" + String(currentGame.humanPlayer.money)
-	
+
 
 
 
 func makeBet(amount, chipName):
-	# TODO - all of this logic should be moved to the game class 
+	# TODO - all of this logic should be moved to the game class
 	# If we are currently allowed to make bets, subtract the money and add info to board
 	if(currentGame.gamestate == 0 && currentGame.humanPlayer.money >= amount):
 		# We can and are making a bet
 		currentGame.humanPlayerBet(amount)
 		changePlayerMoney(-amount)
-		
+
 		var mini = miniChip.instance()
 		mini.setTexture(chipName)
-		
+
 		var pos = getPlayerPosition()
 		pos.addMiniChip(mini)
 		pos.addBetValue(amount)
-		
+
 	# TODO toast for failure reason
 
 
 
 func dealButton_pressed():
-	# This means human player has finished betting 
+	# This means human player has finished betting
 	currentGame.humanPlayer.endBetting()
 	pass # Replace with function body.
 
