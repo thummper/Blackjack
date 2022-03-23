@@ -1,5 +1,5 @@
 var madeBet = false
-var handResolved = false 
+var handResolved = false
 
 var money
 var ai
@@ -18,10 +18,10 @@ var currentBet  = 0
 func _init(startingMoney, isAI = false):
 	ai    = isAI
 	money = startingMoney
-	
-	
+
+
 func bet(amount):
-	currentBet += amount	
+	currentBet += amount
 
 func endBetting():
 	if(currentBet > 0):
@@ -29,11 +29,14 @@ func endBetting():
 		madeBet = true
 	else:
 		print("Player tried to end betting phase without making a bet")
-	
+
 func handOver():
 	madeBet = false
-	
-	
+
+
 func assignPosition(position):
 	playingPosition = position
-	
+
+func revealAllCards():
+	playingPosition.revealAllCards()
+

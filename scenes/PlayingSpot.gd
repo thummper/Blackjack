@@ -26,15 +26,19 @@ onready var cardPivot      = get_node("CardPivot")
 # var a = 2
 # var b = "text"
 
-func toggleTurnIndicator():
-	print("TURN IND")
-	turnIndicator.drawIndicator = !turnIndicator.drawIndicator
+
+func showTurnIndicator():
+	turnIndicator.drawIndicator = true
 	turnIndicator.update()
+	
+func hideTurnIndicator():
+	turnIndicator.drawIndicator = false
+	turnIndicator.update()
+
+
 
 func setCardTween(_cardTween):
 	cardTween = _cardTween
-
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -50,8 +54,6 @@ func _process(delta):
 	else:
 		valueContainer.visible = true
 
-
-
 	if(betValue == 0):
 		uiBetValue.visible = false
 		miniContainer.visible = false
@@ -65,16 +67,14 @@ func updateCardPositions(newCard):
 	for n in cardPivot.get_children():
 		cardPivot.remove_child(n)
 
-	var spacing = 50
-	var vertShrink = 0.0005
+	var spacing = 40
+	var vertShrink = 0.003
 	var start = Vector2(-(spacing / 2) - (spacing * ((float(cards.size()) / 2) - 1)), 0)
-
 
 	var i = 0
 	for _card in cards:
 		var x = start.x + (spacing * i)
 		var y = vertShrink * pow(x, 2)
-
 		# We need to tween the card from start position to current position
 		cardPivot.add_child(_card)
 		if _card == newCard:
@@ -85,13 +85,8 @@ func updateCardPositions(newCard):
 			cardTween.start()
 		else:
 			print("Tween from: ", _card.position, " to: ", Vector2(x, y))
-			cardTween.interpolate_property(_card, "position", _card.position, Vector2(x, y), 0.3, Tween.EASE_IN)
+			cardTween.interpolate_property(_card, "position", _card.position, Vector2(x, y), 0.3, Tween.EASE_OUT)
 			cardTween.start()
-
-
-
-
-
 		i += 1
 
 	var constRot = 7
@@ -101,44 +96,8 @@ func updateCardPositions(newCard):
 	for _card in cards:
 		cardTween.interpolate_property(_card, "rotation_degrees", _card.rotation_degrees, (startRot + constRot * i), 0.25)
 		cardTween.start()
-
-
 		i += 1
 
-
-
-#func updateCardPosition():
-#	for n in cardPivot.get_children():
-#		cardPivot.remove_child(n)
-#
-#	print("NUM CARDS: ", cards.size())
-#	var spacing = 80
-#	var vertShrink = 0.05
-#
-#	var pivotLocation = cardPivot.get_global_rect().position
-#	print("PIVOT: ", pivotLocation)
-#
-#	var startPos = Vector2( - (spacing / 2) - (spacing * ((float(cards.size()) / 2) - 1)), 0)
-#
-#
-#	var i = 0
-#
-#	for _card in cards:
-#		var x = startPos.x + (spacing * i)
-#		var y = vertShrink * pow(x, 2)
-#
-#		_card.position = Vector2(startPos.x, y)
-#		cardPivot.add_child(_card)
-#
-#		i += 1
-#
-#	var cardconst = 7
-#	var card_rot = -(cardconst / 2) - (cardconst * ((float(cards.size()) / 2) - 1))
-#	i = 0
-#	for _card in cards:
-#		_card.rotation_degrees = card_rot + (cardconst * i)
-#		print("ROTATION: ", _card.rotation_degrees)
-#		i += 1
 
 
 
@@ -152,32 +111,6 @@ func addCard(card):
 
 
 
-# Add card to playing spot, return the specific spot it was placed in
-# func addCard(card):
-# 	print("Adding card to spot")
-# 	var spot = null
-# 	if cards.size() < 2:
-# 		cards.push_back(card)
-# 		spot = getCardSlot()
-# 		spot.add_child(card)
-
-# 		card.connect("cardFlipped", self, "calculateValue")
-
-# 	else:
-# 		push_error("Card spot is overflowing")
-# 	return spot
-
-
-
-
-func getCardSlot():
-	if(c1.get_child_count() == 0):
-		return c1
-	elif(c2.get_child_count() == 0):
-		return c2
-	else:
-		push_error("No empty card slots")
-		return null
 
 
 
@@ -202,12 +135,24 @@ func calculateValue():
 		if card.flipped:
 			hVal += card.hardVal
 			sVal += card.softVal
+			
 	handValue = hVal
+	if hVal > 21:
+		handValue = sVal
+	
 	print("Setting value: ", hVal)
 	if hVal == sVal:
 		valueLabel.text = String(hVal)
 	else:
 		valueLabel.text = String(hVal) + " " + " (" + String(sVal) + ")"
+
+
+func revealAllCards():
+	for _card in cards:
+		if !_card.flipped:
+			_card.showCard()
+	calculateValue()
+
 
 
 

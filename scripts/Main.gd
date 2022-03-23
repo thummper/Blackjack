@@ -185,7 +185,9 @@ func player_split():
 
 
 func player_stand():
-	pass # Replace with function body.
+	print("Caught stand in main")
+	currentGame.playerStand()
+
 
 
 func player_surrender():
