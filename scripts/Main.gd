@@ -22,16 +22,19 @@ onready var miniChip      = preload("res://scenes/SmallChip.tscn")
 onready var cardSpawn     = get_node("UI Layer/UIWRAPPER/CardSpawnPoint")
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/DealActions")
 onready var cardTween     = get_node("CardTween")
+onready var delayTimer    = get_node("DelayTimer")
 
 
 onready var gameControls = {
 	"chipTrayControl": trayButton,
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
-	"uiAnimation": uiAnimations,
+	"uiAnimations": uiAnimations,
 	"dealActions": gameDealActions,
 	"cardTween": cardTween,
-	"moneyLabel": moneyLabel
+	"moneyLabel": moneyLabel,
+	"delayTimer": delayTimer,
+	"trayButton": trayButton,
 }
 
 
@@ -88,7 +91,12 @@ func getPlayerPosition():
 	if(currentGame != null):
 		return currentGame.humanPlayer.playingPosition
 
-
+func trayButton_pressed():
+	if currentGame != null:
+		if currentGame.chipTrayVisible:
+			currentGame.hideTray()
+		else:
+			currentGame.showTray()
 
 func _process(delta):
 	# If we are not currently playing
@@ -122,19 +130,10 @@ func _process(delta):
 
 
 
-func showChipTray():
-	pass
-
-func hideChipTray():
-	pass
 
 
 
-func _on_Timer_timeout():
-	for card in activeCards:
-		card.flip()
 
-	pass # Replace with function body.
 
 
 
@@ -143,34 +142,14 @@ func _on_Timer_timeout():
 func trayButtonMouseEnter():
 	trayButton.setLight()
 
-
-
-
 func trayButtonMouseExit():
 	trayButton.setDark()
 
 
 
 
-func showTray():
-	if chipTrayVisible != true:
-		uiAnimations.play_backwards("trayClose")
-		trayButton.flip_v = false
-		chipTrayVisible = true
 
-func hideTray():
-	if chipTrayVisible:
-		uiAnimations.play("trayClose")
-		trayButton.flip_v = true
-		chipTrayVisible = false
 
-func trayButton_pressed():
-	if chipTrayVisible:
-		hideTray()
-	else:
-		showTray()
-
-	pass
 
 
 func player_hit():
@@ -205,7 +184,7 @@ func player_surrender():
 # Handle money changes here so the UI updates
 func changePlayerMoney(amount):
 	currentGame.changePlayerMoney(amount)
-	
+
 
 
 

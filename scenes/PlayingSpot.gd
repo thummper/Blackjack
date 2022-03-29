@@ -21,7 +21,8 @@ onready var valueContainer = get_node("ValueControl")
 onready var valueLabel     = get_node("ValueControl/HandValue")
 onready var turnIndicator  = get_node("CENTER/TurnIndicator")
 onready var cardPivot      = get_node("CardPivot")
-
+onready var handFeedback = get_node("feedbackWrapper/handFeedback")
+onready var spotAnimations = get_node("PositionPlayer")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -42,10 +43,11 @@ func setCardTween(_cardTween):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	handFeedback.visible = false
 	if(dealer):
 		$ValueControl.anchor_top = 0.5
 		$ValueControl.anchor_bottom = 0.5
-		$ValueControl.anchor_left = 1.2
+		$ValueControl.anchor_left = 1.23
 		$BettingInfo.visible = false
 
 func _process(delta):
@@ -160,6 +162,24 @@ func clearPosition():
 	handValue = 0
 	cards     = []
 	miniContainer.clear()
+	
+	handFeedback.visible = true
+	handFeedback.setLabel(0)
+	
+	spotAnimations.play("feedbackIn")
+	yield(spotAnimations, "animation_finished")
+
+
+
+
+	# Tween all cards to 0 position
+	for _card in cardPivot.get_children():
+		cardTween.interpolate_property(_card, "position", _card.position, Vector2(0, 0), 0.6)
+		cardTween.interpolate_property(_card, "rotation_degrees", _card.rotation_degrees, 0, 0.6)
+		cardTween.start()
+
+	yield(cardTween, "tween_all_completed")
+
 
 	for _card in cardPivot.get_children():
 		_card.queue_free()

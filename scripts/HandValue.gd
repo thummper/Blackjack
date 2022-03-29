@@ -1,4 +1,4 @@
-extends Control
+extends Label
 
 
 # Declare member variables here. Examples:
@@ -14,13 +14,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-
-
-func _draw():
-	var bg        = GameVars.outlineColor
-	var style_box = GameVars.getUIStyleBox(bg, [5, 0, 5, 0], 2)
-
-	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))
-#	draw_rect(Rect2(Vector2(0, 0), rect_size), get_owner().outlineColor, true)
-	
-	

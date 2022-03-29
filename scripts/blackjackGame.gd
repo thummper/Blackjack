@@ -19,6 +19,7 @@ var humanPlayer
 var ais
 var gameControls
 var gamestate = null
+var chipTrayVisible = true
 
 var dealingOrder = {
 	0: null,
@@ -46,6 +47,7 @@ func changeGameState(newstate):
 			# Enable betting
 			# Technically this already happens, we check game state in main
 			# We could toggle the UI
+			showTray()
 			gameControls.dealActions.enableButtons()
 			gameControls.actionButtons.disableButtons()
 			# Disable action buttons
@@ -54,6 +56,7 @@ func changeGameState(newstate):
 		1:
 			gameControls.dealActions.disableButtons()
 			print("Betting phase is finished (by player), dealer will deal")
+			hideTray()
 		2:
 			print("Dealer is dealing")
 		3:
@@ -148,6 +151,7 @@ func playTable():
 func resolveDealer():
 	# Reveal all cards in dealers hand
 	dealer.revealAllCards()
+	activePlayer = dealer
 	dealer.playingPosition.showTurnIndicator()
 
 
@@ -194,12 +198,18 @@ func resolveGame():
 
 	# Dealer has no player vars to resolve, we only need to reset the hands at this point
 	# This is separate to gameResolved in case i need to slide animations in here
+	activePlayer.playingPosition.hideTurnIndicator()
+	# Before we call clear position, ideally we need some UI animation to play depending on the result for the player
+	gameControls.delayTimer.start(1.0)
+	yield(gameControls.delayTimer, "timeout")
+
 	for pos in dealingOrder.keys():
 		var player = dealingOrder[pos]
 		if player != null:
 			player.clearHand()
 	# Clear dealer hand also
 	dealer.clearHand()
+
 	changeGameState(0)
 
 
@@ -209,6 +219,19 @@ func resolveGame():
 
 
 
+
+
+func showTray():
+	if chipTrayVisible != true:
+		gameControls.uiAnimations.play_backwards("trayClose")
+		gameControls.trayButton.flip_v = false
+		chipTrayVisible = true
+
+func hideTray():
+	if chipTrayVisible:
+		gameControls.uiAnimations.play("trayClose")
+		gameControls.trayButton.flip_v = true
+		chipTrayVisible = false
 
 
 

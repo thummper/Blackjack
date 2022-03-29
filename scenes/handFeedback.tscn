@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=1]
+[ext_resource path="res://scripts/handFeedback.gd" type="Script" id=2]
+
+[node name="Panel" type="PanelContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -27.5
+margin_right = 27.5
+margin_bottom = 44.0
+rect_clip_content = true
+script = ExtResource( 2 )
+green = Color( 0.478431, 0, 0.0235294, 0.784314 )
+
+[node name="CenterLabel" type="CenterContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 48.0
+margin_bottom = 37.0
+
+[node name="Label" type="Label" parent="CenterLabel"]
+margin_right = 41.0
+margin_bottom = 30.0
+theme = ExtResource( 1 )
+text = "Win"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Outline.gd" type="Script" id=1]
 [ext_resource path="res://scenes/PlayingSpot.gd" type="Script" id=2]
@@ -10,6 +10,98 @@
 [ext_resource path="res://scenes/VBoxContainer.gd" type="Script" id=8]
 [ext_resource path="res://misc/minichipTheme.tres" type="Theme" id=9]
 [ext_resource path="res://scripts/TurnIndicator.gd" type="Script" id=10]
+[ext_resource path="res://scenes/handFeedback.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("feedbackWrapper/handFeedback:anchor_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("feedbackWrapper/handFeedback:anchor_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("feedbackWrapper/handFeedback:anchor_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("feedbackWrapper/handFeedback:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "feedbackIn"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("feedbackWrapper/handFeedback:anchor_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("feedbackWrapper/handFeedback:anchor_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("feedbackWrapper/handFeedback:anchor_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
 
 [node name="PlayingSpot" type="Control" groups=["pSpot"]]
 margin_left = -100.0
@@ -56,20 +148,23 @@ anchor_right = 0.65
 anchor_bottom = 0.5
 rect_rotation = 8.0
 
-[node name="ValueControl" type="Control" parent="."]
+[node name="ValueControl" type="HBoxContainer" parent="."]
 anchor_left = 0.5
-anchor_top = -0.2
+anchor_top = -0.23
 anchor_right = 0.5
-anchor_bottom = -0.2
+anchor_bottom = -0.23
 margin_left = -17.4
 margin_top = -17.6
 margin_right = 17.6
 margin_bottom = 17.4
+alignment = 1
 script = ExtResource( 4 )
 
 [node name="HandValue" type="Label" parent="ValueControl"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = 2.0
+margin_right = 28.0
+margin_bottom = 32.0
 theme = ExtResource( 3 )
 text = "21"
 align = 1
@@ -138,3 +233,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+
+[node name="feedbackWrapper" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = -0.25
+anchor_right = 0.5
+anchor_bottom = -0.25
+margin_left = -45.0
+margin_top = -20.0
+margin_right = 45.0
+margin_bottom = 22.4
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="handFeedback" parent="feedbackWrapper" instance=ExtResource( 11 )]
+anchor_left = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.0
+margin_right = 55.0
+margin_bottom = 0.0
+rect_clip_content = true
+green = Color( 0.0470588, 0.14902, 0.0980392, 0.54902 )
+
+[node name="PositionPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/feedbackIn = SubResource( 2 )

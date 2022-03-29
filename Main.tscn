@@ -80,6 +80,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("UIWRAPPER/BottomUI/DealActions:anchor_top")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("UIWRAPPER/BottomUI/DealActions:anchor_bottom")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.98 ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "cardAnim"
@@ -299,7 +323,6 @@ anims/trayClose = ExtResource( 7 )
 
 [node name="CardTween" type="Tween" parent="."]
 
-[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="double" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_double"]
 [connection signal="hit" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_hit"]
