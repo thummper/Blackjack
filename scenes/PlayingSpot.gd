@@ -30,7 +30,7 @@ onready var cardPivot      = get_node("CardPivot")
 func showTurnIndicator():
 	turnIndicator.drawIndicator = true
 	turnIndicator.update()
-	
+
 func hideTurnIndicator():
 	turnIndicator.drawIndicator = false
 	turnIndicator.update()
@@ -135,11 +135,11 @@ func calculateValue():
 		if card.flipped:
 			hVal += card.hardVal
 			sVal += card.softVal
-			
+
 	handValue = hVal
 	if hVal > 21:
 		handValue = sVal
-	
+
 	print("Setting value: ", hVal)
 	if hVal == sVal:
 		valueLabel.text = String(hVal)
@@ -152,6 +152,18 @@ func revealAllCards():
 		if !_card.flipped:
 			_card.showCard()
 	calculateValue()
+
+
+# Reset position essentially, remove cards, reset value
+func clearPosition():
+	betValue  = 0
+	handValue = 0
+	cards     = []
+	miniContainer.clear()
+
+	for _card in cardPivot.get_children():
+		_card.queue_free()
+
 
 
 

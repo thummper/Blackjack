@@ -6,7 +6,7 @@ var positions
 var dealerPosition
 var delayTimer
 var dealerHand  = []
-var dealerValue = []
+
 var dealerWinnings = 0
 var dealerStand    = 17
 var bettingEnabled = true
@@ -156,20 +156,16 @@ func resolveDealer():
 		yield(dealer.playingPosition.cardTween, "tween_all_completed")
 		dealer.playingPosition.calculateValue()
 
-	print("Final dealer value: ", dealerValue)
+
 	changeGameState(7)
 
 # Check dealer and all player hands, resolve outcomes
 func resolveGame():
 	var dealerBust  = false
 	var dealerValue = dealer.playingPosition.handValue
-
 	if dealerValue > 21:
 		dealerBust = true
-
-
 	for pos in dealingOrder.keys():
-
 		var playerBust = false
 		var player     = dealingOrder[pos]
 
@@ -181,14 +177,14 @@ func resolveGame():
 			if dealerBust && playerBust:
 				print("Player loses money")
 				player.gameResolved(0)
-			if dealerBust && !playerBust:
+			elif dealerBust && !playerBust:
 				print("Player wins, dealer bust")
 				player.gameResolved(1)
-			if !dealerBust && !playerBust:
+			elif !dealerBust && !playerBust:
 				if dealerValue > playerValue:
 					print("Dealer beat player, no bust")
 					player.gameResolved(0)
-				if dealerValue < playerValue:
+				elif dealerValue < playerValue:
 					print("Player beat dealer, no bust")
 					player.gameResolved(1)
 				else:
@@ -196,6 +192,15 @@ func resolveGame():
 					player.gameResolved(2)
 			updateMoneyLabel()
 
+	# Dealer has no player vars to resolve, we only need to reset the hands at this point
+	# This is separate to gameResolved in case i need to slide animations in here
+	for pos in dealingOrder.keys():
+		var player = dealingOrder[pos]
+		if player != null:
+			player.clearHand()
+	# Clear dealer hand also
+	dealer.clearHand()
+	changeGameState(0)
 
 
 
