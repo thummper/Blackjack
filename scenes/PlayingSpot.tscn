@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Outline.gd" type="Script" id=1]
-[ext_resource path="res://scenes/PlayingSpot.gd" type="Script" id=2]
+[ext_resource path="res://scripts/playingSpotOutline.gd" type="Script" id=1]
+[ext_resource path="res://scripts/PlayingSpot.gd" type="Script" id=2]
 [ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=3]
-[ext_resource path="res://scenes/Control.gd" type="Script" id=4]
-[ext_resource path="res://scenes/ChipCenter.gd" type="Script" id=7]
-[ext_resource path="res://scenes/VBoxContainer.gd" type="Script" id=8]
+[ext_resource path="res://scripts/controlStyleBox.gd" type="Script" id=4]
+[ext_resource path="res://scripts/ChipCenter.gd" type="Script" id=5]
 [ext_resource path="res://misc/minichipTheme.tres" type="Theme" id=9]
 [ext_resource path="res://scripts/TurnIndicator.gd" type="Script" id=10]
 [ext_resource path="res://scenes/handFeedback.tscn" type="PackedScene" id=11]
@@ -208,14 +207,14 @@ margin_right = 25.0
 margin_bottom = 15.0
 grow_horizontal = 2
 alignment = 1
-script = ExtResource( 7 )
+script = ExtResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BettingInfo/BetDisplay"]
 margin_right = 50.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 50, 30 )
 alignment = 1
-script = ExtResource( 8 )
+script = ExtResource( 4 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BettingInfo/BetDisplay/VBoxContainer"]
 margin_top = 15.0
@@ -231,6 +230,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 
 [node name="feedbackWrapper" type="Control" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = -0.25
 anchor_right = 0.5

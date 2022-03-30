@@ -1,31 +1,28 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
 [ext_resource path="res://sprites/casinotexture.jpg" type="Texture" id=4]
 [ext_resource path="res://scripts/DealActions.gd" type="Script" id=5]
-[ext_resource path="res://scripts/CardSpawnPoint.gd" type="Script" id=6]
 [ext_resource path="res://misc/animations/trayClose.tres" type="Animation" id=7]
 [ext_resource path="res://sprites/ui/white_down.png" type="Texture" id=25]
-[ext_resource path="res://ChipVAlign.gd" type="Script" id=28]
-[ext_resource path="res://TextureButton.gd" type="Script" id=29]
-[ext_resource path="res://ButtonVAlign.gd" type="Script" id=30]
+[ext_resource path="res://scripts/controlLargeStyleBox.gd" type="Script" id=28]
+[ext_resource path="res://scripts/trayButton.gd" type="Script" id=29]
 [ext_resource path="res://misc/tempActionButtons.tres" type="ButtonGroup" id=31]
-[ext_resource path="res://TempActionUI.gd" type="Script" id=32]
-[ext_resource path="res://scripts/bottomUI.gd" type="Script" id=33]
-[ext_resource path="res://ChipHAlign.gd" type="Script" id=34]
-[ext_resource path="res://MoneyContainer.gd" type="Script" id=35]
+[ext_resource path="res://scripts/TempActionUI.gd" type="Script" id=32]
+[ext_resource path="res://scripts/genChipButtons.gd" type="Script" id=34]
+[ext_resource path="res://scripts/MoneyContainer.gd" type="Script" id=35]
 [ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=36]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("UIWRAPPER/BottomUI/BottomHBOX/ChipVAlign:anchor_top")
+tracks/0/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign:anchor_top")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -33,11 +30,11 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("UIWRAPPER/BottomUI/BottomHBOX/ChipVAlign:anchor_bottom")
+tracks/1/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign:anchor_bottom")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -45,11 +42,11 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign:alignment")
+tracks/2/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:alignment")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -57,11 +54,11 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign:anchor_top")
+tracks/3/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:anchor_top")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
-tracks/3/enabled = true
+tracks/3/enabled = false
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -69,7 +66,7 @@ tracks/3/keys = {
 "values": [ 0.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign:anchor_bottom")
+tracks/4/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:anchor_bottom")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -99,6 +96,30 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.98 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("UIWRAPPER/BottomUI:anchor_top")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.98 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("UIWRAPPER/BottomUI:anchor_bottom")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -184,9 +205,6 @@ margin_left = -99.84
 margin_right = 100.16
 order = 4
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
 [node name="UIWRAPPER" type="Control" parent="UI Layer"]
@@ -198,7 +216,6 @@ anchor_left = 0.5
 anchor_top = -0.2
 anchor_right = 0.5
 anchor_bottom = -0.2
-script = ExtResource( 6 )
 
 [node name="TempActionUI" type="Control" parent="UI Layer/UIWRAPPER"]
 margin_right = 200.0
@@ -246,14 +263,12 @@ text = "Surrender"
 
 [node name="BottomUI" type="Control" parent="UI Layer/UIWRAPPER"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.98
 anchor_right = 0.5
-anchor_bottom = 1.0
+anchor_bottom = 0.98
 margin_left = -199.68
 margin_top = -69.84
 margin_right = 200.32
-margin_bottom = 0.159996
-script = ExtResource( 33 )
 
 [node name="DealActions" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI"]
 anchor_left = -0.25
@@ -276,28 +291,34 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Clear Bet"
 
-[node name="BottomHBOX" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI"]
+[node name="ChipButtonContainer" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI"]
+anchor_bottom = 0.5
 custom_constants/separation = 20
 
-[node name="ChipVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/BottomHBOX"]
-margin_bottom = 25.0
+[node name="ChipVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer"]
+margin_bottom = 34.0
 size_flags_horizontal = 0
+custom_constants/separation = 100
+alignment = 1
 script = ExtResource( 28 )
 
-[node name="ChipHAlign" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ChipVAlign"]
+[node name="ChipHAlign" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign"]
+margin_top = 17.0
+margin_bottom = 17.0
 custom_constants/separation = 15
+alignment = 1
 script = ExtResource( 34 )
 
-[node name="trayButtonVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/BottomHBOX"]
+[node name="trayButtonVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer"]
 margin_left = 20.0
 margin_right = 45.0
-margin_bottom = 25.0
+margin_bottom = 34.0
 alignment = 1
-script = ExtResource( 30 )
 
-[node name="trayButton" type="TextureButton" parent="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign"]
+[node name="trayButton" type="TextureButton" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign"]
+margin_top = 4.0
 margin_right = 25.0
-margin_bottom = 25.0
+margin_bottom = 29.0
 texture_normal = ExtResource( 25 )
 script = ExtResource( 29 )
 
@@ -323,16 +344,14 @@ anims/trayClose = ExtResource( 7 )
 
 [node name="CardTween" type="Tween" parent="."]
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="double" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_double"]
 [connection signal="hit" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_hit"]
 [connection signal="split" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_split"]
 [connection signal="stand" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_stand"]
 [connection signal="surrender" from="UI Layer/UIWRAPPER/TempActionUI" to="." method="player_surrender"]
-[connection signal="chipButtonPressed" from="UI Layer/UIWRAPPER/BottomUI" to="." method="chipButtonPressed"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/DealButton" to="." method="dealButton_pressed"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/ClearBetButton" to="." method="clearBetButton_pressed"]
-[connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/ChipVAlign/ChipHAlign" to="." method="makeBet"]
-[connection signal="mouse_entered" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton" to="." method="trayButtonMouseEnter"]
-[connection signal="mouse_exited" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton" to="." method="trayButtonMouseExit"]
-[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton" to="." method="trayButton_pressed"]
+[connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign/ChipHAlign" to="." method="makeBet"]
+[connection signal="mouse_entered" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButtonMouseEnter"]
+[connection signal="mouse_exited" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButtonMouseExit"]
+[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButton_pressed"]

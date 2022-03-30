@@ -3,7 +3,7 @@ extends Node
 export var oc: Color
 var cardFactory   = preload("res://scripts/CardFactory.gd").new()
 var gameDeck      = preload("res://scripts/GameDeck.gd").new(cardFactory)
-var debugPoint    = preload("res://scenes/Point.tscn")
+
 var playerScript  = preload("res://scripts/player.gd")
 var blackjackGame = preload("res://scripts/blackjackGame.gd")
 var activeCards   = []
@@ -15,7 +15,7 @@ var currentGame = null
 # We can only start playing once all bets have been placed
 var betsMade = false
 onready var actionButtons = get_node("UI Layer/UIWRAPPER/TempActionUI")
-onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/BottomHBOX/trayButtonVAlign/trayButton")
+onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton")
 onready var uiAnimations  = get_node("UI Layer/UI ANIMATIONS")
 onready var moneyLabel    = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")
 onready var miniChip      = preload("res://scenes/SmallChip.tscn")
@@ -30,6 +30,7 @@ onready var gameControls = {
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
 	"uiAnimations": uiAnimations,
+
 	"dealActions": gameDealActions,
 	"cardTween": cardTween,
 	"moneyLabel": moneyLabel,
