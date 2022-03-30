@@ -1,11 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Outline.gd" type="Script" id=1]
 [ext_resource path="res://scenes/PlayingSpot.gd" type="Script" id=2]
 [ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=3]
 [ext_resource path="res://scenes/Control.gd" type="Script" id=4]
-[ext_resource path="res://scenes/BettingInfo.gd" type="Script" id=5]
-[ext_resource path="res://scenes/HBoxContainer.gd" type="Script" id=6]
 [ext_resource path="res://scenes/ChipCenter.gd" type="Script" id=7]
 [ext_resource path="res://scenes/VBoxContainer.gd" type="Script" id=8]
 [ext_resource path="res://misc/minichipTheme.tres" type="Theme" id=9]
@@ -179,7 +177,6 @@ margin_left = -100.0
 margin_top = -15.0
 margin_right = 100.0
 margin_bottom = 85.0
-script = ExtResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BettingInfo"]
 anchor_left = 0.5
@@ -226,7 +223,6 @@ margin_right = 50.0
 margin_bottom = 15.0
 theme = ExtResource( 9 )
 alignment = 1
-script = ExtResource( 6 )
 
 [node name="CardPivot" type="Control" parent="."]
 anchor_left = 0.5
@@ -253,7 +249,6 @@ anchor_bottom = 1.0
 margin_left = 0.0
 margin_right = 55.0
 margin_bottom = 0.0
-rect_clip_content = true
 green = Color( 0.0470588, 0.14902, 0.0980392, 0.54902 )
 
 [node name="PositionPlayer" type="AnimationPlayer" parent="."]
