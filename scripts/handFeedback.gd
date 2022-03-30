@@ -1,8 +1,9 @@
-extends PanelContainer
+tool
+extends Control
 
 
 onready var label = get_node("CenterLabel/Label")
-
+onready var feedbackPlayer = get_node("FeedbackPlayer")
 var style = StyleBoxFlat.new()
 
 var feedbackInfo = [
@@ -25,5 +26,11 @@ func setLabel(_feedback):
 	style.set_bg_color(colour)
 	add_stylebox_override("panel", style)
 	update()
+	
+func playTextFade():
+	feedbackPlayer.play("fadeText")
+	
+func _draw():
+	draw_style_box(style, Rect2(Vector2(0,0), rect_size))
 
 

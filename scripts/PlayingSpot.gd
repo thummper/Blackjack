@@ -163,10 +163,13 @@ func clearPosition():
 	cards     = []
 	miniContainer.clear()
 	
-	handFeedback.visible = true
-	handFeedback.setLabel(0)
 	
+	if !dealer:
+		handFeedback.visible = true
+		handFeedback.setLabel(0)
+
 	spotAnimations.play("feedbackIn")
+	handFeedback.playTextFade()
 	yield(spotAnimations, "animation_finished")
 
 
