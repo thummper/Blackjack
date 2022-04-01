@@ -5,33 +5,21 @@
 
 [sub_resource type="Animation" id=1]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("CenterLabel/Label:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
 
 [sub_resource type="Animation" id=2]
 resource_name = "fadeText"
 length = 0.4
 tracks/0/type = "value"
-tracks/0/path = NodePath("CenterLabel/Label:visible")
+tracks/0/path = NodePath("CenterLabel/Label:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ false, false, true ]
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="Panel" type="Control"]
@@ -39,7 +27,9 @@ anchor_left = 0.5
 anchor_right = 0.5
 rect_clip_content = true
 script = ExtResource( 2 )
-green = Color( 0.478431, 0, 0.0235294, 0.784314 )
+winCol = Color( 0.0470588, 0.14902, 0.0980392, 0.784314 )
+loseCol = Color( 0.478431, 0, 0.0235294, 0.784314 )
+pushCol = Color( 0.439216, 0.423529, 0.219608, 0.54902 )
 
 [node name="CenterLabel" type="CenterContainer" parent="."]
 anchor_left = 0.5
@@ -52,7 +42,6 @@ margin_right = 20.5
 margin_bottom = 15.0
 
 [node name="Label" type="Label" parent="CenterLabel"]
-visible = false
 margin_right = 41.0
 margin_bottom = 30.0
 theme = ExtResource( 1 )

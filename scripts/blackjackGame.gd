@@ -209,17 +209,7 @@ func resolveGame():
 			player.clearHand()
 	# Clear dealer hand also
 	dealer.clearHand()
-
 	changeGameState(0)
-
-
-
-
-
-
-
-
-
 
 func showTray():
 	if chipTrayVisible != true:
@@ -248,18 +238,6 @@ func dealToPlayers():
 			dealCard(position, true)
 
 
-
-
-#	# Loop through positions in order
-#	for pos in positions:
-#		# If there is a player
-#		if pos.player != "none":
-#			# Deal a card to the position
-#			print("Dealing to player in position: ", pos.position, " player is: ", pos.player)
-#			dealCard(pos.position, true)
-#			delayTimer.start(2)
-#			yield(delayTimer, "timeout")
-#
 
 
 

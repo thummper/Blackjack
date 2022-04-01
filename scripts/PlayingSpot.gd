@@ -12,6 +12,8 @@ var cards = []
 var betValue  = 0
 var handValue = 0
 
+var valueVisible = false
+
 var cardTween = null
 
 
@@ -141,6 +143,12 @@ func calculateValue():
 	handValue = hVal
 	if hVal > 21:
 		handValue = sVal
+		
+	if handValue > 0:
+		if !valueVisible:
+			spotAnimations.play_backwards("fadeValue")
+			yield(spotAnimations, "animation_finished")
+			valueVisible = true
 
 	print("Setting value: ", hVal)
 	if hVal == sVal:
@@ -159,18 +167,39 @@ func revealAllCards():
 # Reset position essentially, remove cards, reset value
 func clearPosition():
 	betValue  = 0
-	handValue = 0
+	
 	cards     = []
 	miniContainer.clear()
-	
-	
+
+
+
 	if !dealer:
+		# We should fade out the hand value indicator
+		print("Fading hand value")
+
+		# Set hand feedback if not dealer
 		handFeedback.visible = true
 		handFeedback.setLabel(0)
-
+	
+	# Feedback info comes in	
 	spotAnimations.play("feedbackIn")
 	handFeedback.playTextFade()
 	yield(spotAnimations, "animation_finished")
+	# Timeout
+	yield(get_tree().create_timer(0.5),"timeout")
+	# Hand value fades out
+	spotAnimations.play("fadeValue")
+	yield(spotAnimations, "animation_finished")		
+	handValue = 0
+	valueVisible = false
+	# Timeout
+	yield(get_tree().create_timer(0.5),"timeout")
+	# Feedback info fades out
+	handFeedback.playTextFade()
+	spotAnimations.play_backwards("feedbackIn")
+	yield(spotAnimations, "animation_finished")
+
+
 
 
 

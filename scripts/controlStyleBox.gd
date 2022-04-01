@@ -1,4 +1,7 @@
+tool
 extends Control
+
+
 
 func _draw():
 	var bg        = GameVars.outlineColor

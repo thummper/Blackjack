@@ -2,17 +2,24 @@ tool
 extends Control
 
 
+
+export var winCol: Color #c80c2619
+export var loseCol: Color #c87a0006
+export var pushCol: Color #8c706c38
+
+
 onready var label = get_node("CenterLabel/Label")
 onready var feedbackPlayer = get_node("FeedbackPlayer")
 var style = StyleBoxFlat.new()
 
-var feedbackInfo = [
-	{"label": "Win", "colour": "#c80c2619"},
-	{"label": "Lose", "colour": "#c87a0006"},
-	{"label": "Push", "colour": "#8c706c38"}
+var textFaded = true
+
+onready var feedbackInfo = [
+	{"label": "Win", "colour": winCol},
+	{"label": "Lose", "colour": loseCol},
+	{"label": "Push", "colour": pushCol}
 ]
 
-export var green: Color 
 
 
 
@@ -28,7 +35,14 @@ func setLabel(_feedback):
 	update()
 	
 func playTextFade():
-	feedbackPlayer.play("fadeText")
+	if !textFaded:
+		feedbackPlayer.play("fadeText")
+		textFaded = true
+	elif textFaded:
+		feedbackPlayer.play_backwards("fadeText")
+		textFaded = false
+		
+
 	
 func _draw():
 	draw_style_box(style, Rect2(Vector2(0,0), rect_size))
