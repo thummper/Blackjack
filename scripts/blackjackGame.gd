@@ -151,53 +151,70 @@ func playTable():
 
 # Resolve dealers hand
 func resolveDealer():
-	gameControls.eventLog.addMessage("System", "Resolving dealer hands")
-	# Reveal all cards in dealers hand
-	dealer.revealAllCards()
-	gameControls.eventLog.addMessage("System", "Revealed dealers cards, hand value is: " + String(dealer.playingPosition.handValue))
 	activePlayer = dealer
 	dealer.playingPosition.showTurnIndicator()
 
+	gameControls.eventLog.addMessage("System", "Resolving dealer hands")
+	dealer.revealAllCards()
+	gameControls.eventLog.addMessage("System", "Revealed dealers cards, hand value is: " + String(dealer.playingPosition.handValue))
+	# If dealer hand is 21 the dealer has blackjack
+	if dealer.playingPosition.hardValue == 21:
+		gameControls.eventLog.addMessage("System", "Dealer has blackjack")
 
-	while dealer.playingPosition.handValue <= 17:
+	# AHH
+	while dealer.playingPosition.hardValue <= 17:
 		dealToDealer(true)
 		yield(dealer.playingPosition.cardTween, "tween_all_completed")
 		dealer.playingPosition.calculateValue()
+		print("DEALER HARD: ", dealer.playingPosition.hardValue)
+
+
 
 
 	changeGameState(7)
 
 # Check dealer and all player hands, resolve outcomes
 func resolveGame():
+	gameControls.eventLog.addMessage("System", "Resolving game..")
 	var dealerBust  = false
-	var dealerValue = dealer.playingPosition.handValue
+	var dealerValue = dealer.playingPosition.hardValue
 	if dealerValue > 21:
 		dealerBust = true
-	for pos in dealingOrder.keys():
-		var playerBust = false
-		var player     = dealingOrder[pos]
 
+	for pos in dealingOrder.keys():
+		var player = dealingOrder[pos]
 		if player != null:
-			var playerValue = player.playingPosition.handValue
-			if playerValue > 21:
+			var playerBust = false
+			var playerPos  = player.playingPosition
+
+			var playerHard = playerPos.hardValue
+			var playerSoft = playerPos.softValue
+
+			if playerHard > 21 and playerSoft > 21:
 				playerBust = true
 
-			if dealerBust && playerBust:
-				print("Player loses money")
+			if dealerBust and playerBust:
 				player.gameResolved(0)
-			elif dealerBust && !playerBust:
-				print("Player wins, dealer bust")
+				gameControls.eventLog.addMessage("System", "Both players bust")
+			elif !dealerBust and playerBust:
+				player.gameResolved(0)
+				gameControls.eventLog.addMessage("System", "Player bust but dealer did not")
+			elif dealerBust and !playerBust:
 				player.gameResolved(1)
-			elif !dealerBust && !playerBust:
-				if dealerValue > playerValue:
-					print("Dealer beat player, no bust")
-					player.gameResolved(0)
-				elif dealerValue < playerValue:
-					print("Player beat dealer, no bust")
+				gameControls.eventLog.addMessage("System", "Dealer bust but player did not")
+			elif !dealerBust and !playerBust:
+				gameControls.eventLog.addMessage("System", "Neither player bust")
+				if playerHard > dealerValue or playerSoft > dealerValue:
+					gameControls.eventLog.addMessage("System", "Player hand beats dealer")
 					player.gameResolved(1)
 				else:
-					print("Player and dealer tie")
-					player.gameResolved(2)
+					if playerHard == dealerValue or playerSoft == dealerValue:
+						gameControls.eventLog.addMessage("System", "Hands are equal")
+						player.gameResolved(2)
+					else:
+						gameControls.eventLog.addMessage("System", "Dealer hand beats player")
+						player.gameResolved(0)
+
 			updateMoneyLabel()
 
 	# Dealer has no player vars to resolve, we only need to reset the hands at this point

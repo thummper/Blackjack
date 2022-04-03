@@ -134,29 +134,24 @@ func addBetValue(amount):
 
 
 func calculateValue():
-	var hVal = 0
-	var sVal = 0
+	hardValue = 0
+	softValue = 0
 
 	for card in cards:
 		if card.flipped:
-			hVal += card.hardVal
-			sVal += card.softVal
+			hardValue += card.hardVal
+			softValue += card.softVal
 
-	handValue = hVal
-	if hVal > 21:
-		handValue = sVal
-
-	if handValue > 0:
+	# If we bust on hardValue
+	if softValue != 0 | hardValue != 0:
 		if !valueVisible:
 			spotAnimations.play_backwards("fadeValue")
 			yield(spotAnimations, "animation_finished")
 			valueVisible = true
-
-	print("Setting value: ", hVal)
-	if hVal == sVal:
-		valueLabel.text = String(hVal)
+	if hardValue == softValue:
+		valueLabel.text = String(hardValue)
 	else:
-		valueLabel.text = String(hVal) + " " + " (" + String(sVal) + ")"
+		valueLabel.text = String(hardValue) + " " + " (" + String(softValue) + ")"
 
 
 func revealAllCards():
