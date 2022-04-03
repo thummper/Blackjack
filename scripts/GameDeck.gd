@@ -1,6 +1,6 @@
 
 
-var cardFactory 
+var cardFactory
 var cards = []
 var numberDecks
 var remainingCards
@@ -22,15 +22,16 @@ func generateDeck(numberofDecks):
 func shuffle():
 	if cards.size() > 0:
 		cards.shuffle()
-	
-	
+
+
 func getCard():
 	var card = cards.pop_back()
+	remainingCards = cards.size()
 	return card
-	
+
 func burn(number):
 	for i in range(number):
 		cards.pop_back()
-	
 
-	
+
+

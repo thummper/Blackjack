@@ -23,7 +23,7 @@ onready var cardSpawn     = get_node("UI Layer/UIWRAPPER/CardSpawnPoint")
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/DealActions")
 onready var cardTween     = get_node("CardTween")
 onready var delayTimer    = get_node("DelayTimer")
-
+onready var eventLog = get_node("UI Layer/UIWRAPPER/EventLog")
 
 onready var gameControls = {
 	"chipTrayControl": trayButton,
@@ -36,6 +36,7 @@ onready var gameControls = {
 	"moneyLabel": moneyLabel,
 	"delayTimer": delayTimer,
 	"trayButton": trayButton,
+	"eventLog": eventLog
 }
 
 
@@ -83,6 +84,16 @@ func _ready():
 	gameDeck.generateDeck(2)
 	# 3 - Pass all information to the blackjack handler
 	currentGame = blackjackGame.new(gameDeck, humanPlayer, aiPlayers, dealer, gameControls)
+	# 4 - Connect game action buttons to the current game
+	connectGameSignals()
+
+func connectGameSignals():
+	actionButtons.hitButton.connect("pressed", currentGame, "playerAction", [actionButtons.hitButton])
+	actionButtons.standButton.connect("pressed", currentGame, "playerAction", [actionButtons.standButton])
+	actionButtons.doubleButton.connect("pressed", currentGame, "playerAction", [actionButtons.doubleButton])
+	actionButtons.splitButton.connect("pressed", currentGame, "playerAction", [actionButtons.splitButton])
+	actionButtons.surrenderButton.connect("pressed", currentGame, "playerAction", [actionButtons.surrenderButton])
+
 
 
 
@@ -108,76 +119,11 @@ func _process(delta):
 		#print("Blackjack game could start")
 
 
-# Loop through all active players, check if bets have been made
-#func checkBetting():
-#	var allBetsMade = true
-#	for player in activePlayers:
-#		if player.madeBet == false:
-#			allBetsMade = false
-#	betsMade = allBetsMade
-
-#func _process(delta):
-#	# If not playing, check if all bets have been made
-#	if(!playing):
-#		checkBetting()
-#
-#	if(betsMade && !playing):
-#		blackjackGame.startGame()
-#		playing = true
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 func trayButtonMouseEnter():
 	trayButton.setLight()
 
 func trayButtonMouseExit():
 	trayButton.setDark()
-
-
-
-
-
-
-
-
-func player_hit():
-	currentGame.playerHit()
-	pass # Replace with function body.
-
-
-func player_double():
-	pass # Replace with function body.
-
-
-func player_split():
-	pass # Replace with function body.
-
-
-func player_stand():
-	print("Caught stand in main")
-	currentGame.playerStand()
-
-
-
-func player_surrender():
-	pass # Replace with function body.
-
-
-
-
 
 
 

@@ -4,16 +4,18 @@ export var outlineColor: Color
 export var dealer = false
 export var order  = 0
 
-
 onready var c1 = $CARD1
 onready var c2 = $CARD2
 var cards = []
 
 var betValue  = 0
+
+var hardValue = 0
+var softValue = 0
+
 var handValue = 0
 
 var valueVisible = false
-
 var cardTween = null
 
 
@@ -52,7 +54,7 @@ func _ready():
 		$ValueControl.anchor_left = 1.23
 		$BettingInfo.visible = false
 
-func _process(delta):
+func _process(_delta):
 	if(handValue == 0):
 		valueContainer.visible = false
 	else:
@@ -143,7 +145,7 @@ func calculateValue():
 	handValue = hVal
 	if hVal > 21:
 		handValue = sVal
-		
+
 	if handValue > 0:
 		if !valueVisible:
 			spotAnimations.play_backwards("fadeValue")
@@ -167,7 +169,7 @@ func revealAllCards():
 # Reset position essentially, remove cards, reset value
 func clearPosition():
 	betValue  = 0
-	
+
 	cards     = []
 	miniContainer.clear()
 
@@ -180,8 +182,8 @@ func clearPosition():
 		# Set hand feedback if not dealer
 		handFeedback.visible = true
 		handFeedback.setLabel(0)
-	
-	# Feedback info comes in	
+
+	# Feedback info comes in
 	spotAnimations.play("feedbackIn")
 	handFeedback.playTextFade()
 	yield(spotAnimations, "animation_finished")
@@ -189,7 +191,7 @@ func clearPosition():
 	yield(get_tree().create_timer(0.5),"timeout")
 	# Hand value fades out
 	spotAnimations.play("fadeValue")
-	yield(spotAnimations, "animation_finished")		
+	yield(spotAnimations, "animation_finished")
 	handValue = 0
 	valueVisible = false
 	# Timeout

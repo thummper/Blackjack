@@ -78,11 +78,11 @@ func changeGameState(newstate):
 
 
 func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
-	assignDeck(deck)
 	dealer       = dealerPlyer
 	ais          = aiPlyers
 	humanPlayer  = humanPlyer
 	gameControls = controls
+
 	"""
 	Not sure if good?
 	Players are associated with positions, not the other way around
@@ -92,7 +92,7 @@ func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
 	for ai in ais:
 		dealingOrder[ai.playingPosition.order] = ai
-	print(dealingOrder)
+	assignDeck(deck)
 	# Init 0 game state to make sure UI elements are toggled
 	changeGameState(0)
 
@@ -100,8 +100,10 @@ func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
 
 func assignDeck(deck):
 	gameDeck = deck
+	gameControls.eventLog.addMessage("System", "Deck attached with " +  String(deck.remainingCards) + " cards")
 	# Not sure if leave this in, some games burn card on game start?
 	gameDeck.burn(1)
+	gameControls.eventLog.addMessage("System", "Burnt 1 card from deck")
 
 
 
@@ -143,14 +145,16 @@ func playTable():
 			player.playingPosition.hideTurnIndicator()
 			print("Player has resolved hand")
 	# If loop finishes, all hands are resolved
-	print("Play table loop finished")
+	gameControls.eventLog.addMessage("System", "All player hands have been resolved")
 	changeGameState(6)
 
 
 # Resolve dealers hand
 func resolveDealer():
+	gameControls.eventLog.addMessage("System", "Resolving dealer hands")
 	# Reveal all cards in dealers hand
 	dealer.revealAllCards()
+	gameControls.eventLog.addMessage("System", "Revealed dealers cards, hand value is: " + String(dealer.playingPosition.handValue))
 	activePlayer = dealer
 	dealer.playingPosition.showTurnIndicator()
 
@@ -223,10 +227,6 @@ func hideTray():
 		gameControls.trayButton.flip_v = true
 		chipTrayVisible = false
 
-
-
-
-
 func dealToPlayers():
 	# Loop through playing order and deal to them
 	for key in dealingOrder:
@@ -237,16 +237,9 @@ func dealToPlayers():
 			position.setCardTween(gameControls.cardTween)
 			dealCard(position, true)
 
-
-
-
-
-
-
 func dealToDealer(faceup):
 	dealer.playingPosition.setCardTween(gameControls.cardTween)
 	dealCard(dealer.playingPosition, faceup)
-
 
 func checkBetting():
 	# Loop through players and check if bets have all been made
@@ -285,15 +278,43 @@ func dealCard(position, faceUp):
 	position.addCard(card)
 	position.calculateValue()
 
+	if humanPlayer.playingPosition == position:
+		printCardValue("player", card, position)
+	elif dealer.playingPosition == position:
+		printCardValue("dealer", card, position)
 
-func playerStand():
-	# Check we are waiting for player action
-	print(" game stand action: ", gamestate)
-	if gamestate == 4:
-		# If player presses stand button, end their turn
-		activePlayer.handResolved = true
-		# Return to playTable loop
-		playTable()
+
+func printCardValue(entitiy, card, position):
+	if card.flipped:
+		gameControls.eventLog.addMessage("System", "Dealt " + String(card.softVal) + " | " + String(card.hardVal) + " to " + entitiy)
+		gameControls.eventLog.addMessage("System", entitiy + " hand value is: " + String(position.handValue) )
+	else:
+		gameControls.eventLog.addMessage("System", "Dealt face down card to " + entitiy)
+
+
+
+
+
+# Handle actions below v
+func playerAction(button):
+	var action = button.text.to_lower()
+	print("Action handled in blackjack core: ", action)
+	match action:
+		"hit":
+			gameControls.eventLog.addMessage("System", "Player hit")
+			playerHit()
+		"stand":
+			gameControls.eventLog.addMessage("System", "Player stand")
+			playerStand()
+		"surrender":
+			gameControls.eventLog.addMessage("System", "Player surrender")
+			playerSurrender()
+		"split":
+			gameControls.eventLog.addMessage("System", "Player split")
+			playerSplit()
+		"double":
+			gameControls.eventLog.addMessage("System", "Player double")
+			playerDouble()
 
 
 func playerHit():
@@ -306,6 +327,24 @@ func playerHit():
 			print("Player has bust")
 			activePlayer.handResolved = true
 		playTable()
+
+func playerStand():
+	# Check we are waiting for player action
+	print(" game stand action: ", gamestate)
+	if gamestate == 4:
+		# If player presses stand button, end their turn
+		activePlayer.handResolved = true
+		# Return to playTable loop
+		playTable()
+
+func playerSurrender():
+	pass
+
+func playerSplit():
+	pass
+
+func playerDouble():
+	pass
 
 
 

@@ -33,17 +33,7 @@ func _ready():
 
 	];
 	
-	for button in buttons:
-		button.connect("pressed", self, "actionButtonPressed", [button])
-	
-	
 
-		
-func actionButtonPressed(button):
-	print("Pressed passed: ", button)
-	var action = button.text.to_lower()
-	print("Action: ", action)
-	emit_signal(action)
 	
 func enableButtons():
 	print("Enable action buttons")

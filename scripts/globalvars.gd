@@ -1,6 +1,7 @@
 extends Node
 
 
+var eventLogDebug = true
 
 var outlineColor = "#640c2619"
 var outlineLight = "#64133c27"
