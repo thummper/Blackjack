@@ -18,6 +18,10 @@ var handValue = 0
 var valueVisible = false
 var cardTween = null
 
+var aceInHand = false
+var aceSoft   = true
+var feedbackLabel = 0
+
 
 onready var uiBetValue     = get_node("BettingInfo/VBoxContainer/BetAmount")
 onready var miniContainer  = get_node("BettingInfo/BetDisplay")
@@ -134,24 +138,47 @@ func addBetValue(amount):
 
 
 func calculateValue():
-	hardValue = 0
-	softValue = 0
 
+	aceInHand = false
+	# Ace is soft if it is 11
+	aceSoft   = true
+
+
+	handValue = 0
 	for card in cards:
 		if card.flipped:
-			hardValue += card.hardVal
-			softValue += card.softVal
+			if String(card.type) == "A":
+				if !aceInHand:
+					aceInHand = true
+					handValue += 11
+				else:
+					# Already an ace in hand
+					handValue += 1
+			else:
+				handValue += card.hardVal
+
+			if handValue > 21 and aceInHand and aceSoft:
+				print("LOWER HAND VALUE")
+				aceSoft = false
+				handValue -= 10
+
+
 
 	# If we bust on hardValue
-	if softValue != 0 | hardValue != 0:
+
+
+	if handValue != 0:
 		if !valueVisible:
 			spotAnimations.play_backwards("fadeValue")
 			yield(spotAnimations, "animation_finished")
 			valueVisible = true
-	if hardValue == softValue:
-		valueLabel.text = String(hardValue)
+
+	if aceInHand and aceSoft:
+		valueLabel.text = String(handValue) + " " + " (" + String(handValue - 10) + ")"
 	else:
-		valueLabel.text = String(hardValue) + " " + " (" + String(softValue) + ")"
+		valueLabel.text = String(handValue)
+
+
 
 
 func revealAllCards():
@@ -159,6 +186,12 @@ func revealAllCards():
 		if !_card.flipped:
 			_card.showCard()
 	calculateValue()
+
+
+
+func setFeedback(_res):
+	feedbackLabel = _res
+
 
 
 # Reset position essentially, remove cards, reset value
@@ -173,10 +206,10 @@ func clearPosition():
 	if !dealer:
 		# We should fade out the hand value indicator
 		print("Fading hand value")
-
 		# Set hand feedback if not dealer
+		handFeedback.setLabel(feedbackLabel)
 		handFeedback.visible = true
-		handFeedback.setLabel(0)
+
 
 	# Feedback info comes in
 	spotAnimations.play("feedbackIn")

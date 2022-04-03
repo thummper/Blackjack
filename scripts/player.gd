@@ -73,5 +73,7 @@ func gameResolved(_res):
 		money += currentBet
 		handOver()
 
+	playingPosition.setFeedback(_res)
+
 
 

@@ -162,7 +162,7 @@ func resolveDealer():
 		gameControls.eventLog.addMessage("System", "Dealer has blackjack")
 
 	# AHH
-	while dealer.playingPosition.hardValue <= 17:
+	while dealer.playingPosition.handValue <= 17:
 		dealToDealer(true)
 		yield(dealer.playingPosition.cardTween, "tween_all_completed")
 		dealer.playingPosition.calculateValue()
@@ -177,7 +177,7 @@ func resolveDealer():
 func resolveGame():
 	gameControls.eventLog.addMessage("System", "Resolving game..")
 	var dealerBust  = false
-	var dealerValue = dealer.playingPosition.hardValue
+	var dealerValue = dealer.playingPosition.handValue
 	if dealerValue > 21:
 		dealerBust = true
 
@@ -187,10 +187,11 @@ func resolveGame():
 			var playerBust = false
 			var playerPos  = player.playingPosition
 
-			var playerHard = playerPos.hardValue
-			var playerSoft = playerPos.softValue
 
-			if playerHard > 21 and playerSoft > 21:
+			var playerValue = playerPos.handValue
+
+
+			if playerValue > 21:
 				playerBust = true
 
 			if dealerBust and playerBust:
@@ -204,11 +205,11 @@ func resolveGame():
 				gameControls.eventLog.addMessage("System", "Dealer bust but player did not")
 			elif !dealerBust and !playerBust:
 				gameControls.eventLog.addMessage("System", "Neither player bust")
-				if playerHard > dealerValue or playerSoft > dealerValue:
+				if playerValue > dealerValue:
 					gameControls.eventLog.addMessage("System", "Player hand beats dealer")
 					player.gameResolved(1)
 				else:
-					if playerHard == dealerValue or playerSoft == dealerValue:
+					if playerValue == dealerValue:
 						gameControls.eventLog.addMessage("System", "Hands are equal")
 						player.gameResolved(2)
 					else:
