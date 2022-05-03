@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://sprites/casinotexture.jpg" type="Texture" id=1]
+[ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=2]
+[ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=3]
+[ext_resource path="res://scripts/CardGrid.gd" type="Script" id=4]
+
+[node name="MainMenuRoot" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CardGrid" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Background" parent="." instance=ExtResource( 2 )]
+size_flags_horizontal = 5
+size_flags_vertical = 5
+texture = ExtResource( 1 )
+stretch_mode = 2
+
+[node name="MainElements" type="CanvasLayer" parent="."]
+
+[node name="MMButtonContainer" type="Control" parent="MainElements"]
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.25
+anchor_bottom = 0.75
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainElements/MMButtonContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 10
+
+[node name="Play" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 30.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 3 )
+text = "Play"
+align = 0
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Settings" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 256.0
+margin_bottom = 70.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 3 )
+text = "Settings"
+align = 0
+
+[node name="Quit" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
+margin_top = 80.0
+margin_right = 256.0
+margin_bottom = 110.0
+mouse_default_cursor_shape = 2
+theme = ExtResource( 3 )
+text = "Quit"
+align = 0
