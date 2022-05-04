@@ -6,6 +6,7 @@ var cfInstance = null
 onready var background = get_node("Background")
 onready var cardGrid = get_node("CardGrid")
 onready var camera = get_parent().get_node("Camera2D")
+onready var cameraTimer = get_parent().get_node("CameraTimer")
 
 func resetGrid():
 	# Set the background size to 2x the screen size
@@ -101,26 +102,23 @@ func pickCameraTarget():
 	
 	cameraTarget = Vector2(targetX, targetY)
 	
+	print("TARGET: ", cameraTarget)
+	
 
 
 var lastPos = null
 func _process(delta):
-	
-	var currentPos = camera.get_camera_screen_center()
-	if lastPos != null:
-		var lastDist = currentPos.distance_to(lastPos)
-		if lastDist <= 0.5:
-			pickCameraTarget()
-			cameraMoving = false
-		lastPos = currentPos
-	else:
-		lastPos = currentPos
-	
+	# Maybe we just pick on a timeout	
+#	var currentPos = camera.get_camera_screen_center()
+#	if lastPos != null:
+#		var lastDist = currentPos.distance_to(lastPos)
+#		if lastDist <= 0.5:
+#			pickCameraTarget()
+#			cameraMoving = false
+#		lastPos = currentPos
+#	else:
+#		lastPos = currentPos
 
-	
-
-	
-	
 	if cameraTarget == null:
 		pickCameraTarget()
 	if cameraTarget != null and cameraMoving == false:
@@ -146,3 +144,10 @@ func _on_MainMenuRoot_resized():
 	print("Main menu resized")
 	resetGrid()
 	pass # Replace with function body.
+
+
+func _on_CameraTimer_timeout():
+	# When timer has ran out, pick a new timer position
+	pickCameraTarget()
+	cameraMoving = false
+	cameraTimer.start(8)

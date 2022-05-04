@@ -13,13 +13,16 @@ margin_left = -3.0
 margin_right = -3.0
 script = ExtResource( 5 )
 
+[node name="CameraTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 588, 63 )
 anchor_mode = 0
 current = true
 limit_smoothed = true
 smoothing_enabled = true
-smoothing_speed = 0.1
+smoothing_speed = 0.05
 editor_draw_limits = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -87,4 +90,5 @@ text = "Quit"
 align = 0
 
 [connection signal="resized" from="." to="CanvasLayer" method="_on_MainMenuRoot_resized"]
+[connection signal="timeout" from="CameraTimer" to="CanvasLayer" method="_on_CameraTimer_timeout"]
 [connection signal="pressed" from="MainElements/MMButtonContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
