@@ -74,26 +74,15 @@ func changeGameState(newstate):
 			print("Dealer has been resolved")
 			resolveGame()
 
-
-
-
-func _init(deck, humanPlyer, aiPlyers, dealerPlyer, controls):
-	dealer       = dealerPlyer
-	ais          = aiPlyers
-	humanPlayer  = humanPlyer
+func _init(_deck, _player, _dealer, controls):
+	dealer = _dealer
+	humanPlayer = _player
 	gameControls = controls
-
-	"""
-	Not sure if good?
-	Players are associated with positions, not the other way around
-	When dealing, ideally we loop through positions in order and get the player
-	So might be better to have this the other way around?
-	"""
+	
 	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
-	for ai in ais:
-		dealingOrder[ai.playingPosition.order] = ai
-	assignDeck(deck)
-	# Init 0 game state to make sure UI elements are toggled
+	# Previously had AI assignment to dealing order, TODO: update this structire
+	assignDeck(_deck)
+	# Progress game state to triggle UI animations
 	changeGameState(0)
 
 
@@ -112,21 +101,21 @@ func startTable():
 	# Change to dealing state
 	changeGameState(2)
 	# Deal 1 face up to all players
-	dealToPlayers()
+	dealTo(humanPlayer, true)
 	# Deal 1 face down to dealer
-	dealToDealer(false)
+	dealTo(dealer, false)
 	yield(gameControls.cardTween, "tween_all_completed")
 	# Deal 1 face up to all players
-	dealToPlayers()
+	dealTo(humanPlayer, true)
 	yield(gameControls.cardTween, "tween_all_completed")
 	# Deal 1 face up card to dealer
-	dealToDealer(true)
+	dealTo(dealer, true)
 	yield(gameControls.cardTween, "tween_completed")
 	# Dealing over, change to end dealing state
 	changeGameState(3)
 
 # Play hands on table
-func playTable():
+func playTable():	
 	# Loop through each player that is actually playing
 	for pos in dealingOrder.keys():
 		var player = dealingOrder[pos]
@@ -163,7 +152,8 @@ func resolveDealer():
 
 	# AHH
 	while dealer.playingPosition.handValue <= 17:
-		dealToDealer(true)
+		dealTo(dealer, true)
+
 		yield(dealer.playingPosition.cardTween, "tween_all_completed")
 		dealer.playingPosition.calculateValue()
 		print("DEALER HARD: ", dealer.playingPosition.hardValue)
@@ -245,28 +235,22 @@ func hideTray():
 		gameControls.trayButton.flip_v = true
 		chipTrayVisible = false
 
-func dealToPlayers():
-	# Loop through playing order and deal to them
-	for key in dealingOrder:
-		var player = dealingOrder[key]
-		if(player != null):
-			# Deal to this player's position
-			var position = player.playingPosition
-			position.setCardTween(gameControls.cardTween)
-			dealCard(position, true)
+# Deal to an entitiy that has a playing position
+func dealTo(_player, cardVisible = true):
+	print(_player.playingPosition)
+	_player.playingPosition.setCardTween(gameControls.cardTween)
+	dealCard(_player.playingPosition, cardVisible)
+	
+	
 
-func dealToDealer(faceup):
-	dealer.playingPosition.setCardTween(gameControls.cardTween)
-	dealCard(dealer.playingPosition, faceup)
+
 
 func checkBetting():
 	# Loop through players and check if bets have all been made
 	var finishedBetting = true
 	if(humanPlayer.madeBet != true):
 		finishedBetting = false
-	for ai in ais:
-		if(ai.madeBet != true):
-			finishedBetting = false
+
 	if(finishedBetting):
 		print("All players have finished betting, should disable betting")
 		changeGameState(1)

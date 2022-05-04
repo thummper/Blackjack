@@ -10,7 +10,7 @@ var activeCards   = []
 var chipTrayVisible = true
 var playing = false
 var humanPlayer = null
-var aiPlayers = []
+
 var currentGame = null
 # We can only start playing once all bets have been placed
 var betsMade = false
@@ -30,7 +30,6 @@ onready var gameControls = {
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
 	"uiAnimations": uiAnimations,
-
 	"dealActions": gameDealActions,
 	"cardTween": cardTween,
 	"moneyLabel": moneyLabel,
@@ -41,49 +40,28 @@ onready var gameControls = {
 
 
 
-# TODO: Logic for player to pick position
-# TODO: Other places should be filled with AI
 
-onready var playerPositions = [
-	get_node("ControlWrapper/PlayerPositions/SPOT_0"),
-	get_node("ControlWrapper/PlayerPositions/SPOT_1"),
-	get_node("ControlWrapper/PlayerPositions/SPOT_2"),
-	get_node("ControlWrapper/PlayerPositions/SPOT_3"),
-	get_node("ControlWrapper/PlayerPositions/SPOT_4")
-];
-onready var dealerPosition = get_node("ControlWrapper/DealerPos/DealerSpot")
+
+onready var playerPosition = get_node("TableWrapper/PlayerPos/PlayerSpot")
+onready var dealerPosition = get_node("TableWrapper/DealerPos/DealerSpot")
 
 
 
 
-
-
-#export var numberofDecks = 1
-#var GameDeck = preload("res://Scenes/GameDeck.tscn").instance()
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# 1 - Assume we are somehow passed logic that assigns the human player to a position
-	# Make the human player
+	# Init Human Player
 	humanPlayer = playerScript.new(1000, false)
-	# Assign the human player to their chosen spot
-	humanPlayer.assignPosition(playerPositions[0])
-	# TODO - GENERATE X AI PLAYERS AND ASSIGN THEM POSITIONS
-
-	# 1.5 - Generate dealer
+	humanPlayer.assignPosition(playerPosition)
+	# Init Dealer
 	var dealer = playerScript.new(0, false)
 	dealer.assignPosition(dealerPosition)
-
-	# 2 - Generate the game deck
+	# Generate initial game deck TODO: Pass this to game script entirely
 	gameDeck.generateDeck(2)
 	# 3 - Pass all information to the blackjack handler
-	currentGame = blackjackGame.new(gameDeck, humanPlayer, aiPlayers, dealer, gameControls)
+	currentGame = blackjackGame.new(gameDeck, humanPlayer, dealer, gameControls)
 	# 4 - Connect game action buttons to the current game
 	connectGameSignals()
 

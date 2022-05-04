@@ -143,68 +143,32 @@ size_flags_horizontal = 5
 size_flags_vertical = 5
 texture = ExtResource( 4 )
 
-[node name="ControlWrapper" type="Control" parent="."]
+[node name="TableWrapper" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="DealerPos" type="Control" parent="ControlWrapper"]
-anchor_left = 0.5
+[node name="DealerPos" type="Control" parent="TableWrapper"]
+anchor_left = 0.4
 anchor_top = 0.2
-anchor_right = 0.5
+anchor_right = 0.4
 anchor_bottom = 0.2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DealerSpot" parent="ControlWrapper/DealerPos" instance=ExtResource( 2 )]
+[node name="DealerSpot" parent="TableWrapper/DealerPos" instance=ExtResource( 2 )]
 dealer = true
 
-[node name="PlayerPositions" type="Control" parent="ControlWrapper"]
+[node name="PlayerPos" type="Control" parent="TableWrapper"]
 anchor_top = 0.25
 anchor_right = 1.0
 anchor_bottom = 0.85
 
-[node name="SPOT_0" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.9
-anchor_top = 0.5
-anchor_right = 0.9
-anchor_bottom = 0.5
-
-[node name="SPOT_1" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.7
-anchor_top = 0.66
-anchor_right = 0.7
-anchor_bottom = 0.66
-margin_left = -100.16
-margin_right = 99.84
-order = 1
-
-[node name="SPOT_2" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.5
+[node name="PlayerSpot" parent="TableWrapper/PlayerPos" instance=ExtResource( 2 )]
+anchor_left = 0.4
 anchor_top = 0.7
-anchor_right = 0.5
+anchor_right = 0.4
 anchor_bottom = 0.7
-margin_top = -99.792
-margin_bottom = 100.208
-order = 2
-
-[node name="SPOT_3" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.3
-anchor_top = 0.66
-anchor_right = 0.3
-anchor_bottom = 0.66
-margin_left = -99.84
-margin_right = 100.16
-order = 3
-
-[node name="SPOT_4" parent="ControlWrapper/PlayerPositions" instance=ExtResource( 2 )]
-anchor_left = 0.1
-anchor_top = 0.5
-anchor_right = 0.1
-anchor_bottom = 0.5
-margin_left = -99.84
-margin_right = 100.16
-order = 4
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
