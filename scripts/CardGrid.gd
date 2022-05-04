@@ -1,6 +1,8 @@
 extends Control
 
-onready var tempSprite = preload("res://scenes/TestSprite.tscn")
+# Instead of temp sprite I need to get REAL cards
+onready var cardFactory = preload("res://scripts/CardFactory.gd")
+
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,8 +19,8 @@ func _ready():
 	# Not sure why I only get rect size if the parent is a canvas layer
 	var screenSize = rect_size
 	
-	var cellWidth = 100
-	var cellHeight = 142
+	var cellWidth = 200
+	var cellHeight = 284
 	var cellPadding = 10
 	
 	
@@ -35,6 +37,8 @@ func _ready():
 	var gridWidth = endX - startX
 	var gridRows = floor(gridWidth / cellWidth)
 	
+	cardFactory = cardFactory.new()
+	
 
 	
 	
@@ -43,7 +47,9 @@ func _ready():
 			var cellX = startX + (cellWidth/2) +  (x * cellWidth) + (cellPadding * x)
 			var cellY = startY + (cellHeight/2) + (y * cellHeight)
 			# Create cell at this point
-			var sprite = tempSprite.instance()
+			var sprite = cardFactory.generateRandomCard()
+			sprite.spriteScale = 1
+			sprite.setFrontModulate("#dddddd")
 			sprite.position = Vector2(cellX, cellY)
 			add_child(sprite)
 		startY += cellPadding

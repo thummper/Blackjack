@@ -14,6 +14,10 @@ var spriteScale = 0.5
 var startLocation
 
 
+func setFrontModulate(hex):
+	$cardFront.modulate = hex
+
+
 func init(cardTexture, backTexture, cardSuit, cardType, hardValue, softValue):
 	front = cardTexture
 	back  = backTexture

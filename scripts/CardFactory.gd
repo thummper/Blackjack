@@ -28,6 +28,47 @@ var cardValues = {
 func _init():
 	pass
 	
+# Need random card generator for main menu
+func generateRandomCard():
+	# Pick random suit and type
+	var randomSuit = suitNames[ randi() % suitNames.size() ]
+	var randomType = cardTypes[ randi() % cardTypes.size() ]
+	var textureKey = randomSuit + String(randomType)
+	# Get or load textures
+	var cardTextures = getCardSprites(randomSuit, randomType)
+	# Make card
+	var tempCard = cardScene.instance()
+	tempCard.init(cardTextures.front, cardTextures.back, randomSuit, randomType, 1, 1)
+	tempCard.flip()
+	tempCard.scale = Vector2(1, 1)
+	print(tempCard.scale)
+	return tempCard
+	
+
+
+func getCardSprites(cardSuit, cardType):
+	var textureKey  = cardSuit + String(cardType)
+	var cardTexture = null
+	var backTexture = null
+	if textureStore.has(textureKey):
+		cardTexture = textureStore[textureKey]
+	else:
+		# Load from sprites, store loaded texture in texture store
+		var cardSprite  = frontDir + "/" + cardSuit + "/" + String(cardType) + ".png"
+		cardTexture = load(cardSprite)
+		textureStore[textureKey] = cardTexture
+	# Check if cardback is loaded
+	if textureStore.has("backtext"):
+		backTexture = textureStore["backtext"]
+	else:
+		backTexture = load(backDir + "/" + "01.png")
+		textureStore['backtext'] = backTexture
+		
+	return {
+		"front": cardTexture,
+		"back": backTexture
+	}
+	
 func generateDeck():
 	# Create and return deck
 	var deck = []
@@ -45,25 +86,9 @@ func generateDeck():
 			else:
 				hardValue = cardValues[type] 
 				softValue = hardValue
-			
-			# Get card sprites
-			if textureStore.has(textureKey):
-				cardTexture = textureStore[textureKey]
-			else:
-				var cardSprite  = frontDir + "/" + suit + "/" + String(type) + ".png"
-				cardTexture = load(cardSprite)
-				textureStore[textureKey] = cardTexture
-				
-			if textureStore.has("backtext"):
-				backTexture = textureStore["backtext"]
-			else:
-				backTexture = load(backDir + "/" + "01.png")
-				textureStore['backtext'] = backTexture
-				
-			
-			# Instance the card, pass textures and store 
+			var cardTextures = getCardSprites(suit, type)
 			var tempCard = cardScene.instance()
-			tempCard.init(cardTexture, backTexture, suit, type, hardValue, softValue)
+			tempCard.init(cardTextures.front, cardTextures.back, suit, type, hardValue, softValue)
 			deck.push_back(tempCard)
 	return deck
 			
