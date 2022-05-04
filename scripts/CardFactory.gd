@@ -40,8 +40,7 @@ func generateRandomCard():
 	var tempCard = cardScene.instance()
 	tempCard.init(cardTextures.front, cardTextures.back, randomSuit, randomType, 1, 1)
 	tempCard.flip()
-	tempCard.scale = Vector2(1, 1)
-	print(tempCard.scale)
+
 	return tempCard
 	
 

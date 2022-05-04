@@ -39,7 +39,6 @@ func showCard():
 	$cardBack.visible = false
 	if flipped == false:
 		# This func called when card is unflipped
-		print("Emit flipped")
 		emit_signal("cardFlipped", softVal, hardVal)
 		flipped = true
 
