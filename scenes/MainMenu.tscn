@@ -91,4 +91,5 @@ align = 0
 
 [connection signal="resized" from="." to="CanvasLayer" method="_on_MainMenuRoot_resized"]
 [connection signal="timeout" from="CameraTimer" to="CanvasLayer" method="_on_CameraTimer_timeout"]
+[connection signal="pressed" from="MainElements/MMButtonContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="MainElements/MMButtonContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
