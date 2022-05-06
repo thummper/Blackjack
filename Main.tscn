@@ -1,131 +1,50 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
 [ext_resource path="res://sprites/casinotexture.jpg" type="Texture" id=4]
-[ext_resource path="res://scripts/DealActions.gd" type="Script" id=5]
+[ext_resource path="res://scripts/StyleBoxBG/controlLargeBox.gd" type="Script" id=5]
 [ext_resource path="res://scenes/EventLogContainer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://misc/animations/trayClose.tres" type="Animation" id=7]
-[ext_resource path="res://sprites/ui/white_down.png" type="Texture" id=25]
-[ext_resource path="res://scripts/controlLargeStyleBox.gd" type="Script" id=28]
-[ext_resource path="res://scripts/trayButton.gd" type="Script" id=29]
+[ext_resource path="res://scripts/GameControlBackground.gd" type="Script" id=8]
+[ext_resource path="res://scripts/BottomUIController.gd" type="Script" id=9]
+[ext_resource path="res://misc/MAINFONT.tres" type="DynamicFont" id=10]
 [ext_resource path="res://misc/tempActionButtons.tres" type="ButtonGroup" id=31]
 [ext_resource path="res://scripts/TempActionUI.gd" type="Script" id=32]
-[ext_resource path="res://scripts/genChipButtons.gd" type="Script" id=34]
 [ext_resource path="res://scripts/MoneyContainer.gd" type="Script" id=35]
 [ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=36]
 
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.345098, 0.376471, 0.588235, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.415686, 0.454902, 0.717647, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.278431, 0.301961, 0.462745, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id=5]
+Button/fonts/font = ExtResource( 10 )
+Button/styles/focus = null
+Button/styles/hover = SubResource( 6 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 7 )
+
 [sub_resource type="Animation" id=2]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign:anchor_top")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign:anchor_bottom")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:alignment")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 1 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:anchor_top")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = false
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign:anchor_bottom")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("UIWRAPPER/BottomUI/DealActions:anchor_top")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("UIWRAPPER/BottomUI/DealActions:anchor_bottom")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.98 ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("UIWRAPPER/BottomUI:anchor_top")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.98 ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("UIWRAPPER/BottomUI:anchor_bottom")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.98 ]
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "cardAnim"
@@ -143,32 +62,12 @@ size_flags_horizontal = 5
 size_flags_vertical = 5
 texture = ExtResource( 4 )
 
-[node name="TableWrapper" type="Control" parent="."]
+[node name="GameControlWrapper" type="Control" parent="."]
+anchor_left = 0.3
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="DealerPos" type="Control" parent="TableWrapper"]
-anchor_left = 0.4
-anchor_top = 0.2
-anchor_right = 0.4
-anchor_bottom = 0.2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="DealerSpot" parent="TableWrapper/DealerPos" instance=ExtResource( 2 )]
-dealer = true
-
-[node name="PlayerPos" type="Control" parent="TableWrapper"]
-anchor_top = 0.25
-anchor_right = 1.0
-anchor_bottom = 0.85
-
-[node name="PlayerSpot" parent="TableWrapper/PlayerPos" instance=ExtResource( 2 )]
-anchor_left = 0.4
-anchor_top = 0.7
-anchor_right = 0.4
-anchor_bottom = 0.7
+script = ExtResource( 8 )
+C = Color( 0.0470588, 0.14902, 0.0980392, 0.705882 )
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
@@ -176,13 +75,86 @@ anchor_bottom = 0.7
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="CardSpawnPoint" type="Control" parent="UI Layer/UIWRAPPER"]
-anchor_left = 0.5
-anchor_top = -0.2
-anchor_right = 0.5
-anchor_bottom = -0.2
+[node name="BottomUI" type="Control" parent="UI Layer/UIWRAPPER"]
+anchor_left = 0.33
+anchor_top = 0.86
+anchor_right = 0.67
+anchor_bottom = 0.98
+margin_bottom = -6.10352e-05
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 462, 98 )
+script = ExtResource( 9 )
+
+[node name="ButtonActions" type="Control" parent="UI Layer/UIWRAPPER/BottomUI"]
+anchor_left = -0.011
+anchor_top = -0.16
+anchor_right = 1.01
+anchor_bottom = 0.1
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="VerticleCenterButtons" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ButtonActions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+
+[node name="HorizontalCenterButtons" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons"]
+margin_right = 471.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="DealButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons"]
+margin_right = 233.0
+margin_bottom = 25.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource( 5 )
+text = "Deal"
+
+[node name="ClearBetButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons"]
+margin_left = 237.0
+margin_right = 471.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Clear Bet"
+
+[node name="ChipActions" type="Control" parent="UI Layer/UIWRAPPER/BottomUI"]
+anchor_top = 0.21
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 5 )
+
+[node name="VerticleCenterChips" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipActions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HorizontalCenterChips" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipActions/VerticleCenterChips"]
+margin_top = 38.0
+margin_right = 462.0
+margin_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 6
+alignment = 1
 
 [node name="TempActionUI" type="Control" parent="UI Layer/UIWRAPPER"]
+visible = false
 margin_top = 127.0
 margin_right = 200.0
 margin_bottom = 327.0
@@ -227,68 +199,8 @@ margin_bottom = 116.0
 group = ExtResource( 31 )
 text = "Surrender"
 
-[node name="BottomUI" type="Control" parent="UI Layer/UIWRAPPER"]
-anchor_left = 0.5
-anchor_top = 0.98
-anchor_right = 0.5
-anchor_bottom = 0.98
-margin_left = -199.68
-margin_top = -69.84
-margin_right = 200.32
-
-[node name="DealActions" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI"]
-anchor_left = -0.25
-anchor_right = -0.25
-anchor_bottom = 0.98
-script = ExtResource( 5 )
-
-[node name="DealButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
-margin_right = 70.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Deal"
-
-[node name="ClearBetButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/DealActions"]
-margin_top = 36.0
-margin_right = 70.0
-margin_bottom = 68.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Clear Bet"
-
-[node name="ChipButtonContainer" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI"]
-anchor_bottom = 0.5
-custom_constants/separation = 20
-
-[node name="ChipVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer"]
-margin_bottom = 34.0
-size_flags_horizontal = 0
-custom_constants/separation = 100
-alignment = 1
-script = ExtResource( 28 )
-
-[node name="ChipHAlign" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign"]
-margin_top = 17.0
-margin_bottom = 17.0
-custom_constants/separation = 15
-alignment = 1
-script = ExtResource( 34 )
-
-[node name="trayButtonVAlign" type="VBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer"]
-margin_left = 20.0
-margin_right = 45.0
-margin_bottom = 34.0
-alignment = 1
-
-[node name="trayButton" type="TextureButton" parent="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign"]
-margin_top = 4.0
-margin_right = 25.0
-margin_bottom = 29.0
-texture_normal = ExtResource( 25 )
-script = ExtResource( 29 )
-
 [node name="MoneyContainer" type="Control" parent="UI Layer/UIWRAPPER"]
+visible = false
 anchor_left = 0.92
 anchor_right = 1.0
 margin_bottom = 50.0
@@ -303,6 +215,7 @@ align = 1
 valign = 1
 
 [node name="EventLog" parent="UI Layer/UIWRAPPER" instance=ExtResource( 6 )]
+visible = false
 
 [node name="UI ANIMATIONS" type="AnimationPlayer" parent="UI Layer"]
 playback_speed = 3.0
@@ -312,9 +225,41 @@ anims/trayClose = ExtResource( 7 )
 
 [node name="CardTween" type="Tween" parent="."]
 
-[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/DealButton" to="." method="dealButton_pressed"]
-[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/DealActions/ClearBetButton" to="." method="clearBetButton_pressed"]
-[connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/ChipVAlign/ChipHAlign" to="." method="makeBet"]
-[connection signal="mouse_entered" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButtonMouseEnter"]
-[connection signal="mouse_exited" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButtonMouseExit"]
-[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton" to="." method="trayButton_pressed"]
+[node name="GameUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TableWrapper" type="Control" parent="GameUI"]
+anchor_right = 0.3
+anchor_bottom = 1.0
+
+[node name="DealerPos" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.3
+
+[node name="DealerSpot" parent="GameUI/TableWrapper/DealerPos" instance=ExtResource( 2 )]
+dealer = true
+
+[node name="PlayerPos" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+margin_right = -192.0
+
+[node name="PlayerSpot" parent="GameUI/TableWrapper/PlayerPos" instance=ExtResource( 2 )]
+anchor_left = 0.4
+anchor_top = 0.7
+anchor_right = 0.4
+anchor_bottom = 0.7
+
+[node name="CardSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = -0.2
+anchor_right = 0.5
+anchor_bottom = -0.2
+
+[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons/DealButton" to="." method="dealButton_pressed"]
+[connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons/ClearBetButton" to="." method="clearBetButton_pressed"]

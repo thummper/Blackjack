@@ -14,12 +14,16 @@ var humanPlayer = null
 var currentGame = null
 # We can only start playing once all bets have been placed
 var betsMade = false
+
+
+onready var bottomUI = get_node("UI Layer/UIWRAPPER/BottomUI")
+
 onready var actionButtons = get_node("UI Layer/UIWRAPPER/TempActionUI")
 onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton")
 onready var uiAnimations  = get_node("UI Layer/UI ANIMATIONS")
 onready var moneyLabel    = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")
 onready var miniChip      = preload("res://scenes/SmallChip.tscn")
-onready var cardSpawn     = get_node("UI Layer/UIWRAPPER/CardSpawnPoint")
+onready var cardSpawn     = get_node("GameUI/TableWrapper/CardSpawnPoint")
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/DealActions")
 onready var cardTween     = get_node("CardTween")
 onready var delayTimer    = get_node("DelayTimer")
@@ -42,8 +46,8 @@ onready var gameControls = {
 
 
 
-onready var playerPosition = get_node("TableWrapper/PlayerPos/PlayerSpot")
-onready var dealerPosition = get_node("TableWrapper/DealerPos/DealerSpot")
+onready var playerPosition = get_node("GameUI/TableWrapper/PlayerPos/PlayerSpot")
+onready var dealerPosition = get_node("GameUI/TableWrapper/DealerPos/DealerSpot")
 
 
 
@@ -52,18 +56,19 @@ onready var dealerPosition = get_node("TableWrapper/DealerPos/DealerSpot")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass
 	# Init Human Player
-	humanPlayer = playerScript.new(1000, false)
-	humanPlayer.assignPosition(playerPosition)
-	# Init Dealer
-	var dealer = playerScript.new(0, false)
-	dealer.assignPosition(dealerPosition)
-	# Generate initial game deck TODO: Pass this to game script entirely
-	gameDeck.generateDeck(2)
-	# 3 - Pass all information to the blackjack handler
-	currentGame = blackjackGame.new(gameDeck, humanPlayer, dealer, gameControls)
-	# 4 - Connect game action buttons to the current game
-	connectGameSignals()
+#	humanPlayer = playerScript.new(1000, false)
+#	humanPlayer.assignPosition(playerPosition)
+#	# Init Dealer
+#	var dealer = playerScript.new(0, false)
+#	dealer.assignPosition(dealerPosition)
+#	# Generate initial game deck TODO: Pass this to game script entirely
+#	gameDeck.generateDeck(2)
+#	# 3 - Pass all information to the blackjack handler
+#	currentGame = blackjackGame.new(gameDeck, humanPlayer, dealer, gameControls)
+#	# 4 - Connect game action buttons to the current game
+#	connectGameSignals()
 
 func connectGameSignals():
 	actionButtons.hitButton.connect("pressed", currentGame, "playerAction", [actionButtons.hitButton])
@@ -88,13 +93,14 @@ func trayButton_pressed():
 		else:
 			currentGame.showTray()
 
-func _process(delta):
-	# If we are not currently playing
-	if(currentGame.gamestate == 0):
-		currentGame.checkBetting()
-	elif(currentGame.gamestate == 1):
-		currentGame.startTable()
-		#print("Blackjack game could start")
+#func _process(delta):
+#	# If we are not currently playing
+#	if(currentGame.gamestate == 0):
+#		currentGame.checkBetting()
+#	elif(currentGame.gamestate == 1):
+#		currentGame.startTable()
+#		#print("Blackjack game could start")
+
 
 
 func trayButtonMouseEnter():
@@ -135,7 +141,7 @@ func makeBet(amount, chipName):
 
 func dealButton_pressed():
 	# This means human player has finished betting
-	currentGame.humanPlayer.endBetting()
+#	currentGame.humanPlayer.endBetting()
 	pass # Replace with function body.
 
 

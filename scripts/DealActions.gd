@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends HBoxContainer
 
 
 # Declare member variables here. Examples:
