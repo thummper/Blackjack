@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/casinotexture.jpg" type="Texture" id=4]
 [ext_resource path="res://scripts/StyleBoxBG/controlLargeBox.gd" type="Script" id=5]
 [ext_resource path="res://scenes/EventLogContainer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://misc/Themes/SecondaryAlt.tres" type="Theme" id=7]
 [ext_resource path="res://scripts/GameControlBackground.gd" type="Script" id=8]
 [ext_resource path="res://scripts/BottomUIController.gd" type="Script" id=9]
 [ext_resource path="res://misc/Themes/PrimaryAction.tres" type="Theme" id=10]
@@ -25,7 +26,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 1, 0.307786 ),
 "update": 0,
 "values": [ 0.0, 2.0 ]
 }
@@ -37,7 +38,7 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 1, 0.34151 ),
 "update": 0,
 "values": [ 1.0, 3.0 ]
 }
@@ -103,9 +104,9 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 1, 0.138696 ),
 "update": 0,
-"values": [ 2.0, -0.5 ]
+"values": [ 2.0, 0.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("UIWRAPPER/BottomUI/GameActions:anchor_bottom")
@@ -115,9 +116,9 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 1, 0.133972 ),
 "update": 0,
-"values": [ 2.4, -0.1 ]
+"values": [ 2.4, 1.0 ]
 }
 
 [node name="Main" type="Node"]
@@ -241,55 +242,66 @@ buttonGroup = ExtResource( 31 )
 
 [node name="ActionHAlign" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/GameActions"]
 anchor_right = 1.0
-anchor_bottom = 0.5
+anchor_bottom = 1.0
+size_flags_horizontal = 0
 custom_constants/separation = 12
 
 [node name="HitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_right = 23.0
-margin_bottom = 23.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+margin_right = 100.0
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 100, 35 )
+size_flags_vertical = 4
 theme = ExtResource( 10 )
 group = ExtResource( 31 )
 text = "Hit"
 
 [node name="StandButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 35.0
-margin_right = 81.0
-margin_bottom = 23.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource( 10 )
+margin_left = 112.0
+margin_right = 202.0
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 90, 35 )
+size_flags_vertical = 4
+theme = ExtResource( 7 )
 group = ExtResource( 31 )
 text = "Stand"
 
 [node name="DoubleButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 93.0
-margin_right = 148.0
-margin_bottom = 23.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource( 10 )
+margin_left = 214.0
+margin_right = 294.0
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 80, 35 )
+size_flags_vertical = 4
+theme = ExtResource( 7 )
 group = ExtResource( 31 )
 text = "Double"
 
 [node name="SplitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 160.0
-margin_right = 195.0
-margin_bottom = 23.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource( 10 )
+margin_left = 306.0
+margin_right = 376.0
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 70, 35 )
+size_flags_vertical = 4
+theme = ExtResource( 11 )
 group = ExtResource( 31 )
 text = "Split"
 
 [node name="SurrenderButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 207.0
-margin_right = 283.0
-margin_bottom = 23.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource( 10 )
+margin_left = 388.0
+margin_right = 464.0
+margin_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 70, 35 )
+size_flags_vertical = 4
+theme = ExtResource( 11 )
 group = ExtResource( 31 )
 text = "Surrender"
 
