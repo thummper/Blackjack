@@ -48,13 +48,13 @@ func changeGameState(newstate):
 			# Technically this already happens, we check game state in main
 			# We could toggle the UI
 			showTray()
-			gameControls.dealActions.enableButtons()
+			# gameControls.dealActions.enableButtons()
 			gameControls.actionButtons.disableButtons()
 			# Disable action buttons
 			print("Game ended / not playing")
 			print("Enable betting / clear bets")
 		1:
-			gameControls.dealActions.disableButtons()
+			# gameControls.dealActions.disableButtons()
 			print("Betting phase is finished (by player), dealer will deal")
 			hideTray()
 		2:
@@ -225,14 +225,14 @@ func resolveGame():
 
 func showTray():
 	if chipTrayVisible != true:
-		gameControls.uiAnimations.play_backwards("trayClose")
-		gameControls.trayButton.flip_v = false
+		gameControls.uiAnimations.play_backwards("HideBettingInfo")
+		#gameControls.trayButton.flip_v = false
 		chipTrayVisible = true
 
 func hideTray():
 	if chipTrayVisible:
-		gameControls.uiAnimations.play("trayClose")
-		gameControls.trayButton.flip_v = true
+		gameControls.uiAnimations.play("HideBettingInfo")
+		#gameControls.trayButton.flip_v = true
 		chipTrayVisible = false
 
 # Deal to an entitiy that has a playing position

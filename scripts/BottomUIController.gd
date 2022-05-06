@@ -1,7 +1,7 @@
 extends Control
 
 signal makeBet
-onready var chipContainer = get_node("ChipActions/VerticleCenterChips/HorizontalCenterChips")
+onready var chipContainer = get_node("BettingInformation/ChipActions/VerticleCenterChips/HorizontalCenterChips")
 var chipSize = 71
 var chipHPadding = 6
 
@@ -66,6 +66,7 @@ func _ready():
 		button.setTextures(texturePaths)
 		button.betAmount = buttonInfo.betAmount
 		button.chipName = buttonInfo.name
+		button.uiController = self
 		chipContainer.add_child(button)
 		
 
