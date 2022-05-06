@@ -7,11 +7,11 @@ so I can toggle enable / disable depending on the game state
 
 """
 
-onready var hitButton       = get_node("TempButtonVAlign/HitButton")
-onready var standButton     = get_node("TempButtonVAlign/StandButton")
-onready var doubleButton    = get_node("TempButtonVAlign/DoubleButton")
-onready var splitButton     = get_node("TempButtonVAlign/SplitButton")
-onready var surrenderButton = get_node("TempButtonVAlign/SurrenderButton")
+onready var hitButton       = get_node("ActionHAlign/HitButton")
+onready var standButton     = get_node("ActionHAlign/StandButton")
+onready var doubleButton    = get_node("ActionHAlign/DoubleButton")
+onready var splitButton     = get_node("ActionHAlign/SplitButton")
+onready var surrenderButton = get_node("ActionHAlign/SurrenderButton")
 
 signal hit
 signal stand

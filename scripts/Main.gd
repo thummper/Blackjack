@@ -18,7 +18,7 @@ var betsMade = false
 
 onready var bottomUI = get_node("UI Layer/UIWRAPPER/BottomUI")
 
-onready var actionButtons = get_node("UI Layer/UIWRAPPER/TempActionUI")
+onready var actionButtons = get_node("UI Layer/UIWRAPPER/BottomUI/GameActions")
 onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton")
 onready var uiAnimations  = get_node("MainAnimations")
 onready var moneyLabel    = get_node("UI Layer/UIWRAPPER/MoneyContainer/playerMoney")

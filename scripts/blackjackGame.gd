@@ -20,6 +20,7 @@ var ais
 var gameControls
 var gamestate = null
 var chipTrayVisible = true
+var actionButtonsVisible = false
 
 var dealingOrder = {
 	0: null,
@@ -54,13 +55,15 @@ func changeGameState(newstate):
 			print("Game ended / not playing")
 			print("Enable betting / clear bets")
 		1:
-			# gameControls.dealActions.disableButtons()
 			print("Betting phase is finished (by player), dealer will deal")
+			# Hide dealing buttons
 			hideTray()
 		2:
 			print("Dealer is dealing")
 		3:
 			print("Dealing over")
+			# Show actions buttons
+			showActionButtons()
 			gameControls.actionButtons.enableButtons()
 			playTable()
 		4:
@@ -71,6 +74,8 @@ func changeGameState(newstate):
 			print(" All hands have been resolved")
 			resolveDealer()
 		7:
+			# Hide actions buttons
+			hideActionButtons()
 			print("Dealer has been resolved")
 			resolveGame()
 
@@ -234,6 +239,16 @@ func hideTray():
 		gameControls.uiAnimations.play("HideBettingInfo")
 		#gameControls.trayButton.flip_v = true
 		chipTrayVisible = false
+		
+func showActionButtons():
+	if !actionButtonsVisible:
+		actionButtonsVisible = true
+		gameControls.uiAnimations.play("ShowGameActions")
+	
+func hideActionButtons():
+	if actionButtonsVisible:
+		actionButtonsVisible = false
+		gameControls.uiAnimations.play_backwards("ShowGameActions")
 
 # Deal to an entitiy that has a playing position
 func dealTo(_player, cardVisible = true):
