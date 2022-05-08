@@ -52,11 +52,7 @@ func setCardTween(_cardTween):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	handFeedback.visible = false
-	if(dealer):
-		$ValueControl.anchor_top = 0.5
-		$ValueControl.anchor_bottom = 0.5
-		$ValueControl.anchor_left = 1.23
-		$BettingInfo.visible = false
+
 
 func _process(_delta):
 	if(handValue == 0):
@@ -127,9 +123,12 @@ func addCard(card):
 
 
 
+
+
 func addMiniChip(mini):
 	# Pass off to bet display as sizing logic is in there
 	miniContainer.addMini(mini)
+	print("ADDED: ", mini.rect_global_position)
 
 
 func addBetValue(amount):

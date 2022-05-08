@@ -4,10 +4,15 @@ extends Node
 var eventLogDebug = true
 
 
-var outlineDefault = "#0c2619"
-var outlineColor = "#640c2619"
-var outlineDark = "#b40c2619"
-var outlineLight = "#64133c27"
+#var outlineDarkAlt = "#d2103322"
+#var outlineDefault = "#0c2619"
+#var outlineColor = "#640c2619"
+#var outlineDark = "#b40c2619"
+#var outlineLight = "#64133c27"
+
+
+var outlineColor = "#c8202522"
+var outlineDark = "#dc2c342f"
 
 
 

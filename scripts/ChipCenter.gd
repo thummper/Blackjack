@@ -7,6 +7,17 @@ onready var activeContainer = $VBoxContainer/HBoxContainer
 var totalChildren = 0
 
 
+# Calculate and return the next minichip position for animation purposes
+func getNextMiniPosition():
+	
+	# Get center of current active container?
+	var activePos = activeContainer.rect_global_position	
+	return activePos
+
+	
+	
+	
+
 
 # Add mini chips to container, but add another row if width passes 200
 func addMini(mini):

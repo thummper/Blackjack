@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scripts/BottomUIController.gd" type="Script" id=9]
 [ext_resource path="res://misc/Themes/PrimaryAction.tres" type="Theme" id=10]
 [ext_resource path="res://misc/Themes/SecondaryAction.tres" type="Theme" id=11]
+[ext_resource path="res://scripts/GameTopBar.gd" type="Script" id=12]
 [ext_resource path="res://misc/tempActionButtons.tres" type="ButtonGroup" id=31]
 [ext_resource path="res://scripts/TempActionUI.gd" type="Script" id=32]
 [ext_resource path="res://scripts/MoneyContainer.gd" type="Script" id=35]
@@ -91,7 +92,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 2.5 ]
+"values": [ 3.0 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -118,7 +119,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 0.133972 ),
 "update": 0,
-"values": [ 2.4, 1.0 ]
+"values": [ 3.0, 1.0 ]
 }
 
 [node name="Main" type="Node"]
@@ -133,13 +134,6 @@ oc = Color( 0.0745098, 0.235294, 0.152941, 0.392157 )
 size_flags_horizontal = 5
 size_flags_vertical = 5
 texture = ExtResource( 4 )
-
-[node name="GameControlWrapper" type="Control" parent="."]
-anchor_left = 0.3
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 8 )
-C = Color( 0.0470588, 0.14902, 0.0980392, 0.705882 )
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
@@ -236,7 +230,7 @@ alignment = 1
 [node name="GameActions" type="Control" parent="UI Layer/UIWRAPPER/BottomUI"]
 anchor_top = 2.0
 anchor_right = 1.0
-anchor_bottom = 2.5
+anchor_bottom = 3.0
 script = ExtResource( 32 )
 buttonGroup = ExtResource( 31 )
 
@@ -245,80 +239,72 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 0
 custom_constants/separation = 12
+alignment = 1
 
 [node name="HitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_right = 100.0
-margin_bottom = 35.0
+margin_left = 3.0
+margin_top = 25.0
+margin_right = 98.0
+margin_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 100, 35 )
+rect_min_size = Vector2( 95, 35 )
 size_flags_vertical = 4
 theme = ExtResource( 10 )
 group = ExtResource( 31 )
 text = "Hit"
 
 [node name="StandButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 112.0
-margin_right = 202.0
-margin_bottom = 35.0
+margin_left = 110.0
+margin_top = 25.0
+margin_right = 195.0
+margin_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 90, 35 )
+rect_min_size = Vector2( 85, 35 )
 size_flags_vertical = 4
 theme = ExtResource( 7 )
 group = ExtResource( 31 )
 text = "Stand"
 
 [node name="DoubleButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 214.0
-margin_right = 294.0
-margin_bottom = 35.0
+margin_left = 207.0
+margin_top = 25.0
+margin_right = 292.0
+margin_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 80, 35 )
+rect_min_size = Vector2( 85, 35 )
 size_flags_vertical = 4
 theme = ExtResource( 7 )
 group = ExtResource( 31 )
 text = "Double"
 
 [node name="SplitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 306.0
-margin_right = 376.0
-margin_bottom = 35.0
+margin_left = 304.0
+margin_top = 25.0
+margin_right = 369.0
+margin_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 70, 35 )
+rect_min_size = Vector2( 65, 35 )
 size_flags_vertical = 4
 theme = ExtResource( 11 )
 group = ExtResource( 31 )
 text = "Split"
 
 [node name="SurrenderButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
-margin_left = 388.0
-margin_right = 464.0
-margin_bottom = 35.0
+margin_left = 381.0
+margin_top = 25.0
+margin_right = 457.0
+margin_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 70, 35 )
+rect_min_size = Vector2( 65, 35 )
 size_flags_vertical = 4
 theme = ExtResource( 11 )
 group = ExtResource( 31 )
 text = "Surrender"
-
-[node name="MoneyContainer" type="Control" parent="UI Layer/UIWRAPPER"]
-visible = false
-anchor_left = 0.92
-anchor_right = 1.0
-margin_bottom = 50.0
-script = ExtResource( 35 )
-
-[node name="playerMoney" type="Label" parent="UI Layer/UIWRAPPER/MoneyContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme = ExtResource( 36 )
-text = "£1000"
-align = 1
-valign = 1
 
 [node name="EventLog" parent="UI Layer/UIWRAPPER" instance=ExtResource( 6 )]
 visible = false
@@ -330,6 +316,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="TableWrapper" type="Control" parent="GameUI"]
+anchor_top = 0.05
 anchor_right = 0.3
 anchor_bottom = 1.0
 
@@ -360,6 +347,38 @@ anchor_left = 0.5
 anchor_top = -0.2
 anchor_right = 0.5
 anchor_bottom = -0.2
+
+[node name="ChipSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 1.75
+anchor_top = 1.05
+anchor_right = 1.75
+anchor_bottom = 1.05
+
+[node name="GameControlWrapper" type="Control" parent="GameUI"]
+anchor_left = 0.3
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+C = Color( 0.172549, 0.203922, 0.184314, 0.862745 )
+
+[node name="GameTopBar" type="Control" parent="GameUI"]
+anchor_right = 1.0
+anchor_bottom = 0.05
+script = ExtResource( 12 )
+
+[node name="MoneyContainer" type="Control" parent="GameUI/GameTopBar"]
+anchor_right = 0.1
+anchor_bottom = 1.0
+script = ExtResource( 35 )
+
+[node name="playerMoney" type="Label" parent="GameUI/GameTopBar/MoneyContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 36 )
+text = "£1000"
+align = 1
+valign = 1
 
 [node name="MainAnimations" type="AnimationPlayer" parent="."]
 root_node = NodePath("../UI Layer")

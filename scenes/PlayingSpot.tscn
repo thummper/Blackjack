@@ -126,10 +126,10 @@ anchor_bottom = 0.5
 rect_rotation = 8.0
 
 [node name="ValueControl" type="HBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = -0.23
-anchor_right = 0.5
-anchor_bottom = -0.23
+anchor_left = 1.23
+anchor_top = 0.5
+anchor_right = 1.23
+anchor_bottom = 0.5
 margin_left = -17.4
 margin_top = -17.6
 margin_right = 17.6
@@ -138,10 +138,10 @@ alignment = 1
 script = ExtResource( 4 )
 
 [node name="HandValue" type="Label" parent="ValueControl"]
-margin_left = 7.0
-margin_top = 2.0
-margin_right = 28.0
-margin_bottom = 32.0
+margin_left = 10.0
+margin_top = 6.0
+margin_right = 25.0
+margin_bottom = 29.0
 theme = ExtResource( 3 )
 text = "21"
 align = 1
@@ -171,35 +171,31 @@ rect_scale = Vector2( 0.6, 0.6 )
 alignment = 1
 
 [node name="BetAmount" type="Label" parent="BettingInfo/VBoxContainer"]
-margin_right = 42.0
-margin_bottom = 30.0
+margin_right = 32.0
+margin_bottom = 23.0
 theme = ExtResource( 3 )
 text = "100"
 
 [node name="BetDisplay" type="HBoxContainer" parent="BettingInfo"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -25.0
-margin_top = -15.0
-margin_right = 25.0
-margin_bottom = 15.0
+anchor_left = 0.45
+anchor_top = 0.3
+anchor_right = 0.55
+anchor_bottom = 0.4
 grow_horizontal = 2
 alignment = 1
 script = ExtResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BettingInfo/BetDisplay"]
-margin_right = 50.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 50, 30 )
+margin_right = 20.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 20 )
 alignment = 1
 script = ExtResource( 4 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BettingInfo/BetDisplay/VBoxContainer"]
-margin_top = 15.0
-margin_right = 50.0
-margin_bottom = 15.0
+margin_top = 10.0
+margin_right = 20.0
+margin_bottom = 10.0
 theme = ExtResource( 9 )
 alignment = 1
 

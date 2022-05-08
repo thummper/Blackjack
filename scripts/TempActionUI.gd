@@ -33,8 +33,8 @@ func _ready():
 
 	];
 	
-
 	
+
 func enableButtons():
 	print("Enable action buttons")
 	for button in buttons:

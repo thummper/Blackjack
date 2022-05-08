@@ -62,7 +62,7 @@ custom_constants/separation = 14
 
 [node name="Play" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
 margin_right = 256.0
-margin_bottom = 30.0
+margin_bottom = 23.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 3 )
 text = "Play"
@@ -72,18 +72,18 @@ __meta__ = {
 }
 
 [node name="Settings" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
-margin_top = 44.0
+margin_top = 37.0
 margin_right = 256.0
-margin_bottom = 74.0
+margin_bottom = 60.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 3 )
 text = "Settings"
 align = 0
 
 [node name="Quit" type="Button" parent="MainElements/MMButtonContainer/VBoxContainer"]
-margin_top = 88.0
+margin_top = 74.0
 margin_right = 256.0
-margin_bottom = 118.0
+margin_bottom = 97.0
 mouse_default_cursor_shape = 2
 theme = ExtResource( 3 )
 text = "Quit"
