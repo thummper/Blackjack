@@ -29,6 +29,7 @@ onready var chipSpawn = get_node("GameUI/GameTopBar/ChipSpawnPoint")
 
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons")
 onready var cardTween     = get_node("CardTween")
+onready var chipTween = get_node("ChipTween")
 onready var delayTimer    = get_node("DelayTimer")
 onready var eventLog = get_node("UI Layer/UIWRAPPER/EventLog")
 
@@ -59,7 +60,7 @@ onready var dealerPosition = get_node("GameUI/TableWrapper/DealerPos/DealerSpot"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cardTween.connect("tween_completed", self, "chipTweenCompleted")
+	chipTween.connect("tween_completed", self, "chipTweenCompleted")
 	# Init Human Player
 	humanPlayer = playerScript.new(1000, false)
 	humanPlayer.assignPosition(playerPosition)
@@ -158,9 +159,9 @@ func addMiniChip(chipName):
 	add_child(chip)
 	chip.rect_global_position = chipStartLocation
 	
-	cardTween.interpolate_property(chip, "rect_global_position", chip.rect_global_position, chipEndLocation, 1, Tween.EASE_OUT)
+	chipTween.interpolate_property(chip, "rect_global_position", chip.rect_global_position, chipEndLocation, 1, Tween.EASE_OUT)
 	animatingChips.push_back(cleanChip)
-	cardTween.start()
+	chipTween.start()
 
 
 func makeBet(amount, chipName):

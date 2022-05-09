@@ -1,5 +1,8 @@
 extends Node
 
+
+var gameResolverScript = preload("res://scripts/blackjackFunctions/gameResolve.gd")
+
 # Logic to play blackjack
 var gameDeck
 var positions
@@ -7,11 +10,12 @@ var dealerPosition
 var delayTimer
 var dealerHand  = []
 
+
 var dealerWinnings = 0
 var dealerStand    = 17
 var bettingEnabled = true
-
 var activePlayer = null
+var gameResolver
 
 
 var dealer
@@ -29,6 +33,19 @@ var dealingOrder = {
 	3: null,
 	4: null
 }
+
+
+func _init(_deck, _player, _dealer, controls):
+	dealer = _dealer
+	humanPlayer = _player
+	gameControls = controls
+	gameResolver = gameResolverScript.new()
+	
+	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
+	# Previously had AI assignment to dealing order, TODO: update this structire
+	assignDeck(_deck)
+	# Progress game state to triggle UI animations
+	changeGameState(0)
 
 
 
@@ -77,18 +94,9 @@ func changeGameState(newstate):
 			# Hide actions buttons
 			hideActionButtons()
 			print("Dealer has been resolved")
-			resolveGame()
+			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, updateMoneyLabel())
 
-func _init(_deck, _player, _dealer, controls):
-	dealer = _dealer
-	humanPlayer = _player
-	gameControls = controls
-	
-	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
-	# Previously had AI assignment to dealing order, TODO: update this structire
-	assignDeck(_deck)
-	# Progress game state to triggle UI animations
-	changeGameState(0)
+
 
 
 
@@ -168,65 +176,7 @@ func resolveDealer():
 
 	changeGameState(7)
 
-# Check dealer and all player hands, resolve outcomes
-func resolveGame():
-	gameControls.eventLog.addMessage("System", "Resolving game..")
-	var dealerBust  = false
-	var dealerValue = dealer.playingPosition.handValue
-	if dealerValue > 21:
-		dealerBust = true
 
-	for pos in dealingOrder.keys():
-		var player = dealingOrder[pos]
-		if player != null:
-			var playerBust = false
-			var playerPos  = player.playingPosition
-
-
-			var playerValue = playerPos.handValue
-
-
-			if playerValue > 21:
-				playerBust = true
-
-			if dealerBust and playerBust:
-				player.gameResolved(0)
-				gameControls.eventLog.addMessage("System", "Both players bust")
-			elif !dealerBust and playerBust:
-				player.gameResolved(0)
-				gameControls.eventLog.addMessage("System", "Player bust but dealer did not")
-			elif dealerBust and !playerBust:
-				player.gameResolved(1)
-				gameControls.eventLog.addMessage("System", "Dealer bust but player did not")
-			elif !dealerBust and !playerBust:
-				gameControls.eventLog.addMessage("System", "Neither player bust")
-				if playerValue > dealerValue:
-					gameControls.eventLog.addMessage("System", "Player hand beats dealer")
-					player.gameResolved(1)
-				else:
-					if playerValue == dealerValue:
-						gameControls.eventLog.addMessage("System", "Hands are equal")
-						player.gameResolved(2)
-					else:
-						gameControls.eventLog.addMessage("System", "Dealer hand beats player")
-						player.gameResolved(0)
-
-			updateMoneyLabel()
-
-	# Dealer has no player vars to resolve, we only need to reset the hands at this point
-	# This is separate to gameResolved in case i need to slide animations in here
-	activePlayer.playingPosition.hideTurnIndicator()
-	# Before we call clear position, ideally we need some UI animation to play depending on the result for the player
-	gameControls.delayTimer.start(1.0)
-	yield(gameControls.delayTimer, "timeout")
-
-	for pos in dealingOrder.keys():
-		var player = dealingOrder[pos]
-		if player != null:
-			player.clearHand()
-	# Clear dealer hand also
-	dealer.clearHand()
-	changeGameState(0)
 
 func showTray():
 	if chipTrayVisible != true:

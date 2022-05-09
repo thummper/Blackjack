@@ -342,6 +342,12 @@ anchor_top = 0.7
 anchor_right = 0.4
 anchor_bottom = 0.7
 
+[node name="WinningsSpawn" type="Control" parent="GameUI/TableWrapper/PlayerPos/PlayerSpot"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
 [node name="CardSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
 anchor_left = 0.5
 anchor_top = -0.2
@@ -386,6 +392,8 @@ playback_speed = 2.0
 anims/HideBettingInfo = SubResource( 2 )
 anims/RESET = SubResource( 1 )
 anims/ShowGameActions = SubResource( 3 )
+
+[node name="ChipTween" type="Tween" parent="."]
 
 [connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI" to="." method="makeBet"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons/DealButton" to="." method="dealButton_pressed"]
