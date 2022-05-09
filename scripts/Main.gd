@@ -59,6 +59,7 @@ onready var dealerPosition = get_node("GameUI/TableWrapper/DealerPos/DealerSpot"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	cardTween.connect("tween_completed", self, "chipTweenCompleted")
 	# Init Human Player
 	humanPlayer = playerScript.new(1000, false)
 	humanPlayer.assignPosition(playerPosition)
@@ -120,6 +121,46 @@ func changePlayerMoney(amount):
 
 
 
+var animatingChips = []
+
+func chipTweenCompleted(obj, path):
+	
+	# Get the most recently added chip
+	
+	
+	
+	remove_child(obj)
+	
+	var pos = getPlayerPosition()
+	var animatingChip = animatingChips.pop_front()
+	pos.addMiniChip(animatingChip)
+	
+	
+
+
+func addMiniChip(chipName):
+	
+	var pos = getPlayerPosition()
+	# Make a minichip with the correct texture
+	var chip = miniChip.instance()
+	chip.setTexture(chipName)
+	
+	# If we reuse the same chip instance the zindex on the tween gets messed up for some reason
+	var cleanChip = miniChip.instance()
+	cleanChip.setTexture(chipName)
+	
+	# Generate start and end locations for the animation
+	var chipStartLocation = chipSpawn.rect_global_position
+	var chipEndLocation = pos.miniContainer.getNextMiniPosition()
+	chipEndLocation[0] -= 2
+
+	# Set position of chip to correct location
+	add_child(chip)
+	chip.rect_global_position = chipStartLocation
+	
+	cardTween.interpolate_property(chip, "rect_global_position", chip.rect_global_position, chipEndLocation, 1, Tween.EASE_OUT)
+	animatingChips.push_back(cleanChip)
+	cardTween.start()
 
 
 func makeBet(amount, chipName):
@@ -129,51 +170,13 @@ func makeBet(amount, chipName):
 		currentGame.humanPlayerBet(amount)
 		changePlayerMoney(-amount)
 		
-		# Generate mini chip for UI
-		var mini = miniChip.instance()
-		mini.setTexture(chipName)
+		
 		var pos = getPlayerPosition()
-		# TODO - Generate a chip sprite for animation
-		# We can use the same minichip
-		var animateChip = miniChip.instance()
-		animateChip.setTexture(chipName)
-		
-		
-	
-		
-		
-		
-
-
-		
-		# We could add child, get position, then run the animation
-		print("ADDIN CHIP")
-		mini.visible = false
-		pos.addMiniChip(mini)
-		
-		var chipStartLocation = chipSpawn.rect_global_position
-		var chipEndLocation = pos.miniContainer.getNextMiniPosition()
-	
-		chipEndLocation[0] -= 17 / 1.6
-		print("Animate chip from: ", chipStartLocation, " to ", chipEndLocation)
-		
-		animateChip.rect_global_position = chipStartLocation
-		add_child(animateChip)
-		cardTween.interpolate_property(animateChip, "rect_position", animateChip.rect_position, chipEndLocation, 0.45, Tween.EASE_OUT)
-		cardTween.start()
-		
-		mini.visible = true
-		
-		yield(cardTween, "tween_completed")
 		pos.addBetValue(amount)
-		remove_child(animateChip)
-		
-		
-		print("ADDED POSITION: ", mini.rect_global_position)
-	
+		addMiniChip(chipName)
 
-	# TODO toast for failure reason
-	
+
+
 
 
 func dealButton_pressed():

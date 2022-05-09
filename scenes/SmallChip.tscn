@@ -9,5 +9,6 @@ margin_bottom = 25.0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+z_as_relative = false
 texture = ExtResource( 3 )
 centered = false

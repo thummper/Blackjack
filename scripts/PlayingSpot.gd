@@ -128,7 +128,7 @@ func addCard(card):
 func addMiniChip(mini):
 	# Pass off to bet display as sizing logic is in there
 	miniContainer.addMini(mini)
-	print("ADDED: ", mini.rect_global_position)
+
 
 
 func addBetValue(amount):

@@ -38,24 +38,14 @@ func getNextMiniPosition():
 
 # Add mini chips to container, but add another row if width passes 200
 func addMini(mini):
-	
-#	print("CENTER OF ACTIVE ROW: ", activeContainer.rect_global_position)
-#
-#	print("Adding mini chip to active container")
-#	print("VALIGN SIZE IS: ", rowContainer.rect_size)
-	
-	
 	var numChildren = activeContainer.get_children().size()
 	if(numChildren >= maxChildren):
 		addNewRow()
 	if(totalChildren < totalMax):
 		activeContainer.add_child(mini)
 		totalChildren += 1
-		
-#	print("ADDED POS: ", mini.rect_global_position)
+
 	lastAdded = mini.rect_global_position
-		
-#	print("AFTER SIZE: ", rowContainer.rect_size)
 		
 		
 func clear():
