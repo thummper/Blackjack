@@ -177,10 +177,12 @@ theme = ExtResource( 3 )
 text = "100"
 
 [node name="BetDisplay" type="HBoxContainer" parent="BettingInfo"]
-anchor_left = 0.45
-anchor_top = 0.3
-anchor_right = 0.55
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.5
 anchor_bottom = 0.4
+margin_top = -10.0
+margin_bottom = -10.0
 grow_horizontal = 2
 alignment = 1
 script = ExtResource( 5 )
@@ -193,11 +195,11 @@ alignment = 1
 script = ExtResource( 4 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BettingInfo/BetDisplay/VBoxContainer"]
-margin_top = 10.0
 margin_right = 20.0
-margin_bottom = 10.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 9 )
-alignment = 1
 
 [node name="CardPivot" type="Control" parent="."]
 anchor_left = 0.5

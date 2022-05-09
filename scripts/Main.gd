@@ -24,7 +24,7 @@ onready var uiAnimations  = get_node("MainAnimations")
 onready var moneyLabel    = get_node("GameUI/GameTopBar/MoneyContainer/playerMoney")
 onready var miniChip      = preload("res://scenes/SmallChip.tscn")
 onready var cardSpawn     = get_node("GameUI/TableWrapper/CardSpawnPoint")
-onready var chipSpawn = get_node("GameUI/TableWrapper/ChipSpawnPoint")
+onready var chipSpawn = get_node("GameUI/GameTopBar/ChipSpawnPoint")
 
 
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons")
@@ -153,6 +153,8 @@ func makeBet(amount, chipName):
 		
 		var chipStartLocation = chipSpawn.rect_global_position
 		var chipEndLocation = pos.miniContainer.getNextMiniPosition()
+	
+		chipEndLocation[0] -= 17 / 1.6
 		print("Animate chip from: ", chipStartLocation, " to ", chipEndLocation)
 		
 		animateChip.rect_global_position = chipStartLocation
@@ -162,10 +164,13 @@ func makeBet(amount, chipName):
 		
 		mini.visible = true
 		
+		yield(cardTween, "tween_completed")
+		pos.addBetValue(amount)
+		remove_child(animateChip)
 		
 		
 		print("ADDED POSITION: ", mini.rect_global_position)
-		pos.addBetValue(amount)
+	
 
 	# TODO toast for failure reason
 	

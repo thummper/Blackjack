@@ -348,12 +348,6 @@ anchor_top = -0.2
 anchor_right = 0.5
 anchor_bottom = -0.2
 
-[node name="ChipSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
-anchor_left = 1.75
-anchor_top = 1.05
-anchor_right = 1.75
-anchor_bottom = 1.05
-
 [node name="GameControlWrapper" type="Control" parent="GameUI"]
 anchor_left = 0.3
 anchor_top = 0.05
@@ -379,6 +373,12 @@ theme = ExtResource( 36 )
 text = "£1000"
 align = 1
 valign = 1
+
+[node name="ChipSpawnPoint" type="Control" parent="GameUI/GameTopBar"]
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.05
+anchor_bottom = 0.5
 
 [node name="MainAnimations" type="AnimationPlayer" parent="."]
 root_node = NodePath("../UI Layer")
