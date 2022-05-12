@@ -26,6 +26,8 @@ onready var miniChip      = preload("res://scenes/SmallChip.tscn")
 onready var cardSpawn     = get_node("GameUI/TableWrapper/CardSpawnPoint")
 onready var chipSpawn = get_node("GameUI/GameTopBar/ChipSpawnPoint")
 
+onready var playerWinSpawn = get_node("GameUI/TableWrapper/PlayerPos/PlayerSpot/WinningsSpawn")
+
 
 onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons")
 onready var cardTween     = get_node("CardTween")
@@ -64,6 +66,9 @@ func _ready():
 	# Init Human Player
 	humanPlayer = playerScript.new(1000, false)
 	humanPlayer.assignPosition(playerPosition)
+	
+	humanPlayer.connect("playerMoneyWin", self, "playerMoneyWinAnimation")
+	
 	# Init Dealer
 	var dealer = playerScript.new(0, false)
 	dealer.assignPosition(dealerPosition)
@@ -123,9 +128,31 @@ func chipTweenCompleted(obj, path):
 	remove_child(obj)
 	var pos = getPlayerPosition()
 	var animatingChip = animatingChips.pop_front()
-	pos.addMiniChip(animatingChip)
 	
+	if !animatingChip.is_in_group("winnings"):
+
+		pos.addMiniChip(animatingChip)
 	
+
+
+func playerMoneyWinAnimation():
+	print("Should player animation of player chips adding")
+	
+	var chipStartLocation = playerWinSpawn.rect_global_position
+	var chipEndLocation = chipSpawn.rect_global_position
+	
+	for i in range(0, 4):
+		# Generate a minichip
+		var tempMini = miniChip.instance()
+		tempMini.setTexture("01")
+		tempMini.rect_global_position = chipStartLocation
+		tempMini.add_to_group("winnings")
+		add_child(tempMini)
+		chipTween.interpolate_property(tempMini, "rect_global_position", tempMini.rect_global_position, chipEndLocation, 1, Tween.EASE_OUT)
+		animatingChips.push_back(tempMini)
+		chipTween.start()
+		yield(get_tree().create_timer(0.1),"timeout")
+		
 
 
 func addMiniChip(chipName):

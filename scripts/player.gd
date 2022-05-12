@@ -1,3 +1,5 @@
+signal playerMoneyWin
+
 var madeBet      = false
 var handResolved = false
 var madeAction   = false
@@ -67,14 +69,20 @@ func gameResolved(_res):
 		handOver()
 	elif _res == 1:
 		handsWon += 1
-		money += currentBet * 1.5
+		winMoney(currentBet * 1.5)
+		
 		handOver()
 	elif _res == 2:
 		handsPush += 1
-		money += currentBet
+		winMoney(currentBet)
 		handOver()
 
 	playingPosition.setFeedback(_res)
+	
+	
+func winMoney(amount):
+	emit_signal("playerMoneyWin")
+	money += amount
 
 
 

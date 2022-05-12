@@ -96,16 +96,20 @@ func changeGameState(newstate):
 			print("Dealer has been resolved")
 			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer)
 
-			gameControls.delayTimer.start(0.5)
-			yield(gameControls.delayTimer, "timeout")
-
 
 			humanPlayer.clearHand()
 			dealer.clearHand()
+			
+			gameControls.delayTimer.start(0.5)
+			yield(gameControls.delayTimer, "timeout")
+			
+			
 			updateMoneyLabel()
 			hideActionButtons()
 			
 			yield(gameControls.uiAnimations, "animation_finished")
+			
+			dealer.playingPosition.hideTurnIndicator()
 			
 			changeGameState(0)
 

@@ -28,6 +28,9 @@ func resolveGame(dealer, human, eventLog, delayTimer):
 
 	var playerBust = false
 	var playerValue = human.playingPosition.handValue
+	
+	if playerValue > 21:
+		playerBust = true
 
 	if dealerBust and playerBust:
 		human.gameResolved(0)
