@@ -105,7 +105,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 0.138696 ),
+"transitions": PoolRealArray( 1, 0.34151 ),
 "update": 0,
 "values": [ 2.0, 0.0 ]
 }
@@ -117,7 +117,7 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 0.133972 ),
+"transitions": PoolRealArray( 1, 0.37893 ),
 "update": 0,
 "values": [ 3.0, 1.0 ]
 }
@@ -134,6 +134,8 @@ oc = Color( 0.0745098, 0.235294, 0.152941, 0.392157 )
 size_flags_horizontal = 5
 size_flags_vertical = 5
 texture = ExtResource( 4 )
+
+[node name="CardTween" type="Tween" parent="."]
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
 
@@ -306,59 +308,26 @@ theme = ExtResource( 11 )
 group = ExtResource( 31 )
 text = "Surrender"
 
-[node name="EventLog" parent="UI Layer/UIWRAPPER" instance=ExtResource( 6 )]
-visible = false
-
-[node name="CardTween" type="Tween" parent="."]
-
-[node name="GameUI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="TableWrapper" type="Control" parent="GameUI"]
+[node name="LeftClone" type="Control" parent="UI Layer"]
 anchor_top = 0.05
 anchor_right = 0.3
 anchor_bottom = 1.0
 
-[node name="DealerPos" type="Control" parent="GameUI/TableWrapper"]
-anchor_left = 0.5
-anchor_top = 0.25
-anchor_right = 0.5
-anchor_bottom = 0.3
+[node name="EventLog" parent="UI Layer/LeftClone" instance=ExtResource( 6 )]
+anchor_right = 1.0
+anchor_bottom = 0.15
 
-[node name="DealerSpot" parent="GameUI/TableWrapper/DealerPos" instance=ExtResource( 2 )]
-dealer = true
-
-[node name="PlayerPos" type="Control" parent="GameUI/TableWrapper"]
-anchor_left = 0.5
-anchor_top = 0.7
-anchor_right = 0.5
-anchor_bottom = 0.7
-margin_right = -192.0
-
-[node name="PlayerSpot" parent="GameUI/TableWrapper/PlayerPos" instance=ExtResource( 2 )]
-anchor_left = 0.4
-anchor_top = 0.7
-anchor_right = 0.4
-anchor_bottom = 0.7
-
-[node name="WinningsSpawn" type="Control" parent="GameUI/TableWrapper/PlayerPos/PlayerSpot"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-
-[node name="CardSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
-anchor_left = 0.5
-anchor_top = -0.2
-anchor_right = 0.5
-anchor_bottom = -0.2
+[node name="GameUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
 
 [node name="GameControlWrapper" type="Control" parent="GameUI"]
 anchor_left = 0.3
 anchor_top = 0.05
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource( 8 )
 C = Color( 0.172549, 0.203922, 0.184314, 0.862745 )
 
@@ -386,8 +355,52 @@ anchor_top = 0.5
 anchor_right = 0.05
 anchor_bottom = 0.5
 
+[node name="TableWrapper" type="Control" parent="GameUI"]
+anchor_top = 0.05
+anchor_right = 0.3
+anchor_bottom = 1.0
+mouse_filter = 1
+
+[node name="DealerPos" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.3
+mouse_filter = 1
+
+[node name="DealerSpot" parent="GameUI/TableWrapper/DealerPos" instance=ExtResource( 2 )]
+dealer = true
+
+[node name="PlayerPos" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+margin_right = -192.0
+mouse_filter = 1
+
+[node name="PlayerSpot" parent="GameUI/TableWrapper/PlayerPos" instance=ExtResource( 2 )]
+anchor_left = 0.4
+anchor_top = 0.7
+anchor_right = 0.4
+anchor_bottom = 0.7
+
+[node name="WinningsSpawn" type="Control" parent="GameUI/TableWrapper/PlayerPos/PlayerSpot"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="CardSpawnPoint" type="Control" parent="GameUI/TableWrapper"]
+anchor_left = 0.5
+anchor_top = -0.2
+anchor_right = 0.5
+anchor_bottom = -0.2
+mouse_filter = 1
+
 [node name="MainAnimations" type="AnimationPlayer" parent="."]
 root_node = NodePath("../UI Layer")
+playback_process_mode = 0
 playback_speed = 2.0
 anims/HideBettingInfo = SubResource( 2 )
 anims/RESET = SubResource( 1 )

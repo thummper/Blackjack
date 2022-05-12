@@ -58,6 +58,8 @@ func clear():
 	for _child in activeContainer.get_children():
 		activeContainer.remove_child(_child)
 		_child.queue_free()
+		
+	totalChildren = 0
 	
 	
 

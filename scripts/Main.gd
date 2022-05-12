@@ -19,7 +19,7 @@ var betsMade = false
 onready var bottomUI = get_node("UI Layer/UIWRAPPER/BottomUI")
 
 onready var actionButtons = get_node("UI Layer/UIWRAPPER/BottomUI/GameActions")
-onready var trayButton    = get_node("UI Layer/UIWRAPPER/BottomUI/ChipButtonContainer/trayButtonVAlign/trayButton")
+
 onready var uiAnimations  = get_node("MainAnimations")
 onready var moneyLabel    = get_node("GameUI/GameTopBar/MoneyContainer/playerMoney")
 onready var miniChip      = preload("res://scenes/SmallChip.tscn")
@@ -27,14 +27,14 @@ onready var cardSpawn     = get_node("GameUI/TableWrapper/CardSpawnPoint")
 onready var chipSpawn = get_node("GameUI/GameTopBar/ChipSpawnPoint")
 
 
-onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons")
+onready var gameDealActions = get_node("UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons")
 onready var cardTween     = get_node("CardTween")
 onready var chipTween = get_node("ChipTween")
 onready var delayTimer    = get_node("DelayTimer")
-onready var eventLog = get_node("UI Layer/UIWRAPPER/EventLog")
+onready var eventLog = get_node("UI Layer/LeftClone/EventLog")
 
 onready var gameControls = {
-	"chipTrayControl": trayButton,
+
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
 	"uiAnimations": uiAnimations,
@@ -42,7 +42,7 @@ onready var gameControls = {
 	"cardTween": cardTween,
 	"moneyLabel": moneyLabel,
 	"delayTimer": delayTimer,
-	"trayButton": trayButton,
+
 	"eventLog": eventLog
 }
 
@@ -107,12 +107,6 @@ func _process(delta):
 
 
 
-func trayButtonMouseEnter():
-	trayButton.setLight()
-
-func trayButtonMouseExit():
-	trayButton.setDark()
-
 
 
 
@@ -125,13 +119,8 @@ func changePlayerMoney(amount):
 var animatingChips = []
 
 func chipTweenCompleted(obj, path):
-	
 	# Get the most recently added chip
-	
-	
-	
 	remove_child(obj)
-	
 	var pos = getPlayerPosition()
 	var animatingChip = animatingChips.pop_front()
 	pos.addMiniChip(animatingChip)

@@ -65,9 +65,10 @@ func changeGameState(newstate):
 			# Enable betting
 			# Technically this already happens, we check game state in main
 			# We could toggle the UI
+			
 			showTray()
 			# gameControls.dealActions.enableButtons()
-			gameControls.actionButtons.disableButtons()
+			# gameControls.actionButtons.disableButtons()
 			# Disable action buttons
 			print("Game ended / not playing")
 			print("Enable betting / clear bets")
@@ -91,11 +92,22 @@ func changeGameState(newstate):
 			print(" All hands have been resolved")
 			resolveDealer()
 		7:
-			# Hide actions buttons
-			hideActionButtons()
+			
 			print("Dealer has been resolved")
-			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, updateMoneyLabel())
+			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer)
 
+			gameControls.delayTimer.start(0.5)
+			yield(gameControls.delayTimer, "timeout")
+
+
+			humanPlayer.clearHand()
+			dealer.clearHand()
+			updateMoneyLabel()
+			hideActionButtons()
+			
+			yield(gameControls.uiAnimations, "animation_finished")
+			
+			changeGameState(0)
 
 
 
@@ -192,13 +204,15 @@ func hideTray():
 		
 func showActionButtons():
 	if !actionButtonsVisible:
-		actionButtonsVisible = true
 		gameControls.uiAnimations.play("ShowGameActions")
+		actionButtonsVisible = true
 	
 func hideActionButtons():
 	if actionButtonsVisible:
-		actionButtonsVisible = false
 		gameControls.uiAnimations.play_backwards("ShowGameActions")
+		actionButtonsVisible = false
+
+		
 
 # Deal to an entitiy that has a playing position
 func dealTo(_player, cardVisible = true):

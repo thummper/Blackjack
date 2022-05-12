@@ -59,6 +59,7 @@ _res
 2 - push
 """
 func gameResolved(_res):
+	print("RESOLVE GAME: ", _res)
 	# Regardless of outcome, we have played a game
 	handsPlayed += 1
 	if _res == 0:
