@@ -5,6 +5,9 @@ onready var topBar = get_node("GameTopBar")
 onready var tabContainer = get_node("CanvasLayer/GameControlWrapper/TabContainer")
 onready var tabButtonContainer = get_node("CanvasLayer/GameControlWrapper/TabButtons/TabButtonsHCenter")
 
+onready var activeTheme = preload("res://misc/Themes/TabActiveTheme.tres")
+onready var subTheme = preload("res://misc/Themes/TabSubTheme.tres")
+
 
 var tabButtons = []
 var activeButton = null
@@ -26,6 +29,9 @@ func _ready():
 		
 		if i == 0:
 			activeButton = newButton
+			newButton.theme = activeTheme
+		else:
+			newButton.theme = subTheme 
 		
 		tabButtonContainer.add_child(newButton)
 		tabButtons.push_back(newButton)
@@ -35,5 +41,13 @@ func _ready():
 func tabButtonPressed(button, i):
 	tabContainer.current_tab = i
 	activeButton = button
+	
+	
+	for i in range(0, tabButtons.size()):
+		var btn = tabButtons[i]
+		btn.theme = subTheme 
+	activeButton.theme = activeTheme
+	
+	
 	
 

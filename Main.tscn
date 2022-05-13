@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://scripts/GameTopBar.gd" type="Script" id=12]
 [ext_resource path="res://misc/MAINFONT.tres" type="DynamicFont" id=13]
 [ext_resource path="res://scripts/gameUI.gd" type="Script" id=14]
+[ext_resource path="res://misc/Themes/TabSubTheme.tres" type="Theme" id=15]
+[ext_resource path="res://scenes/GenericUpgrade.tscn" type="PackedScene" id=16]
 [ext_resource path="res://misc/tempActionButtons.tres" type="ButtonGroup" id=31]
 [ext_resource path="res://scripts/TempActionUI.gd" type="Script" id=32]
 [ext_resource path="res://scripts/MoneyContainer.gd" type="Script" id=35]
@@ -185,13 +187,12 @@ texture = ExtResource( 4 )
 layer = 2
 
 [node name="UIWRAPPER" type="Control" parent="UI Layer"]
-anchor_top = 0.2
+anchor_top = 0.86
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="BottomUI" type="Control" parent="UI Layer/UIWRAPPER"]
 anchor_left = 0.32
-anchor_top = 0.86
 anchor_right = 0.68
 anchor_bottom = 0.98
 grow_horizontal = 2
@@ -222,9 +223,9 @@ size_flags_vertical = 0
 alignment = 1
 
 [node name="HorizontalCenterButtons" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons"]
-margin_top = 6.0
+margin_top = 8.0
 margin_right = 192.0
-margin_bottom = 29.0
+margin_bottom = 31.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = 12
@@ -267,9 +268,9 @@ grow_vertical = 2
 alignment = 1
 
 [node name="HorizontalCenterChips" type="HBoxContainer" parent="UI Layer/UIWRAPPER/BottomUI/BettingInformation/ChipActions/VerticleCenterChips"]
-margin_top = 45.0
+margin_top = 49.0
 margin_right = 472.0
-margin_bottom = 45.0
+margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_constants/separation = 6
@@ -291,9 +292,9 @@ alignment = 1
 
 [node name="HitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 3.0
-margin_top = 17.0
+margin_top = 31.0
 margin_right = 98.0
-margin_bottom = 52.0
+margin_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 95, 35 )
@@ -304,9 +305,9 @@ text = "Hit"
 
 [node name="StandButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 110.0
-margin_top = 17.0
+margin_top = 31.0
 margin_right = 195.0
-margin_bottom = 52.0
+margin_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 85, 35 )
@@ -317,9 +318,9 @@ text = "Stand"
 
 [node name="DoubleButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 207.0
-margin_top = 17.0
+margin_top = 31.0
 margin_right = 292.0
-margin_bottom = 52.0
+margin_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 85, 35 )
@@ -330,9 +331,9 @@ text = "Double"
 
 [node name="SplitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 304.0
-margin_top = 17.0
+margin_top = 31.0
 margin_right = 369.0
-margin_bottom = 52.0
+margin_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 65, 35 )
@@ -343,9 +344,9 @@ text = "Split"
 
 [node name="SurrenderButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 381.0
-margin_top = 17.0
+margin_top = 31.0
 margin_right = 457.0
-margin_bottom = 52.0
+margin_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 65, 35 )
@@ -456,6 +457,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 0
 
+[node name="Button" type="Button" parent="GameUI/CanvasLayer/GameControlWrapper/TabButtons/TabButtonsHCenter"]
+visible = false
+margin_right = 154.0
+margin_bottom = 36.0
+theme = ExtResource( 15 )
+text = "Blackjack Upgrades"
+
 [node name="TabContainer" type="TabContainer" parent="GameUI/CanvasLayer/GameControlWrapper"]
 anchor_top = 0.05
 anchor_right = 1.0
@@ -470,10 +478,51 @@ drag_to_rearrange_enabled = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Label" type="Label" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "BJ UPGRADES"
+[node name="ScrollContainer" type="ScrollContainer" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+scroll_horizontal_enabled = false
+
+[node name="HBoxContainer" type="VBoxContainer" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer"]
+margin_right = 884.0
+margin_bottom = 1220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_right = 884.0
+margin_bottom = 200.0
+
+[node name="Control2" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_top = 204.0
+margin_right = 884.0
+margin_bottom = 404.0
+
+[node name="Control5" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_top = 408.0
+margin_right = 884.0
+margin_bottom = 608.0
+
+[node name="Control6" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_top = 612.0
+margin_right = 884.0
+margin_bottom = 812.0
+
+[node name="Control4" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_top = 816.0
+margin_right = 884.0
+margin_bottom = 1016.0
+
+[node name="Control3" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer" instance=ExtResource( 16 )]
+anchor_right = 0.0
+margin_top = 1020.0
+margin_right = 884.0
+margin_bottom = 1220.0
 
 [node name="Hiring" type="Control" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer"]
 visible = false
