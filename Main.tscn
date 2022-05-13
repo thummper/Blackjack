@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/PlayingSpot.tscn" type="PackedScene" id=2]
@@ -12,10 +12,54 @@
 [ext_resource path="res://misc/Themes/PrimaryAction.tres" type="Theme" id=10]
 [ext_resource path="res://misc/Themes/SecondaryAction.tres" type="Theme" id=11]
 [ext_resource path="res://scripts/GameTopBar.gd" type="Script" id=12]
+[ext_resource path="res://misc/MAINFONT.tres" type="DynamicFont" id=13]
+[ext_resource path="res://scripts/gameUI.gd" type="Script" id=14]
 [ext_resource path="res://misc/tempActionButtons.tres" type="ButtonGroup" id=31]
 [ext_resource path="res://scripts/TempActionUI.gd" type="Script" id=32]
 [ext_resource path="res://scripts/MoneyContainer.gd" type="Script" id=35]
 [ext_resource path="res://misc/uitexttheme.tres" type="Theme" id=36]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.172549, 0.203922, 0.184314, 0.862745 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+bg_color = Color( 0.286275, 0.321569, 0.34902, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+
+[sub_resource type="StyleBoxFlat" id=7]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color( 0.415686, 0.454902, 0.717647, 1 )
+
+[sub_resource type="Theme" id=4]
+Control/constants/hseparation = 10
+Control/styles/tab_disabled = SubResource( 10 )
+TabContainer/colors/font_color_bg = Color( 1, 1, 1, 1 )
+TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+TabContainer/colors/font_color_fg = Color( 0.94, 0.94, 0.94, 1 )
+TabContainer/constants/hseparation = 20
+TabContainer/constants/label_valign_bg = 0
+TabContainer/constants/label_valign_fg = 0
+TabContainer/constants/side_margin = -1
+TabContainer/constants/top_margin = 0
+TabContainer/fonts/font = ExtResource( 13 )
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = null
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = null
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = SubResource( 9 )
+TabContainer/styles/tab_bg = SubResource( 8 )
+TabContainer/styles/tab_disabled = SubResource( 6 )
+TabContainer/styles/tab_fg = SubResource( 7 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "HideBettingInfo"
@@ -138,8 +182,10 @@ texture = ExtResource( 4 )
 [node name="CardTween" type="Tween" parent="."]
 
 [node name="UI Layer" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="UIWRAPPER" type="Control" parent="UI Layer"]
+anchor_top = 0.2
 anchor_right = 1.0
 anchor_bottom = 1.0
 
@@ -245,9 +291,9 @@ alignment = 1
 
 [node name="HitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 3.0
-margin_top = 25.0
+margin_top = 17.0
 margin_right = 98.0
-margin_bottom = 60.0
+margin_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 95, 35 )
@@ -258,9 +304,9 @@ text = "Hit"
 
 [node name="StandButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 110.0
-margin_top = 25.0
+margin_top = 17.0
 margin_right = 195.0
-margin_bottom = 60.0
+margin_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 85, 35 )
@@ -271,9 +317,9 @@ text = "Stand"
 
 [node name="DoubleButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 207.0
-margin_top = 25.0
+margin_top = 17.0
 margin_right = 292.0
-margin_bottom = 60.0
+margin_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 85, 35 )
@@ -284,9 +330,9 @@ text = "Double"
 
 [node name="SplitButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 304.0
-margin_top = 25.0
+margin_top = 17.0
 margin_right = 369.0
-margin_bottom = 60.0
+margin_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 65, 35 )
@@ -297,9 +343,9 @@ text = "Split"
 
 [node name="SurrenderButton" type="Button" parent="UI Layer/UIWRAPPER/BottomUI/GameActions/ActionHAlign" groups=["playerActionButtons"]]
 margin_left = 381.0
-margin_top = 25.0
+margin_top = 17.0
 margin_right = 457.0
-margin_bottom = 60.0
+margin_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 65, 35 )
@@ -321,19 +367,12 @@ anchor_bottom = 0.15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
-
-[node name="GameControlWrapper" type="Control" parent="GameUI"]
-anchor_left = 0.3
-anchor_top = 0.05
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 1
-script = ExtResource( 8 )
-C = Color( 0.172549, 0.203922, 0.184314, 0.862745 )
+script = ExtResource( 14 )
 
 [node name="GameTopBar" type="Control" parent="GameUI"]
 anchor_right = 1.0
 anchor_bottom = 0.05
+rect_min_size = Vector2( 0, 21 )
 script = ExtResource( 12 )
 
 [node name="MoneyContainer" type="Control" parent="GameUI/GameTopBar"]
@@ -398,6 +437,57 @@ anchor_right = 0.5
 anchor_bottom = -0.2
 mouse_filter = 1
 
+[node name="CanvasLayer" type="CanvasLayer" parent="GameUI"]
+
+[node name="GameControlWrapper" type="Control" parent="GameUI/CanvasLayer"]
+anchor_left = 0.3
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource( 8 )
+C = Color( 0.172549, 0.203922, 0.184314, 0.862745 )
+
+[node name="TabButtons" type="Control" parent="GameUI/CanvasLayer/GameControlWrapper"]
+anchor_right = 1.0
+anchor_bottom = 0.05
+
+[node name="TabButtonsHCenter" type="HBoxContainer" parent="GameUI/CanvasLayer/GameControlWrapper/TabButtons"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+
+[node name="TabContainer" type="TabContainer" parent="GameUI/CanvasLayer/GameControlWrapper"]
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 4 )
+tab_align = 0
+tabs_visible = false
+all_tabs_in_front = true
+drag_to_rearrange_enabled = true
+
+[node name="BlackJack Upgrades" type="Control" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "BJ UPGRADES"
+
+[node name="Hiring" type="Control" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Label" type="Label" parent="GameUI/CanvasLayer/GameControlWrapper/TabContainer/Hiring"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "HIRING"
+
 [node name="MainAnimations" type="AnimationPlayer" parent="."]
 root_node = NodePath("../UI Layer")
 playback_process_mode = 0
@@ -411,3 +501,4 @@ anims/ShowGameActions = SubResource( 3 )
 [connection signal="makeBet" from="UI Layer/UIWRAPPER/BottomUI" to="." method="makeBet"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons/DealButton" to="." method="dealButton_pressed"]
 [connection signal="pressed" from="UI Layer/UIWRAPPER/BottomUI/BettingInformation/ButtonActions/VerticleCenterButtons/HorizontalCenterButtons/ClearBetButton" to="." method="clearBetButton_pressed"]
+[connection signal="resized" from="GameUI/GameTopBar" to="GameUI" method="_on_GameTopBar_resized"]

@@ -13,7 +13,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _draw():
-	var bg        = GameVars.outlineDark
-	var style_box = GameVars.getUIStyleBox(bg, [5, 0, 5, 0], 2)
-	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))
+#func _draw():
+#	var bg        = GameVars.outlineDark
+#	var style_box = GameVars.getUIStyleBox(bg, [5, 0, 5, 0], 2)
+#	draw_style_box(style_box, Rect2(Vector2(0,0), rect_size))
