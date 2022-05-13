@@ -15,6 +15,7 @@ var blackjacks  = 0
 var handsSurrendered = 0
 var playingPosition  = null
 var currentBet  = 0
+var moneyToAdd = 0
 
 
 
@@ -82,7 +83,7 @@ func gameResolved(_res):
 	
 func winMoney(amount):
 	emit_signal("playerMoneyWin")
-	money += amount
+	moneyToAdd += amount
 
 
 

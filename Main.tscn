@@ -361,6 +361,7 @@ anchor_right = 0.3
 anchor_bottom = 1.0
 
 [node name="EventLog" parent="UI Layer/LeftClone" instance=ExtResource( 6 )]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 0.15
 

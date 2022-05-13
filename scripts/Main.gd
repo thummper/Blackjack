@@ -44,7 +44,6 @@ onready var gameControls = {
 	"cardTween": cardTween,
 	"moneyLabel": moneyLabel,
 	"delayTimer": delayTimer,
-
 	"eventLog": eventLog
 }
 
@@ -103,6 +102,7 @@ func trayButton_pressed():
 			currentGame.showTray()
 
 func _process(delta):
+	currentGame.update(delta)
 	# If we are not currently playing
 	if(currentGame.gamestate == 0):
 		currentGame.checkBetting()

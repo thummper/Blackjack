@@ -49,6 +49,30 @@ func _init(_deck, _player, _dealer, controls):
 
 
 
+func update(delta):
+	var addAmount = 10
+	var moneyToAdd = humanPlayer.moneyToAdd
+	
+	print("TO ADD: ", moneyToAdd, " ADD AMT: ", addAmount)
+	
+	if moneyToAdd < 10 and moneyToAdd > -10:
+		addAmount = abs(moneyToAdd)
+	
+	
+	if humanPlayer.moneyToAdd != 0:
+	
+		if humanPlayer.moneyToAdd < 0:
+			humanPlayer.money -= addAmount
+			humanPlayer.moneyToAdd += addAmount
+		else:
+			humanPlayer.money += addAmount
+			humanPlayer.moneyToAdd -= addAmount
+	updateMoneyLabel()
+			
+
+
+
+
 """
 GAMESTATES:
 	0 - GAME NOT STARTED
@@ -243,7 +267,7 @@ func humanPlayerBet(amount):
 
 
 func changePlayerMoney(amount):
-	humanPlayer.money += amount
+	humanPlayer.moneyToAdd += amount
 	updateMoneyLabel()
 
 func updateMoneyLabel():
