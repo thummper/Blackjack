@@ -66,7 +66,7 @@ onready var dealerPosition = get_node("GameUI/TableWrapper/DealerPos/DealerSpot"
 func _ready():
 	chipTween.connect("tween_completed", self, "chipTweenCompleted")
 	# Init Human Player
-	humanPlayer = playerScript.new(1000, false)
+	humanPlayer = playerScript.new(10000, false)
 	humanPlayer.assignPosition(playerPosition)
 	
 	humanPlayer.connect("playerMoneyWin", self, "playerMoneyWinAnimation")

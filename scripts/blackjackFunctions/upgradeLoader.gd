@@ -6,13 +6,13 @@ var upgradeScene = preload("res://scenes/GenericUpgrade.tscn")
 var upgradeStorage = []
 var upgradeVars
 
-func _init(_upgradeVars):
+func _init(_upgradeVars, gameScript):
 	print("Upgrade loader has initialised")
 	upgradeJSON = load_json(upgradeJSONPath)
 	# I really hope this is a reference 
 	upgradeVars = _upgradeVars
 	if upgradeJSON != null:
-		generateUpgrades()
+		generateUpgrades(gameScript)
 	else:
 		print("Failed to open upgrade json file")
 	
@@ -25,7 +25,7 @@ func load_json(path):
 	if file.open(path, file.READ) != OK: return
 	return parse_json(file.get_as_text())
 	
-func generateUpgrades():
+func generateUpgrades(gameScript):
 	var upgrades = upgradeJSON['upgrades']
 	for upgrade in upgrades:
 		# Instance the upgrade scene and add all the information
@@ -34,9 +34,11 @@ func generateUpgrades():
 		# Either pass upgrade vars here, or update all upgrades on a certain signal emit (upgrade purchased)
 		newUpgrade.setDetails(upgrade, upgradeVars)
 		
+		newUpgrade.connect("buttonPressed", gameScript, "upgradePurchasePressed", [newUpgrade])
+		
 		upgradeStorage.push_back(newUpgrade)
 
 func displayUpgrades(container):
 	for upgradeInstance in upgradeStorage:
 		container.add_child(upgradeInstance)
-
+		

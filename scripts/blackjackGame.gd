@@ -52,7 +52,8 @@ func _init(_deck, _player, _dealer, controls):
 	# Previously had AI assignment to dealing order, TODO: update this structire
 	assignDeck(_deck)
 	gameResolver = gameResolverScript.new()
-	upgradeHandler = upgradeLoaderScript.new(upgradableVars)
+	upgradeHandler = upgradeLoaderScript.new(upgradableVars, self)
+
 	# Display all upgrades on panel
 	upgradeHandler.displayUpgrades(gameControls.upgradeContainer)
 	
@@ -149,6 +150,19 @@ func changeGameState(newstate):
 			
 			changeGameState(0)
 
+
+func upgradePurchasePressed(upgrade):
+	print("Player has: ", humanPlayer.money, " upgrade costs: ", upgrade.cost)
+	
+	
+	if humanPlayer.money >= upgrade.cost:
+		changePlayerMoney(-upgrade.cost)
+		# Upgrade amount has to increment
+		upgrade.quantity += 1
+		
+		# Modify the game var the upgrade corresponds to
+		upgradableVars[upgrade.upgradeName] = upgradableVars[upgrade.upgradeName] + upgrade.upgradeDetails.changeAmount
+		upgrade.updatePrice()
 
 
 
