@@ -34,9 +34,11 @@ onready var cardTween     = get_node("CardTween")
 onready var chipTween = get_node("ChipTween")
 onready var delayTimer    = get_node("DelayTimer")
 onready var eventLog = get_node("UI Layer/LeftClone/EventLog")
+onready var upgradeContainer = get_node("GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer")
+
 
 onready var gameControls = {
-
+	
 	"cardSpawn": cardSpawn,
 	"actionButtons": actionButtons,
 	"uiAnimations": uiAnimations,
@@ -44,7 +46,8 @@ onready var gameControls = {
 	"cardTween": cardTween,
 	"moneyLabel": moneyLabel,
 	"delayTimer": delayTimer,
-	"eventLog": eventLog
+	"eventLog": eventLog,
+	"upgradeContainer": upgradeContainer
 }
 
 

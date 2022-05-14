@@ -1,0 +1,32 @@
+{
+    "upgrades": [
+
+        {
+            "name": "Action Money Upgrade",
+            "description": "Increases the money gained per action taken from %.2f to %.2f",
+            "stringFormat": true,
+            "startPrice": 500,
+            "costBase": 100,
+            "countFactor": 50,
+            "changeAmount": 0.25,
+            "upgradeVar": "actionMoney"
+        },
+        {
+            "name": "Hand Loss Amount",
+            "description": "Decreases the amount of money lost when losing a hand from %.2f%% to %.2f%%",
+            "stringFormat": true,
+            "startPrice": 1000,
+            "costBase": 200,
+            "countFactor": 25,
+            "changeAmount": -0.025,
+            "upgradeVar": "handLoseModifier"
+        },
+
+
+
+
+
+
+
+    ]
+}

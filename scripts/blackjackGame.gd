@@ -2,6 +2,7 @@ extends Node
 
 
 var gameResolverScript = preload("res://scripts/blackjackFunctions/gameResolve.gd")
+var upgradeLoaderScript = preload("res://scripts/blackjackFunctions/upgradeLoader.gd")
 
 # Logic to play blackjack
 var gameDeck
@@ -16,6 +17,7 @@ var dealerStand    = 17
 var bettingEnabled = true
 var activePlayer = null
 var gameResolver
+var upgradeHandler
 
 
 var dealer
@@ -34,16 +36,26 @@ var dealingOrder = {
 	4: null
 }
 
+var upgradableVars = {
+	"actionMoney": 1,
+	"handLoseModifier": 0.9
+}
+
 
 func _init(_deck, _player, _dealer, controls):
 	dealer = _dealer
 	humanPlayer = _player
 	gameControls = controls
-	gameResolver = gameResolverScript.new()
+
 	
 	dealingOrder[humanPlayer.playingPosition.order] = humanPlayer
 	# Previously had AI assignment to dealing order, TODO: update this structire
 	assignDeck(_deck)
+	gameResolver = gameResolverScript.new()
+	upgradeHandler = upgradeLoaderScript.new(upgradableVars)
+	# Display all upgrades on panel
+	upgradeHandler.displayUpgrades(gameControls.upgradeContainer)
+	
 	# Progress game state to triggle UI animations
 	changeGameState(0)
 
@@ -53,7 +65,7 @@ func update(delta):
 	var addAmount = 10
 	var moneyToAdd = humanPlayer.moneyToAdd
 	
-	print("TO ADD: ", moneyToAdd, " ADD AMT: ", addAmount)
+
 	
 	if moneyToAdd < 10 and moneyToAdd > -10:
 		addAmount = abs(moneyToAdd)
