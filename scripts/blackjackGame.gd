@@ -59,28 +59,19 @@ func _init(_deck, _player, _dealer, controls):
 	
 	# Progress game state to triggle UI animations
 	changeGameState(0)
+	
+
+
+
+
 
 
 
 func update(delta):
-	var addAmount = 10
-	var moneyToAdd = humanPlayer.moneyToAdd
-	
-
-	
-	if moneyToAdd < 10 and moneyToAdd > -10:
-		addAmount = abs(moneyToAdd)
-	
-	
-	if humanPlayer.moneyToAdd != 0:
-	
-		if humanPlayer.moneyToAdd < 0:
-			humanPlayer.money -= addAmount
-			humanPlayer.moneyToAdd += addAmount
-		else:
-			humanPlayer.money += addAmount
-			humanPlayer.moneyToAdd -= addAmount
+	humanPlayer.updatePlayerMoney(delta)
 	updateMoneyLabel()
+
+
 			
 
 
@@ -129,10 +120,8 @@ func changeGameState(newstate):
 			print(" All hands have been resolved")
 			resolveDealer()
 		7:
-			
 			print("Dealer has been resolved")
 			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer)
-
 
 			humanPlayer.clearHand()
 			dealer.clearHand()
@@ -155,8 +144,9 @@ func upgradePurchasePressed(upgrade):
 	print("Player has: ", humanPlayer.money, " upgrade costs: ", upgrade.cost)
 	
 	
-	if humanPlayer.money >= upgrade.cost:
-		changePlayerMoney(-upgrade.cost)
+	if (humanPlayer.money + humanPlayer.moneyToAdd) >= upgrade.cost:
+		humanPlayer.removeMoney(upgrade.cost)
+
 		# Upgrade amount has to increment
 		upgrade.quantity += 1
 		
@@ -290,11 +280,10 @@ func checkBetting():
 
 func humanPlayerBet(amount):
 	humanPlayer.bet(amount)
+	humanPlayer.removeMoney(amount)
 
 
-func changePlayerMoney(amount):
-	humanPlayer.moneyToAdd += amount
-	updateMoneyLabel()
+
 
 func updateMoneyLabel():
 	gameControls.moneyLabel.text = "£" + String(humanPlayer.money)
