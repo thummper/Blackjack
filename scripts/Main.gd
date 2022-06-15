@@ -188,10 +188,6 @@ func makeBet(amount, chipName):
 	if(currentGame.gamestate == 0 && currentGame.humanPlayer.money >= amount):
 		# We can and are making a bet
 		currentGame.humanPlayerBet(amount)
-	
-	
-		
-		
 		var pos = getPlayerPosition()
 		pos.addBetValue(amount)
 		addMiniChip(chipName)

@@ -121,11 +121,11 @@ func changeGameState(newstate):
 			resolveDealer()
 		7:
 			print("Dealer has been resolved")
-			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer)
+			# When a hand is resolved, the winnings / losses may be impacted by generic upgrades
+			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer, upgradableVars)
 
 			humanPlayer.clearHand()
 			dealer.clearHand()
-			
 			gameControls.delayTimer.start(0.5)
 			yield(gameControls.delayTimer, "timeout")
 			

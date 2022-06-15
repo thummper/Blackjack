@@ -1,7 +1,7 @@
 extends Node
 # Helper class to handle game resolution and to play hand over animations
 # Check dealer and all player hands, resolve outcomes
-func resolveGame(dealer, human, eventLog, delayTimer):
+func resolveGame(dealer, human, eventLog, delayTimer, upgradeVars):
 	print("GAME RESOLVE")
 	
 	""" 
@@ -20,6 +20,9 @@ func resolveGame(dealer, human, eventLog, delayTimer):
 	
 	"""
 
+
+	
+
 	var dealerBust = false
 	var dealerValue = dealer.playingPosition.handValue
 
@@ -28,31 +31,49 @@ func resolveGame(dealer, human, eventLog, delayTimer):
 
 	var playerBust = false
 	var playerValue = human.playingPosition.handValue
-	
 	if playerValue > 21:
 		playerBust = true
 
+
+
+
+	var playerLose = false
+	var playerWin = false
+	var playerPush = false
+
 	if dealerBust and playerBust:
-		human.gameResolved(0)
+		# Player has lost
+		playerLose = true
 		eventLog.addMessage("System", "Player and dealer have both bust")
+
 	elif !dealerBust and playerBust:
-		human.gameResolved(0)
+		playerLose = true
 		eventLog.addMessage("System", "Player has bust but dealer has not")
+
 	elif dealerBust and !playerBust:
-		human.gameResolved(1)
+		playerWin = true
 		eventLog.addMessage("System", "Dealer bust but player did not")
+
 	elif !dealerBust and !playerBust:
 		eventLog.addMessage("System", "Neither player has bust")
 		# As neither player busted, the logic is a bit more advanced
 		if playerValue > dealerValue:
-			human.gameResolved(1)
+			playerWin = true
 			eventLog.addMessage("System", "Player hand beats Dealer hand")
 		elif playerValue == dealerValue:
-			human.gameResolved(2)
+			playerPush = true
 			eventLog.addMessage("System", "Hands are equal, draw")
 		else:
-			human.gameResolved(0)
+			playerLose = true
 			eventLog.addMessage("System", "Delaer hand beats Player")
+
+	if playerLose:
+		human.gameResolved(0, upgradeVars)
+	elif playerWin:
+		human.gameResolved(1, upgradeVars)
+	elif playerPush:
+		human.gameResolved(2, upgradeVars)
+
 			
 
 

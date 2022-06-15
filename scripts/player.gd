@@ -56,7 +56,7 @@ func revealAllCards():
 # Empty cards from playing position and reset internal vars (value)
 func clearHand():
 	playingPosition.clearPosition()
-	pass
+
 
 
 
@@ -66,17 +66,17 @@ _res
 1 - win
 2 - push
 """
-func gameResolved(_res):
+func gameResolved(_res, upgradeVars):
 	print("RESOLVE GAME: ", _res)
 	# Regardless of outcome, we have played a game
 	handsPlayed += 1
 	if _res == 0:
 		handsLost += 1
+		loseMoney(currentBet, upgradeVars)
 		handOver()
 	elif _res == 1:
 		handsWon += 1
 		winMoney(currentBet * 1.5)
-		
 		handOver()
 	elif _res == 2:
 		handsPush += 1
@@ -88,6 +88,18 @@ func gameResolved(_res):
 func winMoney(amount):
 	emit_signal("playerMoneyWin")
 	addMoney(amount)
+
+func loseMoney(amount, upgradeVars):
+	var loseMod = upgradeVars['handLoseModifier'];
+	# Instead of losing the full amount of money, we lose amount * mod
+	var lossAmount = amount * loseMod
+	var refundAmount = amount - lossAmount
+	addMoney(refundAmount)
+
+
+
+	
+
 
 
 # Add money and remove money should triggle addAmount to be updated
@@ -115,23 +127,11 @@ func updatePlayerMoney(delta):
 		else:
 			# Otherwise, just add the amount of money we need to finish the animation in x seconds
 			addAmount = round(moneyAnimationAmount * delta)
-			
-		print("ADD AMOUNT: ", addAmount)
-		
-		
-		money += addAmount
-		
+
+		money += addAmount		
 		if(addAmount < 0):
 			# We are removing money
 			moneyToAdd += abs(addAmount)
 		else:
 			moneyToAdd -= abs(addAmount)
-			
-			
-
-				
-			
-		#print("ADD AMOUNT: ", addAmount, " MONEY TO ADD: ", moneyToAdd)
-		
-
 

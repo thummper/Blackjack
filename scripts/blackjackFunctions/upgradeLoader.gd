@@ -17,8 +17,6 @@ func _init(_upgradeVars, gameScript):
 		print("Failed to open upgrade json file")
 	
 
-	
-
 
 func load_json(path):
 	var file = File.new()
@@ -33,9 +31,7 @@ func generateUpgrades(gameScript):
 		var newUpgrade = upgradeScene.instance()
 		# Either pass upgrade vars here, or update all upgrades on a certain signal emit (upgrade purchased)
 		newUpgrade.setDetails(upgrade, upgradeVars)
-		
 		newUpgrade.connect("buttonPressed", gameScript, "upgradePurchasePressed", [newUpgrade])
-		
 		upgradeStorage.push_back(newUpgrade)
 
 func displayUpgrades(container):
