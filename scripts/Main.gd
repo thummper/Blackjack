@@ -87,6 +87,8 @@ func connectGameSignals():
 	actionButtons.doubleButton.connect("pressed", currentGame, "playerAction", [actionButtons.doubleButton])
 	actionButtons.splitButton.connect("pressed", currentGame, "playerAction", [actionButtons.splitButton])
 	actionButtons.surrenderButton.connect("pressed", currentGame, "playerAction", [actionButtons.surrenderButton])
+	
+	currentGame.connect("succPlayerAction", self, "succPlayerAction")
 
 
 
@@ -194,13 +196,19 @@ func makeBet(amount, chipName):
 
 
 
-
+func succPlayerAction():
+	print("Player has made a successful action")
+	currentGame.awardActionMoney()
 
 func dealButton_pressed():
-	# This means human player has finished betting
-	currentGame.humanPlayer.endBetting()
-
-
+	# Action Validation - check that the player has made a bet
+	if(currentGame.humanPlayer.currentBet > 0):
+		# Player has made a bet so can end betting phase
+		currentGame.humanPlayer.endBetting()
+		succPlayerAction()
+	else:
+		print("MAIN - player is trying to end betting phase before making a bet")
+		
 
 func clearBetButton_pressed():
 	print("Should clear bet")

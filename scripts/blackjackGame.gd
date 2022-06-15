@@ -1,5 +1,7 @@
 extends Node
 
+signal succPlayerAction
+
 
 var gameResolverScript = preload("res://scripts/blackjackFunctions/gameResolve.gd")
 var upgradeLoaderScript = preload("res://scripts/blackjackFunctions/upgradeLoader.gd")
@@ -316,7 +318,10 @@ func printCardValue(entitiy, card, position):
 		gameControls.eventLog.addMessage("System", "Dealt face down card to " + entitiy)
 
 
-
+# Award player money for making a valid action
+func awardActionMoney():
+	humanPlayer.addMoney(upgradableVars['actionMoney'])
+	
 
 
 # Handle actions below v
@@ -326,12 +331,22 @@ func playerAction(button):
 	match action:
 		"hit":
 			gameControls.eventLog.addMessage("System", "Player hit")
-			playerHit()
+			# Action validation hit - player can only hit if current hand is not resolved
+			if(humanPlayer.handResolved == false):
+				# Player's hand is not resolved, so they can stil hit
+				# If hand value > 21, player hand becomes resolved
+					emit_signal("succPlayerAction")
+					playerHit()
 		"stand":
 			gameControls.eventLog.addMessage("System", "Player stand")
-			playerStand()
+			# Action validation stand - player can only stand if current hand is not resolved
+			# Pressing the stand button will set the hand to resolved
+			if(humanPlayer.handResolved == false):
+				emit_signal("succPlayerAction")
+				playerStand()
 		"surrender":
 			gameControls.eventLog.addMessage("System", "Player surrender")
+			# Action validation surrender - Player can only surrender as the first action of their turn
 			playerSurrender()
 		"split":
 			gameControls.eventLog.addMessage("System", "Player split")
