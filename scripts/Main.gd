@@ -35,7 +35,7 @@ onready var chipTween = get_node("ChipTween")
 onready var delayTimer    = get_node("DelayTimer")
 onready var eventLog = get_node("UI Layer/LeftClone/EventLog")
 onready var upgradeContainer = get_node("GameUI/CanvasLayer/GameControlWrapper/TabContainer/BlackJack Upgrades/ScrollContainer/HBoxContainer")
-
+onready var infoModal = get_node("GameUI/CanvasLayer/InfoModal")
 
 onready var gameControls = {
 	
@@ -80,6 +80,9 @@ func _ready():
 	currentGame = blackjackGame.new(gameDeck, humanPlayer, dealer, gameControls)
 	# 4 - Connect game action buttons to the current game
 	connectGameSignals()
+	
+	infoModal.setLabel("Hello World!")
+	infoModal.animateIn()
 
 func connectGameSignals():
 	actionButtons.hitButton.connect("pressed", currentGame, "playerAction", [actionButtons.hitButton])

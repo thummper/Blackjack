@@ -32,23 +32,8 @@ func close():
 	anchor_bottom = -0.4
 	
 func setLabel(labelValue):
-	pass
+	label.text = labelValue
 	
-	
-	
-	
-
-
-
-
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	animateIn()
-
-
-
 func modalAnimation_finished(anim_name):
 	# If we are animating in, when the animation is finished we are showing the modal
 	if(modalState == "animateIn"):
@@ -67,4 +52,18 @@ func modalTimer_finished():
 	if(modalState == "showing"):
 		animateOut()
 	
+
+
+
+func closeButton_pressed():
+	# Stop any current animations, then hide the modal
+	if(modalState == "animateIn" or modalState == "animateOut"):
+		animationPlayer.stop()
+		close()
+	if(modalState == "showing"):
+		# If modal state is showing, the hide timer is probably running
+		modalTimer.stop()
+		close()
+	modalState = "hidden"
+
 
