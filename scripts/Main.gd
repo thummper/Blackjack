@@ -66,13 +66,14 @@ onready var dealerPosition = get_node("GameUI/TableWrapper/DealerPos/DealerSpot"
 func _ready():
 	chipTween.connect("tween_completed", self, "chipTweenCompleted")
 	# Init Human Player
-	humanPlayer = playerScript.new(10000, false)
+	humanPlayer = playerScript.new(10000)
 	humanPlayer.assignPosition(playerPosition)
 	
 	humanPlayer.connect("playerMoneyWin", self, "playerMoneyWinAnimation")
 	
 	# Init Dealer
-	var dealer = playerScript.new(0, false)
+	var dealer = playerScript.new(0)
+	dealer.isDealer = true 
 	dealer.assignPosition(dealerPosition)
 	# Generate initial game deck TODO: Pass this to game script entirely
 	gameDeck.generateDeck(2)
@@ -210,9 +211,16 @@ func dealButton_pressed():
 		currentGame.humanPlayer.endBetting()
 		succPlayerAction()
 	else:
+		# Display error message to player
+		infoModal.displayMessage("Make a bet before starting the game")
 		print("MAIN - player is trying to end betting phase before making a bet")
 		
 
 func clearBetButton_pressed():
 	print("Should clear bet")
+	if(currentGame.humanPlayer.currentBet > 0):
+		currentGame.clearBet()
+	
+	
+	
 

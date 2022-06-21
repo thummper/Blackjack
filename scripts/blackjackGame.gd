@@ -124,21 +124,24 @@ func changeGameState(newstate):
 		7:
 			print("Dealer has been resolved")
 			# When a hand is resolved, the winnings / losses may be impacted by generic upgrades
-			gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer, upgradableVars)
+			var winVars = gameResolver.resolveGame(dealer, humanPlayer, gameControls.eventLog, gameControls.delayTimer, upgradableVars)
+			
+			# Game resolved only resolves the betting - player is given winnings
+			if winVars['playerLose']:
+				humanPlayer.gameResolved(0, upgradableVars)
+			elif winVars['playerWin']:
+				humanPlayer.gameResolved(1, upgradableVars)
+			elif winVars['playerPush']:
+				humanPlayer.gameResolved(2, upgradableVars)
+			# After winnings are distributed, reset the player game variables
+			humanPlayer.gameOver()
+			dealer.gameOver()
 
-			humanPlayer.clearHand()
-			dealer.clearHand()
 			gameControls.delayTimer.start(0.5)
 			yield(gameControls.delayTimer, "timeout")
-			
-			
 			updateMoneyLabel()
 			hideActionButtons()
-			
 			yield(gameControls.uiAnimations, "animation_finished")
-			
-			dealer.playingPosition.hideTurnIndicator()
-			
 			changeGameState(0)
 
 
@@ -322,6 +325,10 @@ func printCardValue(entitiy, card, position):
 func awardActionMoney():
 	humanPlayer.addMoney(upgradableVars['actionMoney'])
 	
+	
+# Triggered when "Clear Bet" button is pressed and we have a current bet
+func clearBet():
+	pass
 
 
 # Handle actions below v

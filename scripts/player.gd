@@ -2,10 +2,10 @@ signal playerMoneyWin
 
 var madeBet      = false
 var handResolved = false
-var madeAction   = false
+var isDealer = false
 
 var money
-var ai
+
 
 var handsPlayed = 0
 var handsWon    = 0
@@ -22,11 +22,7 @@ var moneyToAdd  = 0
 const moneyAddTime = 5
 var moneyAnimationAmount = 0
 
-
-
-
-func _init(startingMoney, isAI = false):
-	ai    = isAI
+func _init(startingMoney):
 	money = startingMoney
 
 
@@ -40,12 +36,6 @@ func endBetting():
 	else:
 		print("Player tried to end betting phase without making a bet")
 
-func handOver():
-	madeBet      = false
-	handResolved = false
-	currentBet = 0
-
-
 func assignPosition(position):
 	playingPosition = position
 
@@ -53,9 +43,7 @@ func revealAllCards():
 	playingPosition.revealAllCards()
 
 
-# Empty cards from playing position and reset internal vars (value)
-func clearHand():
-	playingPosition.clearPosition()
+
 
 
 
@@ -73,16 +61,35 @@ func gameResolved(_res, upgradeVars):
 	if _res == 0:
 		handsLost += 1
 		loseMoney(currentBet, upgradeVars)
-		handOver()
 	elif _res == 1:
 		handsWon += 1
 		winMoney(currentBet * 1.5)
-		handOver()
 	elif _res == 2:
 		handsPush += 1
 		winMoney(currentBet)
-		handOver()
 	playingPosition.setFeedback(_res)
+	
+	
+func gameOver():
+	# We only carry out most of the variable resets if we are not the dealer
+	if(not isDealer):
+		# Reset variables
+		madeBet = false
+		handResolved = false
+		currentBet = 0
+	# Dealer and players will still clear their hands
+	clearHand()
+	
+		
+	
+
+	
+# Just calls reset function for playing position
+func clearHand():
+	# Empty all cards and reset internal variables
+	playingPosition.clearPosition()
+	# Toggle hide on possible turn indicator
+	playingPosition.hideTurnIndicator()
 	
 
 func winMoney(amount):
@@ -95,6 +102,7 @@ func loseMoney(amount, upgradeVars):
 	var lossAmount = amount * loseMod
 	var refundAmount = amount - lossAmount
 	addMoney(refundAmount)
+
 
 
 

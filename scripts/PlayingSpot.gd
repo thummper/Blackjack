@@ -193,13 +193,11 @@ func setFeedback(_res):
 
 
 
-# Reset position essentially, remove cards, reset value
+# Reset function for playing position - everything should be shiny and new 
 func clearPosition():
 	betValue  = 0
-
 	cards     = []
 	miniContainer.clear()
-
 
 
 	if !dealer:
@@ -208,7 +206,6 @@ func clearPosition():
 		# Set hand feedback if not dealer
 		handFeedback.setLabel(feedbackLabel)
 		handFeedback.visible = true
-
 
 	# Feedback info comes in
 	spotAnimations.play("feedbackIn")
@@ -229,10 +226,6 @@ func clearPosition():
 	yield(spotAnimations, "animation_finished")
 
 
-
-
-
-
 	# Tween all cards to 0 position
 	for _card in cardPivot.get_children():
 		cardTween.interpolate_property(_card, "position", _card.position, Vector2(0, 0), 0.6)
@@ -241,14 +234,8 @@ func clearPosition():
 
 	yield(cardTween, "tween_all_completed")
 
-
+	# Remove all cards
 	for _card in cardPivot.get_children():
 		_card.queue_free()
 
 
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

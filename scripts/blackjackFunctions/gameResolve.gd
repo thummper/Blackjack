@@ -66,14 +66,13 @@ func resolveGame(dealer, human, eventLog, delayTimer, upgradeVars):
 		else:
 			playerLose = true
 			eventLog.addMessage("System", "Delaer hand beats Player")
-
-	if playerLose:
-		human.gameResolved(0, upgradeVars)
-	elif playerWin:
-		human.gameResolved(1, upgradeVars)
-	elif playerPush:
-		human.gameResolved(2, upgradeVars)
-
 			
+			
+	return {
+		"playerLose": playerLose,
+		"playerWin": playerWin,
+		"playerPush": playerPush
+	}
+
 
 

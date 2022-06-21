@@ -19,10 +19,20 @@ anchor_top = 0.03
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="UpgradeTitle" type="Label" parent="UpgradeLeft/VBoxContainer2"]
+[node name="TitleInformation" type="HBoxContainer" parent="UpgradeLeft/VBoxContainer2"]
 margin_right = 1013.0
 margin_bottom = 14.0
-text = "Action Money"
+
+[node name="Name" type="Label" parent="UpgradeLeft/VBoxContainer2/TitleInformation"]
+margin_right = 95.0
+margin_bottom = 14.0
+text = "Upgrade Name"
+
+[node name="Quantity" type="Label" parent="UpgradeLeft/VBoxContainer2/TitleInformation"]
+margin_left = 99.0
+margin_right = 123.0
+margin_bottom = 14.0
+text = "(74)"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UpgradeLeft/VBoxContainer2"]
 margin_top = 18.0

@@ -16,18 +16,25 @@ func getNextMiniPosition():
 	var activeSize = rect_size
 	
 	
-	print("ACTIVE POS: ", activePosition)
-	print("ACTIVE SIZE: ", activeSize)
-	
-	var numRows = int((totalChildren - 1) / 20)
-	
-	print("NUMBER ROWS: ", int(totalChildren / 20))
-	
 	var activeCenter = Vector2(
-		activePosition[0] + 8 + ( (totalChildren - 1 - (numRows * 20)) * 8),
-		activePosition[1] + (numRows * 29)
-		)
-	print("NEXT LOCATION: ", activeCenter)
+		activePosition[0] + (activeSize[0] / 2) - 12.5,
+		activePosition[1] + (activeSize[1] / 2) - 12.5
+	)
+
+
+#	print("ACTIVE: ", rect_global_position)
+#	print("SIZE: ", rect_size)
+#
+#	var numRows = int((totalChildren - 1) / 20)
+#
+#
+#
+#	var activeCenter = Vector2(
+#		activePosition[0] + 8 + ( (totalChildren - 1 - (numRows * 20)) * 8),
+#		activePosition[1] + (numRows * 29)
+#		)
+#	print("CENTER: ", activeCenter)
+##
 	return activeCenter
 
 
@@ -49,17 +56,37 @@ func addMini(mini):
 		
 		
 func clear():
-	while rowContainer.get_child_count() > 1:
-		for _child in rowContainer.get_children():
-			_child.queue_free()
-	
-	activeContainer = rowContainer.get_children()[0]
-	
-	for _child in activeContainer.get_children():
-		activeContainer.remove_child(_child)
+	totalChildren = 0
+	# We could just remove all rows and add a new one?
+	for _child in rowContainer.get_children():
+
+		rowContainer.remove_child(_child)
 		_child.queue_free()
 		
-	totalChildren = 0
+		print("REMOVING CHILDREN: ", rect_global_position)
+	
+	# Not sure if this does anything
+	rowContainer.margin_left = 0
+	rowContainer.margin_top = 0
+	rowContainer.margin_right = 20
+	rowContainer.margin_bottom = 20
+	rowContainer.rect_size = Vector2(20, 20)
+	addNewRow()
+	
+	
+	
+	
+#	while rowContainer.get_child_count() > 1:
+#		for _child in rowContainer.get_children():
+#			_child.queue_free()
+#
+#	activeContainer = rowContainer.get_children()[0]
+#
+#	for _child in activeContainer.get_children():
+#		activeContainer.remove_child(_child)
+#		_child.queue_free()
+#
+#	totalChildren = 0
 	
 	
 
@@ -68,6 +95,7 @@ func clear():
 func addNewRow():
 	var newRow = HBoxContainer.new()
 	newRow.theme = miniChipTheme
+	newRow.rect_size = Vector2(20, 20)
 	rowContainer.add_child(newRow)
 	activeContainer = newRow
 	

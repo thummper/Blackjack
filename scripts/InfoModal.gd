@@ -31,6 +31,20 @@ func close():
 	anchor_top = -0.1
 	anchor_bottom = -0.4
 	
+	
+func displayMessage(message):
+
+	# Now depending on the current state of the label we must do different things
+	# If the label is animatingIn, stop the animation, set the text, start the animation again
+	if(modalState == "animateIn" or modalState == "animateOut"):
+		stopAnimationHide()
+	if(modalState == "showing"):
+		stopTimerHide()
+		
+	# Generally we want to set the message and then animate in the modal
+	setLabel(message)
+	animateIn()
+	
 func setLabel(labelValue):
 	label.text = labelValue
 	
@@ -51,6 +65,19 @@ func modalTimer_finished():
 	# Timer has finished, if modal is showing, hide the modal
 	if(modalState == "showing"):
 		animateOut()
+		
+		
+# If we are currently animation, stop the animation and hide the modal
+func stopAnimationHide():
+	animationPlayer.stop()
+	close()
+	modalState = "hidden"
+
+# If we are currently showing the modal, stop the timer and hide it
+func stopTimerHide():
+	modalTimer.stop()
+	close()
+	modalState = "hidden"
 	
 
 
@@ -58,12 +85,9 @@ func modalTimer_finished():
 func closeButton_pressed():
 	# Stop any current animations, then hide the modal
 	if(modalState == "animateIn" or modalState == "animateOut"):
-		animationPlayer.stop()
-		close()
+		stopAnimationHide()
 	if(modalState == "showing"):
-		# If modal state is showing, the hide timer is probably running
-		modalTimer.stop()
-		close()
-	modalState = "hidden"
+		stopTimerHide()
+
 
 
